@@ -1,5 +1,6 @@
 package GameElements;
 
+import java.util.Arrays;
 
 /**
  * @author Phillip Byram
@@ -27,6 +28,8 @@ public class Board {
 	 */
 	public Board(int width, int height) {
 		spaces = new Piece[width][height];
+		this.width = width;
+		this.height = height;
 		initBoard();
 	}
 	
@@ -38,10 +41,25 @@ public class Board {
 	 */
 	public Board(int width, int height, int winCondition) {
 		spaces = new Piece[width][height];
+		this.width = width;
+		this.height = height;
 		this.winCondition = winCondition;
 		initBoard();
 	}
 	
+	/**
+	 * Creates a Connect N board.
+	 * @param winCondition
+	 */
+	public Board(int winCondition) {
+		spaces = new Piece[width][height];
+		this.winCondition = winCondition;
+		initBoard();
+	}
+	
+	/**
+	 * Initializes the board. Can be used to empty the board as well.
+	 */
 	public void initBoard() {
 		for(int h=0;h<height;h++) {
 			for(int w=0;w<width;w++)
@@ -49,6 +67,9 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * Prints the board to System.Out
+	 */
 	public void showBoard()
 	{
 		StringBuilder output = new StringBuilder(getHorizontalBorder());
@@ -62,8 +83,15 @@ public class Board {
 				
 	}
 	
+	/**
+	 * Drops a piece down a column of the Connect board.
+	 * @param p the type of Piece to place (cannot be Piece.NONE)
+	 * @param column the 0 based index of the column to drop the piece (cannot be >= board width)
+	 */
 	public void placePiece(Piece p, int column)
 	{
+		if(p == Piece.NONE)return;
+		if(column<0 || column>=width)return;
 		if(spaces[column][height-1]==Piece.NONE)
 			spaces[column][height-1] = p;
 		else
@@ -75,6 +103,29 @@ public class Board {
 		}
 	}
 	
+	private Piece didWin()
+	{
+		for(int w=0;w<width;w++)
+			for(int h=0;h<height;h++){
+				if(checkVertical(Piece.BLACK,spaces[w],h,winCondition))
+					return Piece.BLACK;
+				if(checkVertical(Piece.RED,spaces[w],h,winCondition))
+					return Piece.RED;
+			}
+		return Piece.NONE;
+	}
+	
+	private boolean checkVertical(Piece p, Piece[] col, int start, int needToWin){
+		
+		if(col.length>0 && col[start] == p)
+			if(needToWin-1 == 0 || checkVertical(p,Arrays.copyOfRange(col,start+1,col.length),0,needToWin-1))
+				return true;
+		return false;
+	}
+	/**
+	 * Used to create the top and bottom bounds of the board when showing the board
+	 * @return the top or bottom border of the board
+	 */
 	private String getHorizontalBorder() {
 		String out = "";
 		int i = 0;
@@ -85,6 +136,7 @@ public class Board {
 		out+= "-\n";
 		return out;
 	}
+	
 	/**
 	 * Gets the 2D piece array of spaces in the board
 	 * @return the spaces in the board
@@ -125,27 +177,29 @@ public class Board {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Board B = new Board();
-		B.placePiece(Piece.BLACK, 3);
-		B.placePiece(Piece.RED, 3);
-		B.placePiece(Piece.BLACK, 3);
-		B.placePiece(Piece.RED, 3);
-		B.placePiece(Piece.BLACK, 3);
-		B.placePiece(Piece.RED, 3);
-		B.placePiece(Piece.BLACK, 0);
-		B.placePiece(Piece.RED, 0);
-		B.placePiece(Piece.BLACK, 0);
-		B.placePiece(Piece.RED, 0);
-		B.placePiece(Piece.BLACK, 0);
-		B.placePiece(Piece.RED, 0);
+		
 
-		B.placePiece(Piece.BLACK, 1);
-		B.placePiece(Piece.RED, 1);
-		B.placePiece(Piece.BLACK, 1);
-		B.placePiece(Piece.RED, 1);
-		B.placePiece(Piece.BLACK, 1);
-		B.placePiece(Piece.RED, 1);
+		B.placePiece(Piece.RED, 3);
+		B.placePiece(Piece.RED, 3);
+		B.placePiece(Piece.BLACK, 3);
+		B.placePiece(Piece.BLACK, 3);
+		B.placePiece(Piece.BLACK, 3);
+		B.placePiece(Piece.RED, 3);
+		B.placePiece(Piece.BLACK, 3);
+
+		B.placePiece(Piece.BLACK, 4);
+		B.placePiece(Piece.BLACK, 4);
+		B.placePiece(Piece.BLACK, 4);
+		
+		B.placePiece(Piece.RED, 2);
+		B.placePiece(Piece.RED, 2);
+		B.placePiece(Piece.RED, 2);
+		B.placePiece(Piece.RED, 2);
+		B.placePiece(Piece.RED, 2);
+		
+		Piece winner = B.didWin();
+		if(Piece.NONE != winner)System.out.println( winner.prettyName() + " Wins!");
 		B.showBoard();
 
 	}
@@ -163,6 +217,10 @@ public class Board {
 		
 		char getCharacter(){
 			return character;
+		}
+		String prettyName()
+		{
+			return this.toString().substring(0, 1) + this.toString().toLowerCase().substring(1);
 		}
 	}
 
