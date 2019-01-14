@@ -103,13 +103,24 @@ public class Board {
 		}
 	}
 	
-	private Piece didWin()
+	/**
+	 * Checks if a Player has won the game. 
+	 * @return The piece that won the game or the empty piece if there are no winners.
+	 */
+	public Piece didWin()
 	{
 		for(int w=0;w<width;w++)
 			for(int h=0;h<height;h++){
 				if(checkVertical(Piece.BLACK,spaces[w],h,winCondition))
 					return Piece.BLACK;
 				if(checkVertical(Piece.RED,spaces[w],h,winCondition))
+					return Piece.RED;
+			}
+		for(int w=0;w<width;w++)
+			for(int h=0;h<height;h++){
+				if(checkHorizontal(Piece.BLACK,getRowOf2dArray(spaces,w),h,winCondition))
+					return Piece.BLACK;
+				if(checkHorizontal(Piece.RED,getRowOf2dArray(spaces,w),h,winCondition))
 					return Piece.RED;
 			}
 		return Piece.NONE;
@@ -122,6 +133,25 @@ public class Board {
 				return true;
 		return false;
 	}
+	
+	private boolean checkHorizontal(Piece p, Piece[] row, int start, int needToWin){
+		
+		if(row.length>0 && row[start] == p)
+			if(needToWin-1 == 0 || checkHorizontal(p,Arrays.copyOfRange(row,start+1,row.length),0,needToWin-1))
+				return true;
+		return false;
+	}
+	
+	private Piece[] getRowOf2dArray(Piece[][] array,int row){
+		
+		Piece[] rowArray = new Piece[array[0].length];
+		for(int col = 0; col < array[0].length; col++)//array[0] works because the width is static
+		{
+		    rowArray[col] = array[col][row];
+		}
+		return rowArray;
+	}
+	
 	/**
 	 * Used to create the top and bottom bounds of the board when showing the board
 	 * @return the top or bottom border of the board
@@ -179,25 +209,14 @@ public class Board {
 	public static void main(String[] args) {
 		Board B = new Board();
 		
-
+		B.placePiece(Piece.BLACK, 3);
+		B.placePiece(Piece.RED, 2);
+		B.placePiece(Piece.BLACK, 1);
 		B.placePiece(Piece.RED, 3);
-		B.placePiece(Piece.RED, 3);
-		B.placePiece(Piece.BLACK, 3);
-		B.placePiece(Piece.BLACK, 3);
-		B.placePiece(Piece.BLACK, 3);
-		B.placePiece(Piece.RED, 3);
-		B.placePiece(Piece.BLACK, 3);
-
-		B.placePiece(Piece.BLACK, 4);
-		B.placePiece(Piece.BLACK, 4);
-		B.placePiece(Piece.BLACK, 4);
-		
+		B.placePiece(Piece.RED, 4);
 		B.placePiece(Piece.RED, 2);
-		B.placePiece(Piece.RED, 2);
-		B.placePiece(Piece.RED, 2);
-		B.placePiece(Piece.RED, 2);
-		B.placePiece(Piece.RED, 2);
-		
+		B.placePiece(Piece.RED, 1);
+		B.placePiece(Piece.RED, 4);
 		Piece winner = B.didWin();
 		if(Piece.NONE != winner)System.out.println( winner.prettyName() + " Wins!");
 		B.showBoard();
