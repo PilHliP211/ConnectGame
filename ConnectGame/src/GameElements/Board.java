@@ -66,9 +66,12 @@ public class Board {
 	{
 		if(spaces[column][height-1]==Piece.NONE)
 			spaces[column][height-1] = p;
-		for(int h=height-1;h>0;h--) {
-			if(spaces[column][h] != Piece.NONE);
-				spaces[column][h] = p;
+		else
+		for(int h=height-1;h>=1;h--) {
+			if(spaces[column][h-1] == Piece.NONE && spaces[column][h] != Piece.NONE){
+				spaces[column][h-1] = p;
+				return;
+			}
 		}
 	}
 	
@@ -125,6 +128,24 @@ public class Board {
 		// TODO Auto-generated method stub
 		Board B = new Board();
 		B.placePiece(Piece.BLACK, 3);
+		B.placePiece(Piece.RED, 3);
+		B.placePiece(Piece.BLACK, 3);
+		B.placePiece(Piece.RED, 3);
+		B.placePiece(Piece.BLACK, 3);
+		B.placePiece(Piece.RED, 3);
+		B.placePiece(Piece.BLACK, 0);
+		B.placePiece(Piece.RED, 0);
+		B.placePiece(Piece.BLACK, 0);
+		B.placePiece(Piece.RED, 0);
+		B.placePiece(Piece.BLACK, 0);
+		B.placePiece(Piece.RED, 0);
+
+		B.placePiece(Piece.BLACK, 1);
+		B.placePiece(Piece.RED, 1);
+		B.placePiece(Piece.BLACK, 1);
+		B.placePiece(Piece.RED, 1);
+		B.placePiece(Piece.BLACK, 1);
+		B.placePiece(Piece.RED, 1);
 		B.showBoard();
 
 	}
