@@ -37,7 +37,7 @@ public class Board {
 	 * Creates a Connect N board with a width and a height.
 	 * @param width the width of the board
 	 * @param height the height of the board
-	 * @param winCondition
+	 * @param winCondition number needed to connect to win
 	 */
 	public Board(int width, int height, int winCondition) {
 		spaces = new Piece[width][height];
@@ -49,7 +49,7 @@ public class Board {
 	
 	/**
 	 * Creates a Connect N board.
-	 * @param winCondition
+	 * @param winCondition number needed to connect to win
 	 */
 	public Board(int winCondition) {
 		spaces = new Piece[width][height];
@@ -125,6 +125,7 @@ public class Board {
 		return Piece.NONE;
 	}
 	
+	//TODO investigate issues when winCondition = Board height
 	private boolean checkVertical(Piece p, Piece[] col, int start, int needToWin){
 		
 		if(col.length>0 && col[start] == p)
@@ -132,7 +133,7 @@ public class Board {
 				return true;
 		return false;
 	}
-	
+	//TODO has issues when winCondition = Board width
 	private boolean checkHorizontal(Piece p, Piece[] row, int start, int needToWin){
 		
 		if(row.length>0 && row[start] == p)
@@ -143,14 +144,25 @@ public class Board {
 	
 	private Piece[] getRowOf2dArray(Piece[][] array,int row){
 		
-		Piece[] rowArray = new Piece[array[0].length];
-		for(int col = 0; col < array[0].length; col++)//array[0] works because the width is static
+		Piece[] rowArray = new Piece[array.length];
+		for(int col = 0; col < array.length; col++)
 		{
 		    rowArray[col] = array[col][row];
 		}
 		return rowArray;
 	}
 	
+	/*
+	 * given a board of 6 height and 7 width there would be 13 diagonal indecies
+	 * the 0th index would be top left and the 12th index would be bottom right.
+	 * the most extreme indecies would only have a one cell diagonal. 
+	 * the second most extreme, 2, and so on.
+	 */
+	private Piece[] getLeftDiagOf2dArray(Piece[][] array, int diagonal)
+	{
+		Piece[] rowArray = new Piece[array.length];
+		return rowArray;
+	}
 	/**
 	 * Used to create the top and bottom bounds of the board when showing the board
 	 * @return the top or bottom border of the board
@@ -206,18 +218,17 @@ public class Board {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Board B = new Board();
+		Board B = new Board(8,6,7);
 		
 		B.placePiece(Piece.BLACK, 3);
-		B.placePiece(Piece.RED, 2);
+		B.placePiece(Piece.BLACK, 2);
+		B.placePiece(Piece.BLACK, 4);
+		B.placePiece(Piece.BLACK, 5);
+		B.placePiece(Piece.BLACK, 6);
 		B.placePiece(Piece.BLACK, 1);
-		B.placePiece(Piece.RED, 3);
-		B.placePiece(Piece.RED, 1);
-		B.placePiece(Piece.RED, 3);
-		B.placePiece(Piece.RED, 1);
-		B.placePiece(Piece.RED, 3);
-		B.placePiece(Piece.RED, 1);
-		B.placePiece(Piece.RED, 3);
+		B.placePiece(Piece.BLACK, 0);
+		B.placePiece(Piece.BLACK, 7);
+		System.out.println(B.getSpaces()[0].length);
 		Piece winner = B.didWin();
 		if(Piece.NONE != winner)System.out.println( winner.prettyName() + " Wins!");
 		B.showBoard();
