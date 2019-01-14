@@ -116,13 +116,12 @@ public class Board {
 				if(checkVertical(Piece.RED,spaces[w],h,winCondition))
 					return Piece.RED;
 			}
-		for(int w=0;w<width;w++)
-			for(int h=0;h<height;h++){
-				if(checkHorizontal(Piece.BLACK,getRowOf2dArray(spaces,w),h,winCondition))
-					return Piece.BLACK;
-				if(checkHorizontal(Piece.RED,getRowOf2dArray(spaces,w),h,winCondition))
-					return Piece.RED;
-			}
+		for(int h=0;h<height;h++){
+			if(checkHorizontal(Piece.BLACK,getRowOf2dArray(spaces,h),h,winCondition))
+				return Piece.BLACK;
+			if(checkHorizontal(Piece.RED,getRowOf2dArray(spaces,h),h,winCondition))
+				return Piece.RED;
+		}
 		return Piece.NONE;
 	}
 	
@@ -213,10 +212,12 @@ public class Board {
 		B.placePiece(Piece.RED, 2);
 		B.placePiece(Piece.BLACK, 1);
 		B.placePiece(Piece.RED, 3);
-		B.placePiece(Piece.RED, 4);
-		B.placePiece(Piece.RED, 2);
 		B.placePiece(Piece.RED, 1);
-		B.placePiece(Piece.RED, 4);
+		B.placePiece(Piece.RED, 3);
+		B.placePiece(Piece.RED, 1);
+		B.placePiece(Piece.RED, 3);
+		B.placePiece(Piece.RED, 1);
+		B.placePiece(Piece.RED, 3);
 		Piece winner = B.didWin();
 		if(Piece.NONE != winner)System.out.println( winner.prettyName() + " Wins!");
 		B.showBoard();
