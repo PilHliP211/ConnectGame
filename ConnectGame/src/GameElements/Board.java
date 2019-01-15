@@ -116,16 +116,16 @@ public class Board {
 				if(checkVertical(Piece.RED,spaces[w],h,winCondition))
 					return Piece.RED;
 			}
-		for(int h=0;h<height;h++){
-			if(checkHorizontal(Piece.BLACK,getRowOf2dArray(spaces,h),h,winCondition))
-				return Piece.BLACK;
-			if(checkHorizontal(Piece.RED,getRowOf2dArray(spaces,h),h,winCondition))
-				return Piece.RED;
+		for(int h=0;h<height;h++)
+			for(int w=0;w<width;w++){
+				if(checkHorizontal(Piece.BLACK,getRowOf2dArray(spaces,h),w,winCondition))
+					return Piece.BLACK;
+				if(checkHorizontal(Piece.RED,getRowOf2dArray(spaces,h),w,winCondition))
+					return Piece.RED;
 		}
 		return Piece.NONE;
 	}
 	
-	//TODO investigate issues when winCondition = Board height
 	private boolean checkVertical(Piece p, Piece[] col, int start, int needToWin){
 		
 		if(col.length>0 && col[start] == p)
@@ -133,7 +133,6 @@ public class Board {
 				return true;
 		return false;
 	}
-	//TODO has issues when winCondition = Board width
 	private boolean checkHorizontal(Piece p, Piece[] row, int start, int needToWin){
 		
 		if(row.length>0 && row[start] == p)
@@ -218,17 +217,21 @@ public class Board {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Board B = new Board(8,6,7);
 		
-		B.placePiece(Piece.BLACK, 3);
-		B.placePiece(Piece.BLACK, 2);
-		B.placePiece(Piece.BLACK, 4);
-		B.placePiece(Piece.BLACK, 5);
-		B.placePiece(Piece.BLACK, 6);
-		B.placePiece(Piece.BLACK, 1);
+		Board B = new Board();
 		B.placePiece(Piece.BLACK, 0);
-		B.placePiece(Piece.BLACK, 7);
-		System.out.println(B.getSpaces()[0].length);
+		B.placePiece(Piece.BLACK, 0);
+		B.placePiece(Piece.BLACK, 0);
+		B.placePiece(Piece.BLACK, 0);
+		
+		/*
+		Board B = new Board();
+		B.placePiece(Piece.BLACK, 1);
+		B.placePiece(Piece.BLACK, 2);
+		B.placePiece(Piece.BLACK, 3);
+		B.placePiece(Piece.BLACK, 4);
+		*/
+		
 		Piece winner = B.didWin();
 		if(Piece.NONE != winner)System.out.println( winner.prettyName() + " Wins!");
 		B.showBoard();
