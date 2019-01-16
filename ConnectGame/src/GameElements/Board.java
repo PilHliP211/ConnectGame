@@ -127,9 +127,16 @@ public class Board {
 		}
 		for(int d=0;d<width+height-1;d++)
 			for(int l=0;l<getDiagLength(width,height,d);l++){
-				if(checkLeftDiagonal(Piece.BLACK,getLeftDiagOf2dArray(spaces,d),l,winCondition))
+				if(checkLeftDiagonal(Piece.BLACK,getDiagOf2dArray(spaces,d,true),l,winCondition))
 					return Piece.BLACK;
-				if(checkLeftDiagonal(Piece.RED,getLeftDiagOf2dArray(spaces,d),l,winCondition))
+				if(checkLeftDiagonal(Piece.RED,getDiagOf2dArray(spaces,d,true),l,winCondition))
+					return Piece.RED;
+		}
+		for(int d=0;d<width+height-1;d++)
+			for(int l=0;l<getDiagLength(width,height,d);l++){
+				if(checkRightDiagonal(Piece.BLACK,getDiagOf2dArray(spaces,d,false),l,winCondition))
+					return Piece.BLACK;
+				if(checkRightDiagonal(Piece.RED,getDiagOf2dArray(spaces,d,false),l,winCondition))
 					return Piece.RED;
 		}
 		
@@ -157,6 +164,13 @@ public class Board {
 				return true;
 		return false;
 	}
+	private boolean checkRightDiagonal(Piece p, Piece[] diag, int start, int needToWin){
+
+		if(diag.length>0 && diag[start] == p)
+			if(needToWin-1 == 0 || checkRightDiagonal(p,Arrays.copyOfRange(diag,start+1,diag.length),0,needToWin-1))
+				return true;
+		return false;
+	}
 	
 	private Piece[] getRowOf2dArray(Piece[][] array,int row){
 		
@@ -170,24 +184,36 @@ public class Board {
 	
 	/*
 	 * given a board of 6 height and 7 width there would be 12 (6+7-1) diagonal indecies
+	 * 
+	 * for top right to bottom left diagonals (called left diagonals in this class - isLeft = true):
 	 * the 0th index would be top left and the 11th index would be bottom right.
+	 * 
+	 * for top left to bottom right diagonals (called right diagonals in this class - isLeft = false):
+	 * the 0th index would be top right and the 11th index would be bottom left.
+	 * 
 	 * the most extreme indecies would only have a one cell diagonal. 
 	 * the second most extreme, 2, and so on.
+	 * 
 	 */
-	private Piece[] getLeftDiagOf2dArray(Piece[][] array, int diagonal)
+	private Piece[] getDiagOf2dArray(Piece[][] array, int diagonal, boolean isLeft)
 	{
-		Piece[] leftDiagArray = new Piece[getDiagLength(array.length,array[0].length,diagonal)];
-		for(int i = 0; i < leftDiagArray.length; i++)
+		Piece[] diagArray = new Piece[getDiagLength(array.length,array[0].length,diagonal)];
+		
+		for(int i = 0; i < diagArray.length; i++)
 		{
-		    leftDiagArray[i] = getArrayItemFromDiagIdx(array,diagonal,i);
+			if(isLeft)
+				diagArray[i] = getArrayItemFromDiagIdxLeft(array,diagonal,i);
+			else
+				diagArray[i] = getArrayItemFromDiagIdxRight(array,diagonal,i);
 		}
-		return leftDiagArray;
+		return diagArray;
 	}
+	
 	
 	//TODO actual math 
 	private int getDiagLength(int width, int height,int diagonal){
 		
-		if(width== 7 && height == 6)
+		if((width== 7 && height == 6 )||(width== 6 && height == 7))
 			switch (diagonal){
 			case 0:
 			case 11:
@@ -208,19 +234,63 @@ public class Board {
 			case 6:
 				return 6;
 			}
-			
+		
+		if(width== 4 && height == 5)
+			switch (diagonal){
+			case 0:
+			case 7:
+				return 1;
+			case 1:
+			case 6:
+				return 2;
+			case 2:
+			case 5:
+				return 3;
+			case 3:
+			case 4:
+				return 4;
+			}
+		
+		if(width== 5 && height == 5)
+			switch (diagonal){
+			case 0:
+			case 8:
+				return 1;
+			case 1:
+			case 7:
+				return 2;
+			case 2:
+			case 6:
+				return 3;
+			case 3:
+			case 5:
+				return 4;
+			case 4:
+				return 5;
+					
+			}
 		return -1;
 	}
 	
+	
 	/*
-	 * based on a given array's diagonal index return the item at i of that diagonal
+	 * based on a given array's diagonal index return the item at i of that left diagonal
 	 */
-	private Piece getArrayItemFromDiagIdx(Piece[][] array, int diagonal, int i){
-		int len = getDiagLength(array.length,array[0].length,diagonal);
+	private Piece getArrayItemFromDiagIdxLeft(Piece[][] array, int diagonal, int i){
 		if(diagonal<array[0].length)
-			return array[i][diagonal - i];
+			return array[i][diagonal-i];
 		else
-			return array[diagonal - array.length+i+2][diagonal-array[0].length+len -i-1];
+			return array[(diagonal-array.length)+i+1][array[0].length-1-i];
+		
+	}
+	/*
+	 * based on a given array's diagonal index return the item at i of that right diagonal
+	 */
+	private Piece getArrayItemFromDiagIdxRight(Piece[][] array, int diagonal, int i){
+		if(diagonal<array[0].length)
+			return array[array.length-1 - i][diagonal - i];
+		else
+			return array[(array.length - diagonal+1)-i][array[0].length-1-i];
 		
 	}
 	
@@ -295,63 +365,72 @@ public class Board {
 	 */
 	public static void main(String[] args) {
 		
-		Board B = new Board();
-		B.placePiece(Piece.RED, 0);
+		Board B = new Board(5,5);
+		//B.showBoard();
+		B.placePiece(Piece.BLACK, 0);
 		B.placePiece(Piece.BLACK, 0);
 		
 		B.placePiece(Piece.RED, 1);
-		B.placePiece(Piece.BLACK, 1);
+		B.placePiece(Piece.RED, 1);
 		
 		B.placePiece(Piece.RED, 2);
 		B.placePiece(Piece.BLACK, 2);
 		B.placePiece(Piece.BLACK, 2);
 		
 		B.placePiece(Piece.BLACK, 3);
-		B.placePiece(Piece.RED, 3);
+		B.placePiece(Piece.BLACK, 3);
 		B.placePiece(Piece.RED, 3);
 		B.placePiece(Piece.BLACK, 3);
-		B.placePiece(Piece.RED, 4);
+
 		B.placePiece(Piece.BLACK, 4);
-		B.placePiece(Piece.BLACK, 4);
 		B.placePiece(Piece.RED, 4);
 		B.placePiece(Piece.RED, 4);
-		
-		B.placePiece(Piece.RED, 1);
-		B.placePiece(Piece.RED, 2);
-		B.placePiece(Piece.RED, 3);
-		B.placePiece(Piece.BLACK, 4);
-		
-		B.placePiece(Piece.RED, 5);
-		B.placePiece(Piece.RED, 5);
-		B.placePiece(Piece.RED, 5);
-		B.placePiece(Piece.RED, 6);
-		B.placePiece(Piece.RED, 6);
-		B.placePiece(Piece.RED, 6);
-		B.placePiece(Piece.BLACK, 6);
-		B.placePiece(Piece.BLACK, 5);
-		B.placePiece(Piece.RED, 5);
-		B.placePiece(Piece.BLACK, 6);
-		B.placePiece(Piece.BLACK, 6);
-		B.placePiece(Piece.BLACK, 2);
-		B.placePiece(Piece.RED, 1);
-		B.placePiece(Piece.RED, 1);
-		B.placePiece(Piece.BLACK, 1);
-		B.placePiece(Piece.RED, 0);
-		B.placePiece(Piece.RED, 0);
-		B.placePiece(Piece.RED, 0);
-		B.placePiece(Piece.RED, 0);
-		
-		
+		B.placePiece(Piece.RED, 4);
 		/*
+		B.placePiece(Piece.RED, 0);
+		B.placePiece(Piece.BLACK, 0);
+		
+		B.placePiece(Piece.BLACK, 1);
+		B.placePiece(Piece.RED, 1);
+		
+		B.placePiece(Piece.RED, 2);
+		B.placePiece(Piece.RED, 2);
+		B.placePiece(Piece.BLACK, 2);
+		
+		B.placePiece(Piece.BLACK, 3);
+		B.placePiece(Piece.RED, 3);
+		B.placePiece(Piece.RED, 3);
+		B.placePiece(Piece.BLACK, 3);
+		B.placePiece(Piece.RED, 4);
+		B.placePiece(Piece.BLACK, 4);
+		B.placePiece(Piece.BLACK, 4);
+		B.placePiece(Piece.RED, 4);
+
+		B.placePiece(Piece.RED, 5);
+		B.placePiece(Piece.RED, 6);
+		B.placePiece(Piece.RED, 5);
+		B.placePiece(Piece.BLACK, 5);
+		B.placePiece(Piece.RED, 6);
+		B.placePiece(Piece.BLACK, 6);
+		B.placePiece(Piece.BLACK, 4);
+		
+		B.placePiece(Piece.RED, 1);
+		B.placePiece(Piece.RED, 2);
+		B.placePiece(Piece.RED, 3);
+		B.placePiece(Piece.RED, 4);
+		*//*
 		Board B = new Board();
 		B.placePiece(Piece.BLACK, 1);
 		B.placePiece(Piece.BLACK, 2);
 		B.placePiece(Piece.BLACK, 3);
 		B.placePiece(Piece.BLACK, 4);
 		*/
+		
+		
 		B.showBoard();
 		Piece winner = B.didWin();
 		if(Piece.NONE != winner)System.out.println( winner.prettyName() + " Wins!");
+		
 
 	}
 	private enum Piece {
