@@ -280,7 +280,7 @@ public class Board {
 		if(diagonal<array[0].length)
 			return array[i][diagonal-i];
 		else
-			return array[(diagonal-array.length)+i+1][array[0].length-1-i];
+			return array[(diagonal-array.length)+i+2][array[0].length-1-i];
 		
 	}
 	/*
