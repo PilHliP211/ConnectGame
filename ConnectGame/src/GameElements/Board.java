@@ -276,21 +276,21 @@ public class Board {
 	/*
 	 * based on a given array's diagonal index return the item at i of that left diagonal
 	 */
-	private Piece getArrayItemFromDiagIdxLeft(Piece[][] array, int diagonal, int i){
+	private static Piece getArrayItemFromDiagIdxLeft(Piece[][] array, int diagonal, int i){
 		if(diagonal<array[0].length)
 			return array[i][diagonal-i];
 		else
 			return array[(diagonal-array.length)+i+1][array[0].length-1-i];
-		
 	}
+	
 	/*
 	 * based on a given array's diagonal index return the item at i of that right diagonal
 	 */
-	private Piece getArrayItemFromDiagIdxRight(Piece[][] array, int diagonal, int i){
+	private static Piece getArrayItemFromDiagIdxRight(Piece[][] array, int diagonal, int i){
 		if(diagonal<array[0].length)
 			return array[array.length-1 - i][diagonal - i];
 		else
-			return array[(array.length - diagonal+1)-i][array[0].length-1-i];
+			return array[(array.length+1+i)-diagonal-i+1][array[0].length-i];
 		
 	}
 	
