@@ -209,67 +209,15 @@ public class Board {
 		return diagArray;
 	}
 	
-	
-	//TODO actual math 
-	private int getDiagLength(int width, int height,int diagonal){
+	/*
+	 * get the length of a diagonal in a board with a width and a height
+	 */
+	private static int getDiagLength(int width, int height,int diagonal){
 		
-		if((width== 7 && height == 6 )||(width== 6 && height == 7))
-			switch (diagonal){
-			case 0:
-			case 11:
-				return 1;
-			case 1:
-			case 10:
-				return 2;
-			case 2:
-			case 9:
-				return 3;
-			case 3:
-			case 8:
-				return 4;
-			case 4:
-			case 7:
-				return 5;
-			case 5:
-			case 6:
-				return 6;
-			}
-		
-		if(width== 4 && height == 5)
-			switch (diagonal){
-			case 0:
-			case 7:
-				return 1;
-			case 1:
-			case 6:
-				return 2;
-			case 2:
-			case 5:
-				return 3;
-			case 3:
-			case 4:
-				return 4;
-			}
-		
-		if(width== 5 && height == 5)
-			switch (diagonal){
-			case 0:
-			case 8:
-				return 1;
-			case 1:
-			case 7:
-				return 2;
-			case 2:
-			case 6:
-				return 3;
-			case 3:
-			case 5:
-				return 4;
-			case 4:
-				return 5;
-					
-			}
-		return -1;
+		if(diagonal<height)
+			return diagonal+1;
+		else
+			return width+height - (diagonal+1);
 	}
 	
 	
@@ -364,7 +312,7 @@ public class Board {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
+		/*
 		Board B = new Board(5,5);
 		//B.showBoard();
 		B.placePiece(Piece.BLACK, 0);
@@ -386,7 +334,7 @@ public class Board {
 		B.placePiece(Piece.RED, 4);
 		B.placePiece(Piece.RED, 4);
 		B.placePiece(Piece.RED, 4);
-		/*
+		*//*
 		B.placePiece(Piece.RED, 0);
 		B.placePiece(Piece.BLACK, 0);
 		
@@ -426,12 +374,21 @@ public class Board {
 		B.placePiece(Piece.BLACK, 4);
 		*/
 		
-		
+		/*
 		B.showBoard();
 		Piece winner = B.didWin();
 		if(Piece.NONE != winner)System.out.println( winner.prettyName() + " Wins!");
-		
-
+		*/
+		System.out.println((Board.getDiagLength(7, 6, 0)==1)?"Pass":"Fail");
+		System.out.println((Board.getDiagLength(7, 6, 4)==5)?"Pass":"Fail");
+		System.out.println((Board.getDiagLength(7, 6, 5)==6)?"Pass":"Fail");
+		System.out.println((Board.getDiagLength(7, 6, 6)==6)?"Pass":"Fail");
+		System.out.println((Board.getDiagLength(7, 6, 11)==1)?"Pass":"Fail");
+		System.out.println((Board.getDiagLength(8, 8, 7)==8)?"Pass":"Fail");
+		System.out.println((Board.getDiagLength(8, 8, 8)==7)?"Pass":"Fail");
+		System.out.println((Board.getDiagLength(8, 8, 14)==1)?"Pass":"Fail");
+		System.out.println((Board.getDiagLength(8, 8, 0)==1)?"Pass":"Fail");
+		System.out.println((Board.getDiagLength(8, 8, 11)==4)?"Pass":"Fail");
 	}
 	private enum Piece {
 		NONE(' '),
