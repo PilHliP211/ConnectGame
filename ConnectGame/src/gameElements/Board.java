@@ -1,4 +1,4 @@
-package GameElements;
+package gameElements;
 
 import java.util.Arrays;
 
@@ -92,6 +92,7 @@ public class Board {
 	 */
 	public void placePiece(Piece p, int column)
 	{
+		//TODO return success of placing the piece
 		if(p == Piece.NONE)return;
 		if(column<0 || column>=width)return;
 		if(spaces[column][height-1]==Piece.NONE)
@@ -141,6 +142,15 @@ public class Board {
 		}
 		
 		return Piece.NONE;
+	}
+	
+	/**
+	 * Checks if the board has any available moves left
+	 * @return true if the board is full; false otherwise
+	 */
+	public boolean isFull()
+	{
+		return false;
 	}
 	
 	private boolean checkVertical(Piece p, Piece[] col, int start, int needToWin){
@@ -390,7 +400,7 @@ public class Board {
 		System.out.println((Board.getDiagLength(8, 8, 0)==1)?"Pass":"Fail");
 		System.out.println((Board.getDiagLength(8, 8, 11)==4)?"Pass":"Fail");
 	}
-	private enum Piece {
+	public enum Piece {
 		NONE(' '),
 		RED('X'),
 		BLACK('O');
