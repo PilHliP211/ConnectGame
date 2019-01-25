@@ -89,21 +89,25 @@ public class Board {
 	 * Drops a piece down a column of the Connect board.
 	 * @param p the type of Piece to place (cannot be Piece.NONE)
 	 * @param column the 0 based index of the column to drop the piece (cannot be >= board width)
+	 * @return true if the piece was placed on the board, false otherwise
+	 * @throws ColumnFullException if the index of the piece to place is a full column
 	 */
-	public void placePiece(Piece p, int column)
+	public boolean placePiece(Piece p, int column) throws ColumnFullException
 	{
-		//TODO return success of placing the piece
-		if(p == Piece.NONE)return;
-		if(column<0 || column>=width)return;
-		if(spaces[column][height-1]==Piece.NONE)
+		if(p == Piece.NONE)return false;
+		if(column<0 || column>=width)return false;
+		if(spaces[column][height-1]==Piece.NONE){
 			spaces[column][height-1] = p;
+			return true;
+		}
 		else
 		for(int h=height-1;h>=1;h--) {
 			if(spaces[column][h-1] == Piece.NONE && spaces[column][h] != Piece.NONE){
 				spaces[column][h-1] = p;
-				return;
+				return true;
 			}
 		}
+		throw new ColumnFullException();
 	}
 	
 	/**
@@ -145,12 +149,16 @@ public class Board {
 	}
 	
 	/**
-	 * Checks if the board has any available moves left
+	 * Checks if the board has any available spaces left
 	 * @return true if the board is full; false otherwise
 	 */
 	public boolean isFull()
 	{
-		return false;
+		for(int w=0;w<width;w++)
+			for(int h=0;h<height;h++)
+				if(spaces[w][h] == Piece.NONE)
+					return false;
+		return true;
 	}
 	
 	private boolean checkVertical(Piece p, Piece[] col, int start, int needToWin){
@@ -418,6 +426,13 @@ public class Board {
 		String prettyName()
 		{
 			return this.toString().substring(0, 1) + this.toString().toLowerCase().substring(1);
+		}
+	}
+	@SuppressWarnings("serial")
+	public class ColumnFullException extends Exception {
+
+		public ColumnFullException(){
+			
 		}
 	}
 
