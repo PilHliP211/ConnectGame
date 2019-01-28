@@ -256,7 +256,7 @@ public class Board {
 		if(diagonal<array[0].length)
 			return array[array.length-1 - i][diagonal - i];
 		else
-			return array[(2*array.length)-diagonal-i-2][array[0].length-i-1];
+			return array[(2*array.length-1)-diagonal-i-2][array[0].length-i-1];
 		
 	}
 	
