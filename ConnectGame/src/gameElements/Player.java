@@ -19,6 +19,13 @@ public class Player {
 		inputDevice = new Scanner(System.in);
 	}
 	
+	public Player(Piece p, Board b, Scanner in)
+	{
+		piece = p;
+		board = b;
+		inputDevice = in;
+	}
+	
 	/**
 	 * place a piece in a column on the board
 	 * @param col
