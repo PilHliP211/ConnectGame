@@ -1,14 +1,10 @@
 package test;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.IntBuffer;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.PrimitiveIterator.OfInt;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
 import gameElements.Board;
 import gameElements.Board.Piece;
 import gameElements.Game;
@@ -22,10 +18,10 @@ public class RandomTester {
 	 */
 	public static void main(String[] args) {
 		
-		final int BOARD_MAX = 10;
+		final int BOARD_MAX = 6;
 		final int DIMENSIONS_DIFF = 3;
 		Random r = new Random();
-		int width = 4+r.nextInt(BOARD_MAX);//4-14
+		int width = 4+r.nextInt(BOARD_MAX);//4-10
 		int height = width-(r.nextInt(DIMENSIONS_DIFF)*((r.nextBoolean())?-1:1));//width +/- 3
 		int winCondition = 3+(r.nextInt(DIMENSIONS_DIFF));//3-6
 		int iterations = 10;

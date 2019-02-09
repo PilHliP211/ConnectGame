@@ -256,6 +256,7 @@ public class Board {
 		if(diagonal<array[0].length)
 			return array[array.length-1 - i][diagonal - i];
 		else
+			//this has a bug when width = height on diagonal = height
 			return array[(2*array.length-1)-diagonal-i-2][array[0].length-i-1];
 		
 	}
@@ -330,6 +331,9 @@ public class Board {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
+		Board B = new Board(7,7);
+		B.didWin();
 		/*
 		Board B = new Board(5,5);
 		//B.showBoard();
@@ -397,6 +401,7 @@ public class Board {
 		Piece winner = B.didWin();
 		if(Piece.NONE != winner)System.out.println( winner.prettyName() + " Wins!");
 		*/
+		/*
 		System.out.println((Board.getDiagLength(7, 6, 0)==1)?"Pass":"Fail");
 		System.out.println((Board.getDiagLength(7, 6, 4)==5)?"Pass":"Fail");
 		System.out.println((Board.getDiagLength(7, 6, 5)==6)?"Pass":"Fail");
@@ -407,6 +412,7 @@ public class Board {
 		System.out.println((Board.getDiagLength(8, 8, 14)==1)?"Pass":"Fail");
 		System.out.println((Board.getDiagLength(8, 8, 0)==1)?"Pass":"Fail");
 		System.out.println((Board.getDiagLength(8, 8, 11)==4)?"Pass":"Fail");
+		*/
 	}
 	public enum Piece {
 		NONE(' '),
