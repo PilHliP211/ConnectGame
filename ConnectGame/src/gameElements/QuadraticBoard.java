@@ -10,49 +10,34 @@ import java.util.Arrays;
 public class QuadraticBoard implements Board{
 
 	private Piece[][] spaces;
-	private int width = 7;
-	private int height = 6;
+	private int dimension = 7;
 	private int winCondition = 4;
 	/**
 	 * Creates a default Connect 4 board
 	 */
 	public QuadraticBoard() {
-		spaces = new Piece[width][height];
+		spaces = new Piece[dimension][dimension];
 		initBoard();
 	}
 
 	/**
 	 * Creates a Connect 4 board with a width and a height
-	 * @param width the width of the board
-	 * @param height the height of the board
+	 * @param dimension the width and height of the board
 	 */
-	public QuadraticBoard(int width, int height) {
-		spaces = new Piece[width][height];
-		this.width = width;
-		this.height = height;
+	public QuadraticBoard(int dimension) {
+		spaces = new Piece[dimension][dimension];
+		this.dimension = dimension;
 		initBoard();
 	}
 	
 	/**
 	 * Creates a Connect N board with a width and a height.
-	 * @param width the width of the board
-	 * @param height the height of the board
+	 * @param width the width and height of the board
 	 * @param winCondition number needed to connect to win
 	 */
-	public QuadraticBoard(int width, int height, int winCondition) {
-		spaces = new Piece[width][height];
-		this.width = width;
-		this.height = height;
-		this.winCondition = winCondition;
-		initBoard();
-	}
-	
-	/**
-	 * Creates a Connect N board.
-	 * @param winCondition number needed to connect to win
-	 */
-	public QuadraticBoard(int winCondition) {
-		spaces = new Piece[width][height];
+	public QuadraticBoard(int dimension, int winCondition) {
+		spaces = new Piece[dimension][dimension];
+		this.dimension = dimension;
 		this.winCondition = winCondition;
 		initBoard();
 	}
@@ -61,8 +46,8 @@ public class QuadraticBoard implements Board{
 	 * Initializes the board. Can be used to empty the board as well.
 	 */
 	public void initBoard() {
-		for(int h=0;h<height;h++) {
-			for(int w=0;w<width;w++)
+		for(int h=0;h<dimension;h++) {
+			for(int w=0;w<dimension;w++)
 				spaces[w][h] = Piece.NONE;
 		}
 	}
@@ -73,9 +58,9 @@ public class QuadraticBoard implements Board{
 	public void showBoard()
 	{
 		StringBuilder output = new StringBuilder(getHorizontalBorder(" "));
-		for(int h=0;h<height;h++) {
+		for(int h=0;h<dimension;h++) {
 			output.append(String.valueOf(h));
-			for(int w=0;w<width;w++)
+			for(int w=0;w<dimension;w++)
 				output.append("|"+spaces[w][h].getCharacter());
 			output.append("|\n");
 		}
@@ -95,13 +80,13 @@ public class QuadraticBoard implements Board{
 	public boolean placePiece(Piece p, int column) throws ColumnFullException
 	{
 		if(p == Piece.NONE)return false;
-		if(column<0 || column>=width)return false;
-		if(spaces[column][height-1]==Piece.NONE){
-			spaces[column][height-1] = p;
+		if(column<0 || column>=dimension)return false;
+		if(spaces[column][dimension-1]==Piece.NONE){
+			spaces[column][dimension-1] = p;
 			return true;
 		}
 		else
-		for(int h=height-1;h>=1;h--) {
+		for(int h=dimension-1;h>=1;h--) {
 			if(spaces[column][h-1] == Piece.NONE && spaces[column][h] != Piece.NONE){
 				spaces[column][h-1] = p;
 				return true;
@@ -116,29 +101,29 @@ public class QuadraticBoard implements Board{
 	 */
 	public Piece didWin()
 	{
-		for(int w=0;w<width;w++)
-			for(int h=0;h<height;h++){
+		for(int w=0;w<dimension;w++)
+			for(int h=0;h<dimension;h++){
 				if(checkVertical(Piece.BLACK,spaces[w],h,winCondition))
 					return Piece.BLACK;
 				if(checkVertical(Piece.RED,spaces[w],h,winCondition))
 					return Piece.RED;
 			}
-		for(int h=0;h<height;h++)
-			for(int w=0;w<width;w++){
+		for(int h=0;h<dimension;h++)
+			for(int w=0;w<dimension;w++){
 				if(checkHorizontal(Piece.BLACK,getRowOf2dArray(spaces,h),w,winCondition))
 					return Piece.BLACK;
 				if(checkHorizontal(Piece.RED,getRowOf2dArray(spaces,h),w,winCondition))
 					return Piece.RED;
 		}
-		for(int d=0;d<width+height-1;d++)
-			for(int l=0;l<getDiagLength(width,height,d);l++){
+		for(int d=0;d<dimension+dimension-1;d++)
+			for(int l=0;l<getDiagLength(dimension,dimension,d);l++){
 				if(checkLeftDiagonal(Piece.BLACK,getDiagOf2dArray(spaces,d,true),l,winCondition))
 					return Piece.BLACK;
 				if(checkLeftDiagonal(Piece.RED,getDiagOf2dArray(spaces,d,true),l,winCondition))
 					return Piece.RED;
 		}
-		for(int d=0;d<width+height-1;d++)
-			for(int l=0;l<getDiagLength(width,height,d);l++){
+		for(int d=0;d<dimension+dimension-1;d++)
+			for(int l=0;l<getDiagLength(dimension,dimension,d);l++){
 				if(checkRightDiagonal(Piece.BLACK,getDiagOf2dArray(spaces,d,false),l,winCondition))
 					return Piece.BLACK;
 				if(checkRightDiagonal(Piece.RED,getDiagOf2dArray(spaces,d,false),l,winCondition))
@@ -154,8 +139,8 @@ public class QuadraticBoard implements Board{
 	 */
 	public boolean isFull()
 	{
-		for(int w=0;w<width;w++)
-			for(int h=0;h<height;h++)
+		for(int w=0;w<dimension;w++)
+			for(int h=0;h<dimension;h++)
 				if(spaces[w][h] == Piece.NONE)
 					return false;
 		return true;
@@ -227,6 +212,7 @@ public class QuadraticBoard implements Board{
 		return diagArray;
 	}
 	
+	//TODO fix for width/height -> dimension conversion
 	/*
 	 * get the length of a diagonal in a board with a width and a height
 	 */
@@ -281,7 +267,7 @@ public class QuadraticBoard implements Board{
 	private String getHorizontalBorder(String padding) {
 		String out = padding;
 		int i = 0;
-		while(width>i) {
+		while(dimension>i) {
 			out+="--";
 			i++;
 		}
@@ -295,7 +281,7 @@ public class QuadraticBoard implements Board{
 	private String getHorizontalIndecies() {
 		String out = " ";
 		int i = 0;
-		while(width>i) {
+		while(dimension>i) {
 			out+=" "+ String.valueOf(i);
 			i++;
 		}
@@ -313,21 +299,12 @@ public class QuadraticBoard implements Board{
 	}
 
 	/**
-	 * Gets the width of the board
-	 * @return the width of the board
+	 * Gets the dimension of the board
+	 * @return the dimension of the board
 	 */
-	public int getWidth()
+	public int getDimension()
 	{
-		return width;
-	}
-	
-	/**
-	 * Gets the height of the board
-	 * @return the height of the board
-	 */
-	public int getHeight()
-	{
-		return height;
+		return dimension;
 	}
 	
 	/**
