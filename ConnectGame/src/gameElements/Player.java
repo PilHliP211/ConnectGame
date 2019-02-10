@@ -3,11 +3,10 @@ package gameElements;
 import java.util.Scanner;
 
 import gameElements.Board.ColumnFullException;
-import gameElements.Board.Piece;
 
 public class Player {
 
-	private Board.Piece piece = Piece.NONE;
+	private Piece piece = Piece.NONE;
 	private Board board = null;
 	private Scanner inputDevice;
 	private boolean turn = false;

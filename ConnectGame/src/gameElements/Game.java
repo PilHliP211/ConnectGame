@@ -4,7 +4,6 @@ import java.io.PrintStream;
 import java.util.LinkedList;
 
 import gameElements.Board.ColumnFullException;
-import gameElements.Board.Piece;
 
 public class Game {
 
@@ -15,7 +14,7 @@ public class Game {
 	PrintStream output = null;
 	
 	public Game(){
-		board = new Board();
+		board = new QuadraticBoard();
 		player1 = new Player(Piece.BLACK,board);
 		player2 = new Player(Piece.RED,board);
 		playerQueue = new LinkedList<Player>();
@@ -99,7 +98,7 @@ public class Game {
 	}
 
 	private static void startGameFromArgs(String[] args){
-		Board b = new Board(Integer.parseInt(args[1]), Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+		Board b = new QuadraticBoard(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
 		new Game(b).startGame();
 	}
 }
