@@ -23,8 +23,8 @@ public class Game {
 	 */
 	public Game(){
 		board = new QuadraticBoard();
-		player1 = new Player(Piece.BLACK,board);
-		player2 = new Player(Piece.RED,board);
+		player1 = new InputPlayer(Piece.BLACK,board);
+		player2 = new InputPlayer(Piece.RED,board);
 		playerQueue = new LinkedList<Player>();
 		playerQueue.add(player1);
 		playerQueue.add(player2);
@@ -53,8 +53,8 @@ public class Game {
 	 */
 	public Game(Board b){
 		board = b;
-		player1 = new Player(Piece.BLACK,board);
-		player2 = new Player(Piece.RED,board);
+		player1 = new InputPlayer(Piece.BLACK,board);
+		player2 = new InputPlayer(Piece.RED,board);
 		playerQueue = new LinkedList<Player>();
 		playerQueue.add(player1);
 		playerQueue.add(player2);
@@ -74,13 +74,11 @@ public class Game {
 	 */
 	public void startGame(boolean minimalOutput)
 	{
-		int playedCol = -1;
 		Piece winner;
 		if(!minimalOutput)board.showBoard();
 		while(!board.isFull()){
 			Player p = playerQueue.poll();
-			p.toggleTurn();
-			while(p.isTurn())
+			do
 			try{
 				if(!p.nextMove(minimalOutput))throw new NumberFormatException();
 			} catch (NumberFormatException nfe) {
@@ -88,7 +86,7 @@ public class Game {
 			}
 			catch(ColumnFullException cfe){
 				if(!minimalOutput)output.println("Column is full. Cannot place piece! Try Again...");
-			}
+			}while(p.isTurn());
 			if(!minimalOutput)board.showBoard();
 			winner = board.didWin();
 			if(winner!=Piece.NONE){

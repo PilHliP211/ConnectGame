@@ -7,6 +7,7 @@ import java.util.PrimitiveIterator.OfInt;
 import java.util.stream.IntStream;
 import gameElements.Board;
 import gameElements.Game;
+import gameElements.InputPlayer;
 import gameElements.Piece;
 import gameElements.Player;
 import gameElements.QuadraticBoard;
@@ -40,8 +41,8 @@ public class RandomTester {
 			ByteArrayInputStream in = new ByteArrayInputStream(convertIntsToInputs(r.ints(400,0,dimension)).getBytes());
 			System.setIn(in);
 			Scanner sIn = new Scanner(System.in);
-			Player p1 = new Player(Piece.BLACK, b, sIn);
-			Player p2 = new Player(Piece.RED, b, sIn);
+			Player p1 = new InputPlayer(Piece.BLACK, b, sIn);
+			Player p2 = new InputPlayer(Piece.RED, b, sIn);
 			Game g = new Game(b,p1,p2);
 			g.startGame(true);
 			i++;
