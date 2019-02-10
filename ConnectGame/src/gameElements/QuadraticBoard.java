@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 /**
  * @author Phillip Byram
- * The thisboard Connect is played on
+ * The board Connect is played on. 
+ * This Board has equal width and height
  *
  */
 public class QuadraticBoard implements Board{

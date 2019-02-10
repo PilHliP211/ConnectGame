@@ -4,7 +4,12 @@ import java.util.Scanner;
 
 import gameElements.Board.ColumnFullException;
 
-public class Player {
+/**
+ * @author Phillip Byram
+ * A Player playing Connect
+ *
+ */
+public class Player{
 
 	private Piece piece = Piece.NONE;
 	private Board board = null;
@@ -27,11 +32,11 @@ public class Player {
 	
 	/**
 	 * place a piece in a column on the board
-	 * @param col
+	 * @param col the column to play the pi9ece down
 	 * @return true if the player has played a piece, false otherwise,
 	 * @throws ColumnFullException if the index of the column the player is trying to place in is full
 	 */
-	public boolean play(int col) throws ColumnFullException
+	private boolean play(int col) throws ColumnFullException
 	{
 		if(board.placePiece(piece, col))
 			turn = false;
@@ -40,14 +45,15 @@ public class Player {
 		return true;
 	}
 	/**
-	 * gets the player's next move
+	 * gets the player's desired next move and returns the success of playing the player's piece.
 	 * @param noPrompt true if input should be prompted via output, false for no output indicating needed input
-	 * @return the attempted move
+	 * @return the success of the attempted move
 	 * @throws NumberFormatException if the input is not a valid integer
+	 * @throws ColumnFullException if the index of the column the player is trying to place in is full
 	 */
-	public int nextMove(boolean noPrompt) throws NumberFormatException{
+	public boolean nextMove(boolean noPrompt) throws NumberFormatException, ColumnFullException{
 		if(!noPrompt)System.out.print(piece.prettyName() + "'s turn: ");
-		return Integer.valueOf(inputDevice.nextLine());
+		return play(Integer.valueOf(inputDevice.nextLine()));
 	}
 
 	public boolean isTurn() {

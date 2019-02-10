@@ -1,5 +1,10 @@
 package gameElements;
 
+/**
+ * @author Phillip Byram
+ * The Pieces placed in a Connect Game
+ *
+ */
 public enum Piece {
     NONE(' '),
     RED('X'),

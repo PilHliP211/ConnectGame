@@ -11,11 +11,16 @@ import gameElements.Piece;
 import gameElements.Player;
 import gameElements.QuadraticBoard;
 
+/**
+ * @author Phillip Byram
+ * A Tester for Connect that randomly places pieces between two players and reports a winner, if any
+ *
+ */
 public class RandomTester {
 
 	/**
-	 * 
-	 * @param args
+	 * Make 10 boards in their final state
+	 * @param args none
 	 */
 	public static void main(String[] args) {
 		

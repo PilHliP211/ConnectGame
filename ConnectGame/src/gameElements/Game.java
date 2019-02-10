@@ -5,6 +5,11 @@ import java.util.LinkedList;
 
 import gameElements.Board.ColumnFullException;
 
+/**
+ * @author Phillip Byram
+ * The Game of Connect
+ *
+ */
 public class Game {
 
 	Player player1;
@@ -13,6 +18,9 @@ public class Game {
 	Board board;
 	PrintStream output = null;
 	
+	/**
+	 * Create a new default Game
+	 */
 	public Game(){
 		board = new QuadraticBoard();
 		player1 = new Player(Piece.BLACK,board);
@@ -23,6 +31,12 @@ public class Game {
 		output = new PrintStream(System.out);
 	}
 	
+	/**
+	 * Create a new Game with a Board and 2 Players
+	 * @param b the board to play on
+	 * @param p1 player 1
+	 * @param p2 player 2
+	 */
 	public Game(Board b, Player p1, Player p2){
 		board = b;
 		player1 = p1;
@@ -33,6 +47,10 @@ public class Game {
 		output = new PrintStream(System.out);
 	}
 
+	/**
+	 * Create a new Game with a Board and default Players
+	 * @param b the board to play on
+	 */
 	public Game(Board b){
 		board = b;
 		player1 = new Player(Piece.BLACK,board);
@@ -64,8 +82,7 @@ public class Game {
 			p.toggleTurn();
 			while(p.isTurn())
 			try{
-				playedCol = Integer.valueOf(p.nextMove(minimalOutput));
-				p.play(playedCol);
+				if(!p.nextMove(minimalOutput))throw new NumberFormatException();
 			} catch (NumberFormatException nfe) {
 				if(!minimalOutput)output.println("Invalid column. Cannot place piece! Try Again...");
 			}
@@ -76,7 +93,7 @@ public class Game {
 			winner = board.didWin();
 			if(winner!=Piece.NONE){
 				declareWinner(winner);
-				if(minimalOutput)board.showBoard();//minimalOutput? show final state only, otherwise don't since we just showed it.
+				if(minimalOutput)board.showBoard();//if minimalOutput, show final state only, otherwise don't since we just showed it.
 				return;
 			}
 			playerQueue.add(p);

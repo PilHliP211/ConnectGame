@@ -1,6 +1,5 @@
 package gameElements;
 
-
 /**
  * @author Phillip Byram
  * The board Connect is played on
@@ -26,7 +25,7 @@ public interface Board{
     public void initBoard();
     
     /**
-	 * displays the graphical representation of the board
+	 * Displays the graphical representation of the board
 	 */
     public void showBoard();
     
