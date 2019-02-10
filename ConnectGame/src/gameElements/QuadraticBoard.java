@@ -116,14 +116,14 @@ public class QuadraticBoard implements Board{
 					return Piece.RED;
 		}
 		for(int d=0;d<dimension+dimension-1;d++)
-			for(int l=0;l<getDiagLength(dimension,dimension,d);l++){
+			for(int l=0;l<getDiagLength(dimension,d);l++){
 				if(checkLeftDiagonal(Piece.BLACK,getDiagOf2dArray(spaces,d,true),l,winCondition))
 					return Piece.BLACK;
 				if(checkLeftDiagonal(Piece.RED,getDiagOf2dArray(spaces,d,true),l,winCondition))
 					return Piece.RED;
 		}
 		for(int d=0;d<dimension+dimension-1;d++)
-			for(int l=0;l<getDiagLength(dimension,dimension,d);l++){
+			for(int l=0;l<getDiagLength(dimension,d);l++){
 				if(checkRightDiagonal(Piece.BLACK,getDiagOf2dArray(spaces,d,false),l,winCondition))
 					return Piece.BLACK;
 				if(checkRightDiagonal(Piece.RED,getDiagOf2dArray(spaces,d,false),l,winCondition))
@@ -200,7 +200,7 @@ public class QuadraticBoard implements Board{
 	 */
 	private Piece[] getDiagOf2dArray(Piece[][] array, int diagonal, boolean isLeft)
 	{
-		Piece[] diagArray = new Piece[getDiagLength(array.length,array[0].length,diagonal)];
+		Piece[] diagArray = new Piece[getDiagLength(array.length,diagonal)];
 		
 		for(int i = 0; i < diagArray.length; i++)
 		{
@@ -212,28 +212,14 @@ public class QuadraticBoard implements Board{
 		return diagArray;
 	}
 	
-	//TODO fix for width/height -> dimension conversion
 	/*
 	 * get the length of a diagonal in a board with a width and a height
 	 */
-	private static int getDiagLength(int width, int height,int diagonal){
-		
-		if(width>height){
-			if(diagonal<height)
-				return diagonal+1;
-			else
-				return width+height - (diagonal+1);
-		} else if (height > width){
-			if(diagonal<height)
-				return (diagonal+1>width)?width:diagonal+1;
-			else
-				return width+height - (diagonal+1);
-		} else {
-			if(diagonal<=height)
-				return diagonal;
-			else
-				return width+height - (diagonal+1);
-		}
+	private static int getDiagLength(int dimension, int diagonal){
+		if(diagonal<dimension)
+			return diagonal+1;
+		else
+			return dimension*2 - (diagonal+1);
 	}
 	
 	
@@ -321,8 +307,9 @@ public class QuadraticBoard implements Board{
 	 */
 	public static void main(String[] args) {
 		
-		Board B = new QuadraticBoard(7,7);
-		B.didWin();
+		Board B = new QuadraticBoard(8,4);
+		B.showBoard();
+		//B.didWin();
 		/*
 		B.placePiece(Piece.BLACK, 0);
 		B.placePiece(Piece.BLACK, 0);
@@ -388,27 +375,25 @@ public class QuadraticBoard implements Board{
 		Piece winner = B.didWin();
 		if(Piece.NONE != winner)System.out.println( winner.prettyName() + " Wins!");
 		*/
-		System.out.println((QuadraticBoard.getDiagLength(7, 6, 0)==1)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(7, 6, 4)==5)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(7, 6, 5)==6)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(7, 6, 6)==6)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(7, 6, 11)==1)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(8, 8, 7)==7)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(8, 8, 8)==8)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(8, 8, 14)==1)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(8, 8, 0)==1)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(8, 8, 11)==4)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(6, 7, 3)==4)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(6, 7, 9)==3)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(6, 7, 0)==1)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(6, 7, 11)==1)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(6, 7, 7)==6)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(5, 5, 0)==1)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(5, 5, 5)==5)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(5, 5, 4)==4)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(5, 5, 7)==3)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(10, 10, 10)==10)?"Pass":"Fail");
-		System.out.println((QuadraticBoard.getDiagLength(10, 10, 11)==9)?"Pass":"Fail");
-		
+		System.out.println((QuadraticBoard.getDiagLength(7,0)==1)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(7,4)==5)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(7,5)==6)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(7,6)==7)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(7,11)==2)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(8,7)==8)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(8,8)==7)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(8,14)==1)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(8,0)==1)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(8,11)==4)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(6,3)==4)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(6,9)==2)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(6,0)==1)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(6,7)==4)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(5,0)==1)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(5,5)==4)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(5,4)==5)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(5,7)==2)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(10,10)==9)?"Pass":"Fail");
+		System.out.println((QuadraticBoard.getDiagLength(10,11)==8)?"Pass":"Fail");
 	}
 }

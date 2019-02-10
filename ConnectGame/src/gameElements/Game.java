@@ -52,36 +52,38 @@ public class Game {
 
 	/**
 	 * Starts a game using an option to show the board every turn or just at the end of the game.
-	 * @param showBoardOnce true if the board should only be shown at the end of the game; false if the board should be showed with every played piece
+	 * @param minimalOutput true if the board should only be shown at the end of the game; false if the board should be showed with every played piece
 	 */
-	public void startGame(boolean showBoardOnce)
+	public void startGame(boolean minimalOutput)
 	{
 		int playedCol = -1;
 		Piece winner;
-		if(!showBoardOnce)board.showBoard();
+		if(!minimalOutput)board.showBoard();
 		while(!board.isFull()){
 			Player p = playerQueue.poll();
 			p.toggleTurn();
 			while(p.isTurn())
 			try{
-				playedCol = Integer.valueOf(p.nextMove());
+				playedCol = Integer.valueOf(p.nextMove(minimalOutput));
 				p.play(playedCol);
 			} catch (NumberFormatException nfe) {
-				output.println("Invalid column. Cannot place piece! Try Again...");
+				if(!minimalOutput)output.println("Invalid column. Cannot place piece! Try Again...");
 			}
 			catch(ColumnFullException cfe){
-				output.println("Column is full. Cannot place piece! Try Again...");
+				if(!minimalOutput)output.println("Column is full. Cannot place piece! Try Again...");
 			}
-			board.showBoard();
+			if(!minimalOutput)board.showBoard();
 			winner = board.didWin();
 			if(winner!=Piece.NONE){
 				declareWinner(winner);
-				if(showBoardOnce)board.showBoard();
+				if(minimalOutput)board.showBoard();//minimalOutput? show final state only, otherwise don't since we just showed it.
 				return;
 			}
 			playerQueue.add(p);
 				
 		}
+		System.out.println("No winner!");
+		board.showBoard();
 	}
 	
 	

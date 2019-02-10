@@ -26,12 +26,13 @@ public class RandomTester {
 		//int height = width-(r.nextInt(DIMENSIONS_DIFF)*((r.nextBoolean())?-1:1));//width +/- 3
 		int winCondition = 3+(r.nextInt(DIMENSIONS_DIFF));//3-6
 		int iterations = 10;
+		System.out.println("Winner needs to connect "+winCondition);
 		
 		int i = 0;
 		while(i<iterations)
 		{
 			Board b = new QuadraticBoard(dimension,winCondition);
-			ByteArrayInputStream in = new ByteArrayInputStream(convertIntsToInputs(r.ints(1000,0,dimension-1)).getBytes());
+			ByteArrayInputStream in = new ByteArrayInputStream(convertIntsToInputs(r.ints(400,0,dimension)).getBytes());
 			System.setIn(in);
 			Scanner sIn = new Scanner(System.in);
 			Player p1 = new Player(Piece.BLACK, b, sIn);

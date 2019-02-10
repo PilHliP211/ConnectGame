@@ -39,11 +39,17 @@ public class Player {
 			return false;
 		return true;
 	}
-	
-	public int nextMove() throws NumberFormatException{
-		System.out.print(piece.prettyName() + "'s turn: ");
+	/**
+	 * gets the player's next move
+	 * @param noPrompt true if input should be prompted via output, false for no output indicating needed input
+	 * @return the attempted move
+	 * @throws NumberFormatException if the input is not a valid integer
+	 */
+	public int nextMove(boolean noPrompt) throws NumberFormatException{
+		if(!noPrompt)System.out.print(piece.prettyName() + "'s turn: ");
 		return Integer.valueOf(inputDevice.nextLine());
 	}
+
 	public boolean isTurn() {
 		return turn;
 	}
