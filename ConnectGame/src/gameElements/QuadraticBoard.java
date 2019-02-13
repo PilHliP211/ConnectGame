@@ -286,6 +286,25 @@ public class QuadraticBoard implements Board{
 	}
 
 	/**
+	 * Sets the 2D piece array of spaces in the board
+	 * @param spaces the spaces in the board
+	 */
+	public void setSpaces(Piece[][] spaces)
+	{
+		this.spaces = spaces;
+	}
+
+	/**
+	 * Sets value at index h, w in 2D array of spaces
+	 * 
+	 */
+	public void setPieceAtSpace(Piece val, int h, int w)
+	{
+		spaces[h][w] = val;
+	}
+
+
+	/**
 	 * Gets the dimension of the board
 	 * @return the dimension of the board
 	 */

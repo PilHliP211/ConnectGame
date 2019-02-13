@@ -27,7 +27,20 @@ public interface Board{
     /**
 	 * Displays the graphical representation of the board
 	 */
-    public void showBoard();
+	public void showBoard();
+	
+	/**
+	 * Gets the spaces
+	 * @return the spaces
+	 */
+	public Piece[][] getSpaces();
+
+	/**
+	 * Gets the winCondition
+	 * @return the winCondition
+	 */
+	public int getWinCondition();
+
     
     /**
 	 * Drops a piece down a column of the Connect board.
