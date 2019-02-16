@@ -1,3 +1,7 @@
+
+package ai.dataStructs;
+
+import java.util.ArrayList;
 import gameElements.Board;
 
 import gameElements.QuadraticBoard;
@@ -13,15 +17,15 @@ import ai.helper.BoardHelpers;
  */
 public class StateNode 
 {
-    Integer posInf = Integer.MAX_VALUE;
-    Integer negInf = Integer.MIN_VALUE;
+    private Integer posInf = Integer.MAX_VALUE;
+    private Integer negInf = Integer.MIN_VALUE;
 
-    QuadraticBoard board;
-    ArrayList<StateNode> children;
-    int utility;
-    int alpha;
-    int beta;
-    int depthInTree;
+    private QuadraticBoard board;
+    private ArrayList<StateNode> children;
+    private int utility;
+    private int alpha;
+    private int beta;
+    
 
     /**
      * Creates default node.  Best to setup tree's root node. 
@@ -33,18 +37,16 @@ public class StateNode
         this.utility = 0;
         this.alpha = negInf;
         this.beta = posInf;
-        this.depthInTree = 0;
     }
 
 
     public StateNode(Board b)
     {
         // FIXME:  Need to add getDimension() to Board interface.
-        this.board = new QuadraticBoard(b.getDimension(), b.getWinCondition());
+        this.board = new QuadraticBoard(b.getSpaces().length, b.getWinCondition());
         this.board.setSpaces(b.getSpaces());
         this.alpha = negInf;
         this.beta = posInf;
-        this.depthInTree = 0;
         this.children = new ArrayList<StateNode>();
 //        for(int i = 0; i < this.board.getWinCondition(); i++)
 //        {
@@ -52,18 +54,7 @@ public class StateNode
 //        }
     }
 
-    public StateNode(Board b, int depth)
-    {
-        // FIXME:  Need to add getDimension() to Board interface.
-        this.board = new QuadraticBoard(b.getDimension(), b.getWinCondition());
-        this.board.setSpaces(b.getSpaces());
-        this.alpha = negInf;
-        this.beta = posInf;
-        this.depthInTree = 0;
-        this.depthInTree = depth;
-        this.children = new ArrayList<StateNode>();
-    }
-
+ 
     public void createChild(StateNode parent)
     {
 
