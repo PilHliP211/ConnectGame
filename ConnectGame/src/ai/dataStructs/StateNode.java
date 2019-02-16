@@ -20,7 +20,7 @@ public class StateNode
     private Integer posInf = Integer.MAX_VALUE;
     private Integer negInf = Integer.MIN_VALUE;
 
-    private QuadraticBoard board;
+    private Board board;
     private ArrayList<StateNode> children;
     private int utility;
     private int alpha;
@@ -43,8 +43,8 @@ public class StateNode
     public StateNode(Board b)
     {
         // FIXME:  Need to add getDimension() to Board interface.
-        this.board = new QuadraticBoard(b.getSpaces().length, b.getWinCondition());
-        this.board.setSpaces(b.getSpaces());
+//        this.board = new QuadraticBoard(b.getSpaces().length, b.getWinCondition());
+        this.board = b;
         this.alpha = negInf;
         this.beta = posInf;
         this.children = new ArrayList<StateNode>();
@@ -117,15 +117,6 @@ public class StateNode
         this.utility = u;
     }
 
-    public int getDepthInTree()
-    {
-        return this.depthInTree;
-    }
-
-    public void setDepthInTree(int d)
-    {
-        this.depthInTree = d;
-    }
 
 
 

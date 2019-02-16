@@ -5,7 +5,6 @@ import gameElements.Piece;
 import gameElements.QuadraticBoard;
 
 /**
- * @author Phillip Byram 
  * @author Russell Plenkers
  * A Node in The Tree Struture
  *
@@ -56,7 +55,7 @@ public class BoardHelpers {
         // FIXME:  getDimension() function not accessible from Board Class.  
         //         Need to add it to interface (I think).  
         // int dimension = b.getDimension() - 1;
-        int dimension = b.getWinCondition() - 1;
+        int dimension = b.getSpaces().length - 1;
         for(int i = 0; i < dimension; i++)
         {
             if(b.getSpaces()[i][dimension] != Piece.NONE)
