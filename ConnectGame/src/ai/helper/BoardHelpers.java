@@ -52,9 +52,6 @@ public class BoardHelpers {
     
     public static boolean isBoardEmpty(Board b)
     {
-        // FIXME:  getDimension() function not accessible from Board Class.  
-        //         Need to add it to interface (I think).  
-        // int dimension = b.getDimension() - 1;
         int dimension = b.getSpaces().length - 1;
         for(int i = 0; i < dimension; i++)
         {
@@ -104,7 +101,7 @@ public class BoardHelpers {
     }
 
 
-    /*
+
     public static void main(String[] args) throws DimensionsOOBException{
         Board tBoard = generateTestBoard(10, 10, 4);
         tBoard.showBoard();
@@ -112,7 +109,7 @@ public class BoardHelpers {
         subBoard.showBoard();
         System.out.println("\nIs Board Empty:  " + isBoardEmpty(subBoard) + "\n");
     }
-*/
+
     @SuppressWarnings("serial")
     static class DimensionsOOBException extends Exception
     {

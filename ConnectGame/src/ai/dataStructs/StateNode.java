@@ -87,31 +87,54 @@ public class StateNode
         System.out.println("--------------------------------------------");
     }
 
+    /**
+     * Accessor method for variable alpha
+     * @return int value of alpha
+     */
     public int getAlpha()
     {
         return this.alpha;
     }
-
+    /**
+     * Mutator method for variable alpha
+     * @param int value of alpha
+     */
     public void setAlpha(int a)
     {
         this.alpha = a;
     }
-
+    
+    /**
+     * Accessor method for variable beta
+     * @return int value of beta
+     */
     public int getBeta()
     {
         return this.beta;
     }
 
+    /**
+     * Mutator method for variable beta
+     * @param int value of alpha
+     */
     public void setBeta(int b)
     {
         this.beta = b;
     }
 
+    /**
+     * Accessor method for variable utility
+     * @return int value of utility
+     */
     public int getUtility()
     {
         return this.utility;
     }
 
+    /**
+     * Mutator method for variable utility
+     * @param int value of utility
+     */
     public void setUtility(int u)
     {
         this.utility = u;
