@@ -1,6 +1,7 @@
 package ai;
 
 import gameElements.Board.ColumnFullException;
+import ai.dataStructs.GameStateTree;
 import gameElements.Player;
 
 /**
@@ -10,8 +11,16 @@ import gameElements.Player;
  */
 public class ArtificialPlayer implements Player {
 
+    private int difficulty = 10;
+    private GameStateTree tree;
+    
+    public ArtificialPlayer(int difficulty){
+        this.difficulty = difficulty;
+        tree = new GameStateTree(difficulty);
+    }
     @Override
     public boolean nextMove(boolean noPrompt) throws NumberFormatException, ColumnFullException {
+        minMaxSearch();
         return false;
     }
 
@@ -20,4 +29,7 @@ public class ArtificialPlayer implements Player {
         return false;
     }
 
+    private void minMaxSearch(){
+        
+    }
 }

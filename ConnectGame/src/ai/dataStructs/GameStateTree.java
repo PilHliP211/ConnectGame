@@ -7,9 +7,23 @@ package ai.dataStructs;
  */
 public class GameStateTree {
 
-    public StateNode root;
+    private StateNode root;
+    private int depth;
 
-    public GameStateTree(){
+    public GameStateTree(int depth){
+        this.depth = depth;
         root = new StateNode();
+    }
+
+    /**
+     * Given a root node, prune irrelevant paths.
+     * @param node the root node that will be pruned
+     */
+    public static void pruneTree(StateNode node){
+
+    }
+
+    public static void populateUtility(StateNode node, int depth){
+
     }
 }
