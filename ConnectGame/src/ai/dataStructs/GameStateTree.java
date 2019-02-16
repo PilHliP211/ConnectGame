@@ -23,7 +23,10 @@ public class GameStateTree {
 
     }
 
-    public static void populateUtility(StateNode node, int depth){
+    public void createTree()
+        for(int i = 0;i< depth;i++)
+        {
 
+        }
     }
 }

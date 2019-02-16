@@ -2,6 +2,7 @@ package ai;
 
 import gameElements.Board.ColumnFullException;
 import ai.dataStructs.GameStateTree;
+import gameElements.Board;
 import gameElements.Player;
 
 /**
@@ -16,7 +17,6 @@ public class ArtificialPlayer implements Player {
     
     public ArtificialPlayer(int difficulty){
         this.difficulty = difficulty;
-        tree = new GameStateTree(difficulty);
     }
     @Override
     public boolean nextMove(boolean noPrompt) throws NumberFormatException, ColumnFullException {
@@ -29,7 +29,21 @@ public class ArtificialPlayer implements Player {
         return false;
     }
 
-    private void minMaxSearch(){
-        
+    private int minMaxSearch(Board b){
+        tree = new GameStateTree(difficulty);
+        int v =Integer.MIN_VALUE;
+        int a = -1;
+        for(int i = 0; i<b.getSpaces().length;i++){
+            int newV = minvalue(b.placePiece(tree.root, i));
+            if(newV > v){ 
+                v = newV;
+                a = i;
+            }
+            return a;
+        }
+    }
+
+    private boolean play(int col)
+    {
     }
 }
