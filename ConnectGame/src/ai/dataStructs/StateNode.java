@@ -37,7 +37,6 @@ public class StateNode
         this.utility = 0;
         this.alpha = negInf;
         this.beta = posInf;
-        this.depthInTree = 0;
     }
 
 
@@ -48,7 +47,6 @@ public class StateNode
         this.board.setSpaces(b.getSpaces());
         this.alpha = negInf;
         this.beta = posInf;
-        this.depthInTree = 0;
         this.children = new ArrayList<StateNode>();
 //        for(int i = 0; i < this.board.getWinCondition(); i++)
 //        {
