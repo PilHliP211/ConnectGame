@@ -5,6 +5,7 @@ import gameElements.Piece;
 import gameElements.QuadraticBoard;
 
 /**
+ * @author Phillip Byram 
  * @author Russell Plenkers
  * A Node in The Tree Struture
  *
@@ -28,8 +29,8 @@ public class BoardHelpers {
         int dimension = b.getWinCondition();
         // Pass win condition as constructor parameters for height, width, and win condition. 
         QuadraticBoard subBoard = new QuadraticBoard(dimension, dimension);  
-        // Throw error if start position + dimension exceeds
-        if( b.getSpaces().length < (x + dimension)  || b.getSpaces()[0].length > (y + dimension) )
+        // Throw error if start position + dimension exceeds size of board.
+        if( b.getSpaces().length < (x + dimension)  || b.getSpaces()[0].length < (y + dimension) )
         {
             throw new DimensionsOOBException();
         }
@@ -43,9 +44,28 @@ public class BoardHelpers {
                 }
             }
         }
+        // FIXME:  Remove from final Product.  For testing isBoardEmpty()
+        subBoard.setPieceAtSpace(Piece.BLACK, 3, 2);
         return subBoard;
     }
 
+
+    
+    public static boolean isBoardEmpty(Board b)
+    {
+        // FIXME:  getDimension() function not accessible from Board Class.  
+        //         Need to add it to interface (I think).  
+        // int dimension = b.getDimension() - 1;
+        int dimension = b.getWinCondition() - 1;
+        for(int i = 0; i < dimension; i++)
+        {
+            if(b.getSpaces()[i][dimension] != Piece.NONE)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
 
     /**
@@ -85,12 +105,15 @@ public class BoardHelpers {
     }
 
 
+    /*
     public static void main(String[] args) throws DimensionsOOBException{
         Board tBoard = generateTestBoard(10, 10, 4);
         tBoard.showBoard();
-        getSubBoard(tBoard,5,6).showBoard();
+        Board subBoard = getSubBoard(tBoard,0,0);
+        subBoard.showBoard();
+        System.out.println("\nIs Board Empty:  " + isBoardEmpty(subBoard) + "\n");
     }
-
+*/
     @SuppressWarnings("serial")
     static class DimensionsOOBException extends Exception
     {
@@ -98,4 +121,6 @@ public class BoardHelpers {
 			
 		}
     }
+
+
 }
