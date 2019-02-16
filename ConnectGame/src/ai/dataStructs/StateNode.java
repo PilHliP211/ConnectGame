@@ -20,7 +20,7 @@ public class StateNode
     private Integer posInf = Integer.MAX_VALUE;
     private Integer negInf = Integer.MIN_VALUE;
 
-    private QuadraticBoard board;
+    private Board board;
     private ArrayList<StateNode> children;
     private int utility;
     private int alpha;
@@ -43,8 +43,8 @@ public class StateNode
     public StateNode(Board b)
     {
         // FIXME:  Need to add getDimension() to Board interface.
-        this.board = new QuadraticBoard(b.getSpaces().length, b.getWinCondition());
-        this.board.setSpaces(b.getSpaces());
+//        this.board = new QuadraticBoard(b.getSpaces().length, b.getWinCondition());
+        this.board = b;
         this.alpha = negInf;
         this.beta = posInf;
         this.children = new ArrayList<StateNode>();
@@ -87,45 +87,59 @@ public class StateNode
         System.out.println("--------------------------------------------");
     }
 
+    /**
+     * Accessor method for variable alpha
+     * @return int value of alpha
+     */
     public int getAlpha()
     {
         return this.alpha;
     }
-
+    /**
+     * Mutator method for variable alpha
+     * @param int value of alpha
+     */
     public void setAlpha(int a)
     {
         this.alpha = a;
     }
-
+    
+    /**
+     * Accessor method for variable beta
+     * @return int value of beta
+     */
     public int getBeta()
     {
         return this.beta;
     }
 
+    /**
+     * Mutator method for variable beta
+     * @param int value of alpha
+     */
     public void setBeta(int b)
     {
         this.beta = b;
     }
 
+    /**
+     * Accessor method for variable utility
+     * @return int value of utility
+     */
     public int getUtility()
     {
         return this.utility;
     }
 
+    /**
+     * Mutator method for variable utility
+     * @param int value of utility
+     */
     public void setUtility(int u)
     {
         this.utility = u;
     }
 
-    public int getDepthInTree()
-    {
-        return this.depthInTree;
-    }
-
-    public void setDepthInTree(int d)
-    {
-        this.depthInTree = d;
-    }
 
 
 
