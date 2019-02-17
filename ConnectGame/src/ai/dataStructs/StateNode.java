@@ -28,36 +28,56 @@ public class StateNode
     
 
     /**
-     * Creates default node.  Best to setup tree's root node. 
+     * Constructor for default node.  Best to setup tree's root node. 
      */
     public StateNode()
     {
         board.initBoard();
-        this.children = new ArrayList<StateNode>();
         this.utility = 0;
         this.alpha = negInf;
         this.beta = posInf;
+        this.children = new ArrayList<StateNode>();
+
     }
 
-
+    /**
+     * Constructor 
+     * @param b
+     */
     public StateNode(Board b)
     {
-        // FIXME:  Need to add getDimension() to Board interface.
-//        this.board = new QuadraticBoard(b.getSpaces().length, b.getWinCondition());
         this.board = b;
+        this.utility = 0;
         this.alpha = negInf;
         this.beta = posInf;
         this.children = new ArrayList<StateNode>();
-//        for(int i = 0; i < this.board.getWinCondition(); i++)
-//        {
-//
-//        }
     }
 
- 
-    public void createChild(StateNode parent)
+    /** 
+     *  Add child to the end of ArrayList
+     *  @param Statenode child to add
+     */
+    public void addChild(StateNode child)
     {
+        this.children.add(child);
+    }
 
+    /**
+     *  Add child to ArrayList at specified index
+     *  @param int element to add to ArrayList
+     */
+    public void addChildAtIndex(int index, StateNode child)
+    {
+        this.children.add(index, child);
+    }
+
+    /**
+     *  Remove child at index
+     *  @param int location index to remove child
+     */
+    public void removeChild(int index)
+    {
+        this.children.remove(index);
     }
 
     /**
@@ -71,6 +91,14 @@ public class StateNode
         return this.children.get(index);
     }
 
+    /**
+     *  Return ArrayList from current node
+     *  @return ArrayList of children
+     */
+    public ArrayList<StateNode> getChildren()
+    {
+        return this.children;
+    }
     
     /**
      *  Prints node data to terminal
@@ -140,7 +168,24 @@ public class StateNode
         this.utility = u;
     }
 
+    /**
+     * Accessor method for board object
+     * @return Board object
+     */
+    public Board getBoard()
+    {
+        return this.board;
+    }
 
+    /**
+     * Mutator method for board object
+     * @param b board to set in node
+     */
+
+    public void setBoard(Board b)
+    {
+        this.board = b;
+    }
 
 
 
@@ -148,7 +193,7 @@ public class StateNode
      * Main function to test StateNode class.
      * @param args
      */
-    public static void main(String[] args) //throws DimensionsOOBException{
+    public static void main(String[] args)
     {
         Board tBoard = BoardHelpers.generateTestBoard(10, 10, 4);
         tBoard.showBoard();

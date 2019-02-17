@@ -43,14 +43,19 @@ public class BoardHelpers {
                 }
             }
         }
-        // FIXME:  Remove from final Product.  For testing isBoardEmpty()
-        subBoard.setPieceAtSpace(Piece.BLACK, 3, 2);
+        // FIXME:  Remove from final Product.  For testing isBoardEmpty() and isColumnFull()
+        subBoard.setPieceAtSpace(Piece.BLACK, 0, 0);
         return subBoard;
     }
 
 
-    
-    public static boolean isBoardEmpty(Board b)
+    /**
+     *  Checks bottom row of sub-board to see if it is empty.  If bottom row 
+     *  of board is empty, the whole board is empty.  
+     *  @param Board to check for emptiness
+     *  @return boolean value true if board is empty
+     */
+    public static boolean isSubBoardEmpty(Board b)
     {
         int dimension = b.getSpaces().length - 1;
         for(int i = 0; i < dimension; i++)
@@ -63,6 +68,27 @@ public class BoardHelpers {
         return true;
     }
 
+    /**
+     * Helper function to use to determine if column is full when populating the
+     * n-ary tree of StateNode objects.  
+     * @param b board to be tested
+     * @param columnNo column numbuer to be tested
+     * @return boolean value indicating if the column is full
+     * @throws ColumnOOBException
+     */
+
+    public static boolean isColumnFull(Board b, int columnNo) throws ColumnOOBException 
+    {   // Consider changing ColumnOOBException to DimensionsOOBException used in getSubBoard above
+        if(columnNo > (b.getSpaces().length -1))
+        {
+            throw new ColumnOOBException("Column Full");
+        }
+        if(b.getSpaces()[columnNo][0] != Piece.NONE)
+        {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Create a test board used to test the getSubBoard method.
@@ -102,21 +128,35 @@ public class BoardHelpers {
 
 
 
-    public static void main(String[] args) throws DimensionsOOBException{
+    public static void main(String[] args) throws DimensionsOOBException, ColumnOOBException
+    {
         Board tBoard = generateTestBoard(10, 10, 4);
         tBoard.showBoard();
         Board subBoard = getSubBoard(tBoard,0,0);
         subBoard.showBoard();
-        System.out.println("\nIs Board Empty:  " + isBoardEmpty(subBoard) + "\n");
+        System.out.println("\nIs Board Empty:  " + isSubBoardEmpty(subBoard) + "\n");
+        System.out.println("\nIs Column Empty: " + isColumnFull(subBoard, 0));
+    }
+
+    @SuppressWarnings("serial")
+    static class ColumnOOBException extends Exception
+    {
+        public ColumnOOBException(String msg)
+        {
+            super(msg);
+		}
     }
 
     @SuppressWarnings("serial")
     static class DimensionsOOBException extends Exception
     {
-        public DimensionsOOBException(){
+        public DimensionsOOBException()
+        {
 			
-		}
+        }
     }
+
+
 
 
 }
