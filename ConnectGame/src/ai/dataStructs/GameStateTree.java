@@ -46,7 +46,6 @@ public class GameStateTree
      * get this fixed tomorrow and you'll never see any of this.
      * 
      */
-
     public void buildTree(StateNode node, int depth)
     {
         QuadraticBoard tmpBoard = new QuadraticBoard(); 

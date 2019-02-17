@@ -127,7 +127,6 @@ public class BoardHelpers {
     }
 
 
-
     public static void main(String[] args) throws DimensionsOOBException, ColumnOOBException
     {
         Board tBoard = generateTestBoard(10, 10, 4);
