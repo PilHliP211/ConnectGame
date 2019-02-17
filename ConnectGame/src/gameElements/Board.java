@@ -52,11 +52,10 @@ public interface Board{
 	public boolean placePiece(Piece p, int coulmn) throws ColumnFullException;
 	
 	/**
-	 * Creates an entirely new board with the same dimensions, wincondition, and spaces of a given board
-	 * @param b the board to copy
+	 * Creates an entirely new board with the same dimensions, wincondition, and spaces of this board
 	 * @return the newly copied board
 	 */
-	public Board copyBoard(Board b);
+	public Board copy();
     
 	@SuppressWarnings("serial")
 	public class ColumnFullException extends Exception {

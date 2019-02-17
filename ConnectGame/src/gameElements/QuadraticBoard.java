@@ -148,7 +148,7 @@ public class QuadraticBoard implements Board{
 	}
 
 	@Override
-	public Board copyBoard(Board b) {
+	public Board copy() {
 		return null;
 	}
 	

@@ -163,7 +163,7 @@ public class StandardBoard  implements Board {
 	}
 
 	@Override
-	public Board copyBoard(Board b) {
+	public Board copy() {
 		return null;
 	}
 	
