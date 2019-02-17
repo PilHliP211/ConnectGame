@@ -146,6 +146,11 @@ public class QuadraticBoard implements Board{
 					return false;
 		return true;
 	}
+
+	@Override
+	public Board copyBoard(Board b) {
+		return null;
+	}
 	
 	private boolean checkVertical(Piece p, Piece[] col, int start, int needToWin){
 		
