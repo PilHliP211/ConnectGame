@@ -149,7 +149,16 @@ public class QuadraticBoard implements Board{
 
 	@Override
 	public Board copy() {
-		return null;
+		QuadraticBoard newBoard;
+		newBoard = new QuadraticBoard(this.dimension,this.winCondition);
+		Piece[][] spaces = new Piece[this.getSpaces().length][this.getSpaces()[0].length];
+		for(int i=0;i<this.getSpaces().length;i++)
+		{
+			Piece[] p =Arrays.copyOf(this.getSpaces()[i], this.getSpaces()[i].length);
+			spaces[i] = p;
+		}
+		newBoard.setSpaces(spaces);
+		return (Board) newBoard;
 	}
 	
 	private boolean checkVertical(Piece p, Piece[] col, int start, int needToWin){

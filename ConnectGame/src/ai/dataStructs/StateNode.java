@@ -52,9 +52,9 @@ public class StateNode
     }
 
  
-    public void createChild(StateNode parent)
+    public void addChild(StateNode child)
     {
-
+        children.add(child);
     }
 
     /**

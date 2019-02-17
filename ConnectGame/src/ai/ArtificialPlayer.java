@@ -17,22 +17,24 @@ public class ArtificialPlayer implements Player {
 
     private int difficulty = 10;
     private GameStateTree tree;
-    private Piece piece;
+    private Piece myPiece;
+    private Piece theirPiece;
     private Board gameBoard;
     private boolean turn;
     
     public ArtificialPlayer(int difficulty, Piece p, Board b){
         this.difficulty = difficulty;
-        this.piece = p;
+        this.myPiece = p;
+        this.theirPiece = myPiece == Piece.RED?Piece.BLACK:Piece.RED;
         this.gameBoard = b;
     }
     @Override
     public boolean nextMove(boolean noPrompt) throws NumberFormatException, ColumnFullException {
         Board b = gameBoard.copy();
         tree = new GameStateTree(0, b);
-        Board rootBoard = tree.getRoot().getBoard();
+        StateNode root = tree.getRoot();
         //if place was successful, turn = false, but nextMove = true;
-        return !(turn = !rootBoard.placePiece(piece,minMaxSearch(rootBoard)));
+        return !(turn = !gameBoard.placePiece(myPiece,minMaxSearch(root)));
     }
 
     @Override
@@ -41,20 +43,20 @@ public class ArtificialPlayer implements Player {
     }
 
     //TODO use incrementDepth() somehow
-    private int minMaxSearch(Board b){
-        StateNode node = new StateNode(b);
+    private int minMaxSearch(StateNode root){
+        StateNode node = new StateNode(root.getBoard());
         int val =Integer.MIN_VALUE;
         int a = -1;
-        for(int i = 0; i<b.getSpaces().length;i++){
+        for(int i = 0; i<root.getBoard().getSpaces().length;i++){
             boolean goodColumn = true;
-            StateNode newNode = null;
-            try { 
-                newNode = new StateNode((node.getBoard().placePiece(piece, i)?node.getBoard():null));
+            Board b = null;
+            try {
+                b = (node.getBoard().placePiece(myPiece, i)?node.getBoard():null);
             } catch (ColumnFullException cfe){
                 goodColumn = false;
             }
-            if(goodColumn || newNode == null){
-                int newVal = minValue(newNode,node.getBoard());
+            if(goodColumn || b == null){
+                int newVal = minValue(new StateNode(b),root.getBoard());
                 if(newVal > val){ 
                     val = newVal;
                     a = i;
@@ -63,40 +65,46 @@ public class ArtificialPlayer implements Player {
         }
         return a;
     }
-    private int minValue(StateNode node,Board b){
-        if (difficulty == tree.getDepth()) return Utility.calculate(b, piece);
+    private int minValue(StateNode node,Board r){
+        if (difficulty == tree.getDepth()) return Utility.calculate(r, myPiece);
         int val = Integer.MAX_VALUE;
-        for(int i = 0;i<b.getSpaces().length;i++){
+        for(int i = 0;i<r.getSpaces().length;i++){
             boolean goodColumn = true;
-            StateNode newNode = null;
+            Board b = null;
             try{
-                newNode = new StateNode((b.placePiece(piece, i)?b:null));
+                b = (r.placePiece(theirPiece, i)?r:null);
             } catch (ColumnFullException cfe){
                 goodColumn = false;
             }
-            if(goodColumn || newNode == null){
-                val = Math.min(val, maxValue(newNode,b));
+            if(goodColumn && b != null){
+                StateNode n = new StateNode(b);
+                val = Math.min(val, maxValue(n,r));
+                node.addChild(n);
             }
             
         }
+        tree.incrementDepth();
         return val;
     }
-    private int maxValue(StateNode node,Board b){
-        if (difficulty == tree.getDepth()) return Utility.calculate(b, piece);
+    private int maxValue(StateNode node,Board r){
+        if (difficulty == tree.getDepth()) return Utility.calculate(r, myPiece);
         int val = Integer.MIN_VALUE;
-        for(int i = 0;i<b.getSpaces().length;i++){
+        for(int i = 0;i<r.getSpaces().length;i++){
             boolean goodColumn = true;
-            StateNode newNode = null;
+            Board b = null;
             try{
-                newNode = new StateNode((b.placePiece(piece, i)?b:null));
+                b = (r.placePiece(myPiece, i)?r:null);
             } catch (ColumnFullException cfe){
                 goodColumn = false;
             }
-            if(goodColumn || newNode == null){
-                val = Math.max(val, minValue(newNode,b));
+            if(goodColumn && b != null){
+                StateNode n = new StateNode(b);
+                val = Math.max(val, minValue(n,r));
+                node.addChild(n);
             }
             
         }
+        tree.incrementDepth();
         return val;
     }
 }
