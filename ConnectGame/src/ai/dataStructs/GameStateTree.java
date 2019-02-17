@@ -1,8 +1,9 @@
 package ai.dataStructs;
 
+import gameElements.Board;
+
 /**
- * @author Phillip Byram 
- * The Tree Struture the AI uses to make decisions
+ * @author Phillip Byram The Tree Struture the AI uses to make decisions
  *
  */
 public class GameStateTree {
@@ -10,9 +11,9 @@ public class GameStateTree {
     private StateNode root;
     private int depth;
 
-    public GameStateTree(int depth){
+    public GameStateTree(int depth, Board b){
         this.depth = depth;
-        root = new StateNode();
+        root = new StateNode(b);
     }
 
     /**
@@ -23,10 +24,14 @@ public class GameStateTree {
 
     }
 
-    public void createTree()
-        for(int i = 0;i< depth;i++)
-        {
+    public int getDepth(){
+        return depth;
+    }
 
-        }
+    public int incrementDepth(){
+        return ++depth;
+    }
+    public StateNode getRoot(){
+        return root;
     }
 }

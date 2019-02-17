@@ -4,9 +4,6 @@ package ai.dataStructs;
 import java.util.ArrayList;
 import gameElements.Board;
 
-import gameElements.QuadraticBoard;
-import gameElements.Piece;
-
 import ai.helper.BoardHelpers;
 
 
@@ -138,6 +135,15 @@ public class StateNode
     public void setUtility(int u)
     {
         this.utility = u;
+    }
+
+    /**
+     * Accessor method for board
+     * @return Board value of utility
+     */
+    public Board getBoard()
+    {
+        return this.board;
     }
 
 
