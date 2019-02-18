@@ -31,6 +31,10 @@ public class GameStateTree {
     public int incrementDepth(){
         return ++depth;
     }
+    public void resetDepth(){
+        System.out.println("resetting depth");
+        depth = 0;
+    }
     public StateNode getRoot(){
         return root;
     }
