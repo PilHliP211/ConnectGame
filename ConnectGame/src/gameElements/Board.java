@@ -49,7 +49,13 @@ public interface Board{
 	 * @return true if the piece was placed on the board, false otherwise
 	 * @throws ColumnFullException if the index of the piece to place is a full column
 	 */
-    public boolean placePiece(Piece p, int coulmn) throws ColumnFullException;
+	public boolean placePiece(Piece p, int coulmn) throws ColumnFullException;
+	
+	/**
+	 * Creates an entirely new board with the same dimensions, wincondition, and spaces of this board
+	 * @return the newly copied board
+	 */
+	public Board copy();
     
 	@SuppressWarnings("serial")
 	public class ColumnFullException extends Exception {

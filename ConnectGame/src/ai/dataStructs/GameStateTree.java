@@ -32,31 +32,23 @@ public class GameStateTree
     }
 
     /**********************************************************
-     * 
-     * FIXME:  The buildTree function is not working correclty
-     * yet.  It appears to drill down to the bottom layer fine.
-     * For some reason, the board I keep for reference to the
-     * original state of the board upon moving into the node
-     * is being updated when I update the temporary board.  
-     * It almost seems like I am passing a pointer to the
-     * temp board, and so the original is being updated also.  
-     * Phillip, If you're reading this, please know that I 
-     * am exhausted.  If the above comments were even remotely
-     * coherent, I would be very surprised.  Hopefully I'll 
-     * get this fixed tomorrow and you'll never see any of this.
+     * The buildTree function appears to be building the tree 
+     * properly now that it is implementing the copy function 
+     * in the QuadraticBoard class.  Still need to think about
+     * how to track player turn, and if it is necessary.  Need  
+     * to test the function more thoroughly to ensure proper 
+     * operation. 
      * 
      */
     public void buildTree(StateNode node, int depth)
     {
-        QuadraticBoard tmpBoard = new QuadraticBoard(); 
-        tmpBoard.setSpaces(node.getBoard().getSpaces());
+        Board tmpBoard;
         Piece tmpPiece = Piece.NONE;
         int turn = depth % 2; // FIXME:  Couldn't find where player turn is defined. 
 
         for(int i = 0; i < node.getBoard().getSpaces().length; i++)
         {
-            tmpBoard.setSpaces(node.getBoard().getSpaces());
-            tmpBoard.showBoard();
+            tmpBoard = node.getBoard().copy();
             if(turn == 0)
             {
                 tmpPiece = Piece.RED;
@@ -70,6 +62,8 @@ public class GameStateTree
             {
                 tmpBoard.placePiece(tmpPiece, i);
                 node.addChild(new StateNode(tmpBoard));
+                // FIXME:  Below statements are for testing.  Remove once proper 
+                //         operation is verified. 
                 System.out.println("Current Depth:  " + depth);
                 node.getBoard().showBoard();
                 
@@ -88,11 +82,19 @@ public class GameStateTree
         return;
     }                           
 
+    /**
+     * Accessor method for root node
+     * @return StateNode object
+     */
     public StateNode getRoot()
     {
         return this.root;
     }
 
+    /**
+     * Accessor method for tree depth
+     * @return
+     */
     public int getDepth()
     {
         return this.depth;

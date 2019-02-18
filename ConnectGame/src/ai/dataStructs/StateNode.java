@@ -41,8 +41,9 @@ public class StateNode
     }
 
     /**
-     * Constructor 
-     * @param b
+     * Constructor generates a new node taking a predefined board as
+     * a parameter.
+     * @param b Board object
      */
     public StateNode(Board b)
     {
@@ -92,7 +93,7 @@ public class StateNode
     }
 
     /**
-     *  Return ArrayList from current node
+     *  Get ArrayList of children from current node
      *  @return ArrayList of children
      */
     public ArrayList<StateNode> getChildren()
@@ -181,7 +182,6 @@ public class StateNode
      * Mutator method for board object
      * @param b board to set in node
      */
-
     public void setBoard(Board b)
     {
         this.board = b;
