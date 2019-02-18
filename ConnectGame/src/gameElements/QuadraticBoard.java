@@ -147,13 +147,15 @@ public class QuadraticBoard implements Board{
 		return true;
 	}
 
+	/**
+	 * Creates an entirely new board with the same dimensions, wincondition, and spaces of this board
+	 * @return the newly copied board
+	 */
 	@Override
-	public Board copy() {
+	public Board copy(){
 		QuadraticBoard tmpBoard = new QuadraticBoard(dimension, winCondition);
-		for(int i = 0; i < dimension; i++)
-		{
-			for(int j = 0; j < dimension; j++)
-			{
+		for(int i = 0; i < dimension; i++){
+			for(int j = 0; j < dimension; j++){
 				tmpBoard.setPieceAtSpace(spaces[i][j], i, j);
 			}
 		}

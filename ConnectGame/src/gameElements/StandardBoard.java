@@ -162,6 +162,30 @@ public class StandardBoard  implements Board {
 		return true;
 	}
 	
+	/**
+	 * Creates an entirely new board with the same dimensions, wincondition, and spaces of this board
+	 * @return the newly copied board
+	 */
+	@Override
+	public Board copy(){
+		StandardBoard tmpBoard = new StandardBoard(width, height, winCondition);
+		for(int i = 0; i < width; i++){
+			for(int j = 0; j < height; j++){
+				tmpBoard.setPieceAtSpace(spaces[i][j], i, j);
+			}
+		}
+		return tmpBoard;
+	}
+
+	/**
+	 * Sets value at index h, w in 2D array of spaces
+	 * 
+	 */
+	public void setPieceAtSpace(Piece val, int h, int w)
+	{
+		spaces[h][w] = val;
+	}
+
 	private boolean checkVertical(Piece p, Piece[] col, int start, int needToWin){
 		
 		if(col.length>0 && col[start] == p)

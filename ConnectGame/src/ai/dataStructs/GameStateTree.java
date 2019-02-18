@@ -64,8 +64,8 @@ public class GameStateTree
                 node.addChild(new StateNode(tmpBoard));
                 // FIXME:  Below statements are for testing.  Remove once proper 
                 //         operation is verified. 
-                System.out.println("Current Depth:  " + depth);
-                node.getBoard().showBoard();
+//                System.out.println("Current Depth:  " + depth);
+//                node.getBoard().showBoard();
                 
             } 
             catch(QuadraticBoard.ColumnFullException e) 
@@ -80,7 +80,9 @@ public class GameStateTree
 
         }
         return;
-    }                           
+    }                
+    
+
 
     /**
      * Accessor method for root node
