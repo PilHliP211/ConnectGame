@@ -15,7 +15,13 @@ public class Utility {
         int wins = 0;
         for(int w = 0;w<b.getSpaces().length - b.getWinCondition()+1;w++)
             for(int h = 0;h<b.getSpaces()[0].length - b.getWinCondition()+1;h++)
-                wins += checkSubBoard(/*BoardHelpers.getSubBoard(b, w, h)*/b,p);
+                 try{
+                      wins += checkSubBoard(BoardHelpers.getSubBoard(b, w, h), p);
+                    }
+                    catch(BoardHelpers.DimensionsOOBException e)
+                    {
+                        // Do Something
+                    }
         return wins;
     }
 

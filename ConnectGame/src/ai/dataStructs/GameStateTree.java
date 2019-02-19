@@ -6,6 +6,7 @@ import gameElements.QuadraticBoard;
 
 import ai.dataStructs.StateNode;
 import ai.helper.BoardHelpers;
+import ai.helper.Utility;
 
 /**
  * @author Phillip Byram 
@@ -62,11 +63,12 @@ public class GameStateTree
             {
                 tmpBoard.placePiece(tmpPiece, i);
                 node.addChild(new StateNode(tmpBoard));
+                node.setUtility(Utility.calculateAll(tmpBoard, tmpPiece));
                 // FIXME:  Below statements are for testing.  Remove once proper 
                 //         operation is verified. 
 //                System.out.println("Current Depth:  " + depth);
 //                node.getBoard().showBoard();
-                
+//                System.out.println("Utility:  " + node.getUtility());
             } 
             catch(QuadraticBoard.ColumnFullException e) 
             {            
@@ -110,7 +112,7 @@ public class GameStateTree
     {
 
     }
-
+    // I integrated utility population with the build tree function
     public static void populateUtility(StateNode node, int depth)
     {
 
@@ -122,6 +124,4 @@ public class GameStateTree
         GameStateTree newTree = new GameStateTree(3);
         newTree.buildTree(newTree.getRoot(), newTree.getDepth());
     }
-
-
 }
