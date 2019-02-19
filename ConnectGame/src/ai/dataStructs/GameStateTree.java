@@ -63,7 +63,11 @@ public class GameStateTree
             {
                 tmpBoard.placePiece(tmpPiece, i);
                 node.addChild(new StateNode(tmpBoard));
-                node.setUtility(Utility.calculateAll(tmpBoard, tmpPiece));
+                if(depth == 0)
+                {
+                    node.setUtility(Utility.calculateAll(tmpBoard, tmpPiece));
+                    System.out.println("Utility:  " + node.getUtility());
+                }
                 // FIXME:  Below statements are for testing.  Remove once proper 
                 //         operation is verified. 
 //                System.out.println("Current Depth:  " + depth);
