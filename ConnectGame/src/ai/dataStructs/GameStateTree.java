@@ -66,7 +66,8 @@ public class GameStateTree
                 if(depth == 0)
                 {
                     node.setUtility(Utility.calculateAll(tmpBoard, tmpPiece));
-                    System.out.println("Utility:  " + node.getUtility());
+                    //FIXME:  Print statement for testing.
+//                    System.out.println("Utility:  " + node.getUtility());
                 }
                 // FIXME:  Below statements are for testing.  Remove once proper 
                 //         operation is verified. 
