@@ -47,18 +47,18 @@ public class GameStateTree
         Piece tmpPiece = Piece.NONE;
         int turn = depth % 2; // FIXME:  Couldn't find where player turn is defined. 
 
+        if(turn == 0)
+        {
+            tmpPiece = Piece.RED;
+        }
+        else if(turn == 1)
+        {
+            tmpPiece = Piece.BLACK;
+        }
+
         for(int i = 0; i < node.getBoard().getSpaces().length; i++)
         {
             tmpBoard = node.getBoard().copy();
-            if(turn == 0)
-            {
-                tmpPiece = Piece.RED;
-            }
-            else if(turn == 1)
-            {
-                tmpPiece = Piece.BLACK;
-            }
-            
             try 
             {
                 tmpBoard.placePiece(tmpPiece, i);

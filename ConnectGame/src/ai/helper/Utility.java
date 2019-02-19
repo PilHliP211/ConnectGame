@@ -1,5 +1,7 @@
 package ai.helper;
 
+import javax.lang.model.util.ElementScanner6;
+
 import gameElements.Board;
 import gameElements.Piece;
 import gameElements.Board.ColumnFullException;
@@ -27,6 +29,13 @@ public class Utility {
 
     private static int checkSubBoard(Board b, Piece p){
         int wins = 0;
+        // Added this function to check for an empty sub-board.
+        // if it is, sum(wins) - sum(losses) = 0, so return wins.
+        // Not sure if this will be good or bad in the long run.  
+        if(BoardHelpers.isSubBoardEmpty(b))
+        {
+            return wins;
+        }
         for(int w = 0;w<b.getSpaces().length;w++)
             if(checkArray(getVert(b,w),p))
                 wins++;
