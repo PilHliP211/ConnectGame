@@ -15,17 +15,37 @@ public class Utility {
     public static int calculate(Board b,Piece MyPiece, Piece theirPiece){
         int wins = 0;
         try{
-        for(int w = 0;w<b.getSpaces().length - b.getWinCondition()+1;w++)
-            for(int h = 0;h<b.getSpaces()[0].length - b.getWinCondition()+1;h++)
-                wins += checkSubBoard(BoardHelpers.getSubBoard(b, w, h),MyPiece);
+        boolean won = false;
+        for(int w = 0;w<b.getSpaces().length - b.getWinCondition()+1&& !won;w++)
+            for(int h = 0;h<b.getSpaces()[0].length - b.getWinCondition()+1&& !won;h++)
+                {
+                    int win = checkSubBoard(BoardHelpers.getSubBoard(b, w, h),MyPiece);
+                    if(checkForInf(win)) 
+                    {
+                        won = true;
+                        wins = win;
+                    }
+                    else
+                        wins += win;
+                }
         } catch (DimensionsOOBException doobe){
             System.out.println("getSubBoard encountered a bounds error!");
         }
         int losses = 0;
         try{
-        for(int w = 0;w<b.getSpaces().length - b.getWinCondition()+1;w++)
-            for(int h = 0;h<b.getSpaces()[0].length - b.getWinCondition()+1;h++)
-                losses += checkSubBoard(BoardHelpers.getSubBoard(b, w, h),theirPiece);
+        boolean lost = false;
+        for(int w = 0;w<b.getSpaces().length - b.getWinCondition()+1&& !lost;w++)
+            for(int h = 0;h<b.getSpaces()[0].length - b.getWinCondition()+1&& !lost;h++)
+            {
+                int lose = checkSubBoard(BoardHelpers.getSubBoard(b, w, h),theirPiece);
+                if(checkForInf(lose)) 
+                {
+                    lost = true;
+                    losses = lose;
+                }
+                else
+                    losses += lose;
+            }
         return wins - losses;
         } catch (DimensionsOOBException doobe){
             System.out.println("getSubBoard encountered a bounds error!");
@@ -36,18 +56,35 @@ public class Utility {
     private static int checkSubBoard(Board b, Piece p){
         int wins = 0;
         for(int w = 0;w<b.getSpaces().length;w++)
-            if(checkArray(getVert(b,w),p))
-                wins++;
-        for(int h = 0;h<b.getSpaces().length;h++)
-            if(checkArray(getHoriz(b,h),p))
-                wins++;
-        if(checkArray(getLeftDiag(b), p))
-            wins++;
-        if(checkArray(getRightDiag(b), p))
-            wins++;
+        {
+            int win = checkArray(getVert(b,w),p);
+            if(checkForInf(win)) return win;
+            wins+= win;
+        }
+        for(int h = 0;h<b.getSpaces().length;h++){
+            int win = checkArray(getHoriz(b,h),p);
+            if(checkForInf(win)) return win;
+            wins+= win;
+        }
+        {
+            int win = checkArray(getLeftDiag(b), p);
+            if(checkForInf(win)) return win;
+            wins+=win;
+        }
+        {
+            int win = checkArray(getRightDiag(b), p);
+            if(checkForInf(win)) return win; 
+            wins += win;
+        }
         return wins;
     }
-    private static Piece[] getVert(Board b, int w){
+    
+    private static boolean checkForInf(int win) {
+        if(win == Integer.MIN_VALUE || win == Integer.MAX_VALUE) return true;
+        return false;
+    }
+
+    private static Piece[] getVert(Board b, int w) {
         return b.getSpaces()[w];
     }
     private static Piece[] getHoriz(Board b, int h){
@@ -65,10 +102,34 @@ public class Utility {
         for(int i = 0; i< b.getSpaces().length; i++) rightDiag[i] = b.getSpaces()[b.getSpaces().length-1 - i][i];
         return rightDiag;
     }
-    private static boolean checkArray(Piece[] a, Piece p){
+    private static int checkArray(Piece[] a, Piece p){
+        int val = 0;
+        /*
+        // reward number of mine in an array
         for(int i = 0;i<a.length;i++)
-            if((a[i]!=p && a[i]!= Piece.NONE))return false;
-        return true;
+            if(a[i]==p)val++;
+            else if(a[i]!= Piece.NONE)val--;
+            */
+        //sections with no enemy pieces are exponentially more valuable
+        boolean bad = false;
+        for(int i = 0;i<a.length && !bad;i++)   
+            if(a[i]!=p && a[i]!=Piece.NONE) bad = true;
+            else if (a[i]==Piece.NONE)val++;
+            else val*=(i+1);             
+        boolean winner = true;
+        for(int i = 0;i<a.length;i++){
+            if(a[i]!=p)winner= false;
+        }
+        if(winner) 
+            return Integer.MAX_VALUE;
+        boolean loser = true;
+        for(int i = 0;i<a.length;i++){
+            if(a[i]==p || a[i]==Piece.NONE)
+            loser= false;
+        }
+        if(loser) 
+            return Integer.MIN_VALUE;
+        return val;
     }
 
     public static void main(String[] args) throws ColumnFullException{
