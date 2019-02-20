@@ -88,15 +88,28 @@ public class StateNode
         System.out.println("--------------------------------------------");
     }
 
+    /**
+     * Gets current node's depth in the tree.
+     * @return  integer value of depth in tree.
+     */
+
     public int getDepthInTree()
     {
         return this.depthInTree;
     }
 
+    /**
+     * increments the current node's depth in the tree.
+     */
+
     public void incrementDepthInTree()
     {
         this.depthInTree++;
     }
+
+    /**
+     * Decrements the current node's depth in the tree.
+     */
 
     public void decrementDepthInTree()
     {
