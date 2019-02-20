@@ -45,8 +45,7 @@ public class BoardHelpers {
         }
         // FIXME:  Remove from final Product.  For testing isBoardEmpty()
         //subBoard.setPieceAtSpace(Piece.BLACK, 3, 2);
-        System.out.println("x = " +x+", y = " + y );
-        subBoard.showBoard();
+
         return subBoard;
     }
 
