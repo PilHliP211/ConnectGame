@@ -22,6 +22,7 @@ public class StateNode
     private int utility;
     private int alpha;
     private int beta;
+    private int depthInTree;
     
 
     /**
@@ -39,18 +40,21 @@ public class StateNode
 
     public StateNode(Board b)
     {
-        // FIXME:  Need to add getDimension() to Board interface.
-//        this.board = new QuadraticBoard(b.getSpaces().length, b.getWinCondition());
         this.board = b;
         this.alpha = negInf;
         this.beta = posInf;
         this.children = new ArrayList<StateNode>();
-//        for(int i = 0; i < this.board.getWinCondition(); i++)
-//        {
-//
-//        }
     }
 
+
+    public StateNode(Board b, int depth)
+    {
+        this.board = b;
+        this.alpha = negInf;
+        this.beta = posInf;
+        this.children = new ArrayList<StateNode>();
+        this.depthInTree = depth;
+    }
  
     public void addChild(StateNode child)
     {
@@ -84,6 +88,20 @@ public class StateNode
         System.out.println("--------------------------------------------");
     }
 
+    public int getDepthInTree()
+    {
+        return this.depthInTree;
+    }
+
+    public void incrementDepthInTree()
+    {
+        this.depthInTree++;
+    }
+
+    public void decrementDepthInTree()
+    {
+        this.depthInTree--;
+    }
     /**
      * Accessor method for variable alpha
      * @return int value of alpha
