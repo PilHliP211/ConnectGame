@@ -16,6 +16,7 @@ public class GameStateTree {
         root = new StateNode(b);
     }
 
+    
     /**
      * Given a root node, prune irrelevant paths.
      * @param node the root node that will be pruned
