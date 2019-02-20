@@ -23,7 +23,7 @@ public class Utility {
                     if(checkForInf(win)) 
                     {
                         won = true;
-                        wins = win;
+                        return win;
                     }
                     else
                         wins += win;
@@ -41,7 +41,7 @@ public class Utility {
                 if(checkForInf(lose)) 
                 {
                     lost = true;
-                    losses = lose;
+                    return lose;
                 }
                 else
                     losses += lose;
@@ -104,18 +104,19 @@ public class Utility {
     }
     private static int checkArray(Piece[] a, Piece p){
         int val = 0;
-        /*
+        
         // reward number of mine in an array
         for(int i = 0;i<a.length;i++)
             if(a[i]==p)val++;
             else if(a[i]!= Piece.NONE)val--;
-            */
+        /*
         //sections with no enemy pieces are exponentially more valuable
         boolean bad = false;
         for(int i = 0;i<a.length && !bad;i++)   
             if(a[i]!=p && a[i]!=Piece.NONE) bad = true;
             else if (a[i]==Piece.NONE)val++;
-            else val*=(i+1);             
+            else val*=(i+1);     
+            */        
         boolean winner = true;
         for(int i = 0;i<a.length;i++){
             if(a[i]!=p)winner= false;
