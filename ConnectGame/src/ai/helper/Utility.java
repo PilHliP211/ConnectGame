@@ -11,15 +11,25 @@ import gameElements.Board.ColumnFullException;
  */
 public class Utility {
 
+    /**
+     * Finds a column to play that blocks an opponent from winning.
+     * @param b board that has a one away winning condition for their piece
+     * @param myPiece my piece
+     * @param theirPiece their piece
+     * @return the column to play myPiece to block their piece from winning
+     */
+    private static int findBlock(Board b, Piece myPiece, Piece theirPiece){
 
-    public static int calculate(Board b,Piece MyPiece, Piece theirPiece){
+    }
+
+    public static int calculate(Board b,Piece myPiece, Piece theirPiece){
         int wins = 0;
         try{
         boolean won = false;
         for(int w = 0;w<b.getSpaces().length - b.getWinCondition()+1&& !won;w++)
             for(int h = 0;h<b.getSpaces()[0].length - b.getWinCondition()+1&& !won;h++)
                 {
-                    int win = checkSubBoard(BoardHelpers.getSubBoard(b, w, h),MyPiece);
+                    int win = checkSubBoard(BoardHelpers.getSubBoard(b, w, h),myPiece);
                     if(checkForInf(win)) 
                     {
                         won = true;

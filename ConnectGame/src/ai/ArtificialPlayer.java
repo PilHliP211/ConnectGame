@@ -63,6 +63,8 @@ public class ArtificialPlayer implements Player {
                     val = newVal;
                     a = i;
                 }
+                int blockLoss = Utility.willLose(b, myPiece, theirPiece);
+                if(blockLoss>=0)
             }
         }
         return a;
