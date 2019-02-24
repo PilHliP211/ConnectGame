@@ -202,7 +202,7 @@ public class ArtificialPlayer implements Player {
                 node.setBeta(Math.min(node.getBeta(), abMaxValue(n, node.getAlpha(), node.getBeta())));
          
                 //FIXME:  Print statment for checking alpha/beta values
-                System.out.println("abMinValue:  \n\tAlpha:  " + node.getAlpha() + "   Beta:  " + node.getBeta());
+                System.out.println("abMinValue Depth:  " + node.getDepthInTree() +"\n\tAlpha:  " + node.getAlpha() + "   Beta:  " + node.getBeta());
                 if(node.getAlpha() >= node.getBeta())
                 {
                     return Integer.MIN_VALUE;
@@ -243,7 +243,7 @@ public class ArtificialPlayer implements Player {
                 node.setAlpha(Math.max(node.getAlpha(), abMinValue(n, node.getAlpha(), node.getBeta())));
             
                 //FIXME:  Print statment for checking alpha/beta values 
-                System.out.println("abMaxValue:  \n\tAlpha:  " + node.getAlpha() + "   Beta:  " + node.getBeta());              
+                System.out.println("abMaxValue Depth:  " + node.getDepthInTree() +"\n\tAlpha:  " + node.getAlpha() + "   Beta:  " + node.getBeta());        
                 if(node.getAlpha() >= node.getBeta())
                 {
                     return Integer.MAX_VALUE;
@@ -251,6 +251,6 @@ public class ArtificialPlayer implements Player {
             }
                 
         }
-        return node.getBeta();
+        return node.getAlpha();
     }
 }
