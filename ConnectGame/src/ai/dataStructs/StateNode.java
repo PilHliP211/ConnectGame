@@ -1,7 +1,6 @@
 
 package ai.dataStructs;
 
-import java.util.ArrayList;
 import gameElements.Board;
 
 import ai.helper.BoardHelpers;
@@ -18,7 +17,6 @@ public class StateNode
     private Integer negInf = Integer.MIN_VALUE;
 
     private Board board;
-    private ArrayList<StateNode> children;
     private int utility;
     private int alpha;
     private int beta;
@@ -31,7 +29,6 @@ public class StateNode
     public StateNode()
     {
         board.initBoard();
-        this.children = new ArrayList<StateNode>();
         this.utility = 0;
         this.alpha = negInf;
         this.beta = posInf;
@@ -43,7 +40,6 @@ public class StateNode
         this.board = b;
         this.alpha = negInf;
         this.beta = posInf;
-        this.children = new ArrayList<StateNode>();
     }
 
 
@@ -52,25 +48,9 @@ public class StateNode
         this.board = b;
         this.alpha = negInf;
         this.beta = posInf;
-        this.children = new ArrayList<StateNode>();
         this.depthInTree = depth;
     }
  
-    public void addChild(StateNode child)
-    {
-        children.add(child);
-    }
-
-    /**
-     *  Get child from arraylist at index
-     * 
-     * @param index
-     * @return StateNode
-     */
-    public StateNode getChildAtIndex(int index)
-    {
-        return this.children.get(index);
-    }
 
     
     /**
@@ -98,23 +78,6 @@ public class StateNode
         return this.depthInTree;
     }
 
-    /**
-     * increments the current node's depth in the tree.
-     */
-
-    public void incrementDepthInTree()
-    {
-        this.depthInTree++;
-    }
-
-    /**
-     * Decrements the current node's depth in the tree.
-     */
-
-    public void decrementDepthInTree()
-    {
-        this.depthInTree--;
-    }
     /**
      * Accessor method for variable alpha
      * @return int value of alpha
@@ -178,20 +141,16 @@ public class StateNode
     }
 
 
-
-
-
     /**
      * Main function to test StateNode class.
      * @param args
      */
-    public static void main(String[] args) //throws DimensionsOOBException{
+    public static void main(String[] args)
     {
         Board tBoard = BoardHelpers.generateTestBoard(10, 10, 4);
         tBoard.showBoard();
 
         StateNode node = new StateNode(tBoard);
-//        node.board.showBoard();
         node.showNode();
     }
 
