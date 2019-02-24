@@ -6,7 +6,7 @@ import gameElements.QuadraticBoard;
 
 /**
  * @author Russell Plenkers
- * A Node in The Tree Struture
+ * Class for some useful Board methods
  *
  */
 public class BoardHelpers {
@@ -43,14 +43,15 @@ public class BoardHelpers {
                 }
             }
         }
-        // FIXME:  Remove from final Product.  For testing isBoardEmpty()
-        //subBoard.setPieceAtSpace(Piece.BLACK, 3, 2);
-
         return subBoard;
     }
 
 
-    
+    /**
+     * Checks if a given board is empty
+     * @param b the board to check the emptiness of
+     * @return true if b is empty, false otherwise.
+     */    
     public static boolean isBoardEmpty(Board b)
     {
         int dimension = b.getSpaces().length - 1;
@@ -71,7 +72,7 @@ public class BoardHelpers {
      * @param w - width of new board
      * @param h - height of new board
      * @param winCond - win condition
-     * @return  Board 
+     * @return a test Board 
      */
     public static Board generateTestBoard(int w, int h, int winCond)
     {

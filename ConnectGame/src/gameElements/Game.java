@@ -119,9 +119,4 @@ public class Game {
 		Board b = new QuadraticBoard(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
 		new Game(b).startGame();
 	}
-
-	private static void startGameFromStuff(){
-		Board b = new QuadraticBoard(Integer.parseInt("5"), Integer.parseInt("4"));
-		new Game(b).startGame();
-	}
 }

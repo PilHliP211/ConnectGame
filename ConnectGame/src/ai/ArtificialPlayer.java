@@ -43,7 +43,6 @@ public class ArtificialPlayer implements Player {
     }
 
 
-    //TODO use incrementDepth() somehow
     private int minMaxSearch(StateNode root)
     {
         int val =Integer.MIN_VALUE;
@@ -65,13 +64,12 @@ public class ArtificialPlayer implements Player {
             if(goodColumn  && b != null)
             {
                 int newVal = minValue(new StateNode(b, root.getDepthInTree()+1));
+                System.out.println("Column "+i+" has "+newVal+" Utility.");
                 if(newVal > val)
                 { 
                     val = newVal;
                     a = i;
                 }
-//                int blockLoss = Utility.willLose(b, myPiece, theirPiece);
-//                if(blockLoss>=0)
             }
         }
         return a;
@@ -165,8 +163,8 @@ public class ArtificialPlayer implements Player {
                     root.setAlpha(newAlpha);
                     a = i;
                 }
-                int blockLoss = Utility.willLose(b, myPiece, theirPiece);
-                if(blockLoss>=0)
+                //int blockLoss = Utility.willLose(b, myPiece, theirPiece);
+                //if(blockLoss>=0);
             }
         }
         return a;
