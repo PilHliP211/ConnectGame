@@ -19,10 +19,11 @@ public class Utility {
      * @return the column to play myPiece to block their piece from winning
      */
     private static int findBlock(Board b, Piece myPiece, Piece theirPiece){
-
+        return 0;
     }
 
     public static int calculate(Board b,Piece myPiece, Piece theirPiece){
+        
         int wins = 0;
         try{
         boolean won = false;
@@ -41,7 +42,8 @@ public class Utility {
         } catch (DimensionsOOBException doobe){
             System.out.println("getSubBoard encountered a bounds error!");
         }
-        int losses = 0;
+        
+        int losses = 1;
         try{
         boolean lost = false;
         for(int w = 0;w<b.getSpaces().length - b.getWinCondition()+1&& !lost;w++)
@@ -51,16 +53,16 @@ public class Utility {
                 if(checkForInf(lose)) 
                 {
                     lost = true;
-                    return lose;
+                    return -lose;
                 }
                 else
                     losses += lose;
             }
-        return wins - losses;
         } catch (DimensionsOOBException doobe){
             System.out.println("getSubBoard encountered a bounds error!");
         }
-        return 0;
+
+        return wins - losses;
     }
 
     private static int checkSubBoard(Board b, Piece p){
@@ -83,7 +85,7 @@ public class Utility {
         }
         {
             int win = checkArray(getRightDiag(b), p);
-            if(checkForInf(win)) return win; 
+            if(checkForInf(win)) return win;
             wins += win;
         }
         return wins;
@@ -125,14 +127,8 @@ public class Utility {
         for(int i = 0;i<a.length && !bad;i++)   
             if(a[i]!=p && a[i]!=Piece.NONE) bad = true;
             else if (a[i]==Piece.NONE)val++;
-            else val*=(i+1);     
-            */        
-        boolean winner = true;
-        for(int i = 0;i<a.length;i++){
-            if(a[i]!=p)winner= false;
-        }
-        if(winner) 
-            return Integer.MAX_VALUE;
+            else val+=i+1;  
+            */   
         boolean loser = true;
         for(int i = 0;i<a.length;i++){
             if(a[i]==p || a[i]==Piece.NONE)
@@ -140,6 +136,13 @@ public class Utility {
         }
         if(loser) 
             return Integer.MIN_VALUE;
+        boolean winner = true;
+        for(int i = 0;i<a.length;i++){
+            if(a[i]!=p)winner= false;
+        }
+        if(winner) 
+            return Integer.MAX_VALUE;
+
         return val;
     }
 
