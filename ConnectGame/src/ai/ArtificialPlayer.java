@@ -145,7 +145,7 @@ public class ArtificialPlayer implements Player {
         int a = -1;
         root.setAlpha(Integer.MIN_VALUE);
         root.setBeta(Integer.MAX_VALUE);
-        
+
         for(int i = 0; i<root.getBoard().getSpaces().length;i++)
         {
             boolean goodColumn = true;
@@ -200,6 +200,7 @@ public class ArtificialPlayer implements Player {
             {
                 StateNode n = new StateNode(b,node.getDepthInTree()+1); 
                 node.setBeta(Math.min(node.getBeta(), abMaxValue(n, node.getAlpha(), node.getBeta())));
+                System.out.println("abMinValue:  \n\tAlpha:  " + node.getAlpha() + "   Beta:  " + node.getBeta());
                 if(node.getAlpha() >= node.getBeta())
                 {
                     return Integer.MIN_VALUE;
@@ -238,6 +239,7 @@ public class ArtificialPlayer implements Player {
             {
                 StateNode n = new StateNode(b,node.getDepthInTree()+1);
                 node.setAlpha(Math.max(node.getAlpha(), abMinValue(n, node.getAlpha(), node.getBeta())));
+                System.out.println("abMaxValue:  \n\tAlpha:  " + node.getAlpha() + "   Beta:  " + node.getBeta());              
                 if(node.getAlpha() >= node.getBeta())
                 {
                     return Integer.MAX_VALUE;
