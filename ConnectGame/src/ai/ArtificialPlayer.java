@@ -34,7 +34,8 @@ public class ArtificialPlayer implements Player {
         tree = new GameStateTree(0, b);
         StateNode root = tree.getRoot();
         //if place was successful, turn = false, but nextMove = true;
-        return !(turn = !gameBoard.placePiece(myPiece,minMaxSearch(root)));
+//        return !(turn = !gameBoard.placePiece(myPiece,minMaxSearch(root)));
+        return !(turn = !gameBoard.placePiece(myPiece,abSearch(root)));
     }
 
     @Override
@@ -139,10 +140,10 @@ public class ArtificialPlayer implements Player {
 
     private int abSearch(StateNode root)
     {
-        int a = null;
-
+        int a = -1;
         root.setAlpha(Integer.MIN_VALUE);
         root.setBeta(Integer.MAX_VALUE);
+
         for(int i = 0; i<root.getBoard().getSpaces().length;i++)
         {
             boolean goodColumn = true;
@@ -157,14 +158,14 @@ public class ArtificialPlayer implements Player {
             }
             if(goodColumn  && b != null)
             {
-                int newAlpha = minValue(new StateNode(b, root.getDepthInTree()+1), root.getAlpha(), root.getBeta());
+                int newAlpha = abMinValue(new StateNode(b, root.getDepthInTree()+1), root.getAlpha(), root.getBeta());
                 if(newAlpha > root.getAlpha())
                 { 
                     root.setAlpha(newAlpha);
                     a = i;
                 }
-                //int blockLoss = Utility.willLose(b, myPiece, theirPiece);
-                //if(blockLoss>=0);
+//                int blockLoss = Utility.willLose(b, myPiece, theirPiece);
+//                if(blockLoss>=0)
             }
         }
         return a;
@@ -173,6 +174,9 @@ public class ArtificialPlayer implements Player {
 
     private int abMinValue(StateNode node, int alpha, int beta)
     {
+        node.setAlpha(alpha);
+        node.setBeta(beta);
+
         if (difficulty <= node.getDepthInTree())
             return Utility.calculate(node.getBoard(), myPiece, theirPiece);
 
@@ -194,6 +198,9 @@ public class ArtificialPlayer implements Player {
             {
                 StateNode n = new StateNode(b,node.getDepthInTree()+1); 
                 node.setBeta(Math.min(node.getBeta(), abMaxValue(n, node.getAlpha(), node.getBeta())));
+         
+                //FIXME:  Print statment for checking alpha/beta values
+                System.out.println("abMinValue:  \n\tAlpha:  " + node.getAlpha() + "   Beta:  " + node.getBeta());
                 if(node.getAlpha() >= node.getBeta())
                 {
                     return Integer.MIN_VALUE;
@@ -208,6 +215,9 @@ public class ArtificialPlayer implements Player {
 
     private int abMaxValue(StateNode node, int alpha, int beta)
     {
+        node.setAlpha(alpha);
+        node.setBeta(beta);
+
         if (difficulty <= node.getDepthInTree()) 
             return Utility.calculate(node.getBoard(), myPiece, theirPiece);
 
@@ -229,6 +239,9 @@ public class ArtificialPlayer implements Player {
             {
                 StateNode n = new StateNode(b,node.getDepthInTree()+1);
                 node.setAlpha(Math.max(node.getAlpha(), abMinValue(n, node.getAlpha(), node.getBeta())));
+            
+                //FIXME:  Print statment for checking alpha/beta values 
+                System.out.println("abMaxValue:  \n\tAlpha:  " + node.getAlpha() + "   Beta:  " + node.getBeta());              
                 if(node.getAlpha() >= node.getBeta())
                 {
                     return Integer.MAX_VALUE;
