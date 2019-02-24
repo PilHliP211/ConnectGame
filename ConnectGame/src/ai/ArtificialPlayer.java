@@ -21,6 +21,13 @@ public class ArtificialPlayer implements Player {
     private Board gameBoard;
     private boolean turn;
     
+    /**
+     * Constructor for the ArtificialPlayer class.
+     * 
+     * @param integer value indicating depth of tree traversal
+     * @param Piece enumerator type for artificial player
+     * @param Board object indicating the game's current board progress
+     */
     public ArtificialPlayer(int difficulty, Piece p, Board b){
         this.difficulty = difficulty;
         this.myPiece = p;
@@ -28,6 +35,15 @@ public class ArtificialPlayer implements Player {
         this.gameBoard = b;
     }
 
+    /**
+     * Overrides Player interface's nextMove function to allow the AI to make its
+     * next move.  
+     * 
+     * @return boolean value indicating AI has made its move
+     * @param boolean which player's turn it is
+     * @throws NumberFormatException if number entered is outside valid bounds
+     * @throws ColumnFullException if invalid move is chosen because column is full
+     */
     @Override
     public boolean nextMove(boolean noPrompt) throws NumberFormatException, ColumnFullException {
         Board b = gameBoard.copy();
@@ -36,10 +52,27 @@ public class ArtificialPlayer implements Player {
 
     }
 
+    /**
+     * Accessor method for ArtificialPlayer class turn variable.  Overrides Player
+     * interface's isTurn function.  
+     * 
+     * @return boolean value indicating whether it is AI's turn
+     */
+
     @Override
     public boolean isTurn() {
         return turn;
     }
+
+    /**
+     * min/max search function calls recursive minValue and maxValue functions
+     * to determine best move based on results returned from utility funciton.  
+     * Superceded by abSearch function that provides the same functionality with 
+     * added alpha/beta tree pruning.  
+     * 
+     * @return integer value indicting board position of best move
+     * @param StateNode object which is passed as the root of the min/max tree
+     */
 
     private int minMaxSearch(StateNode root)
     {
@@ -72,6 +105,16 @@ public class ArtificialPlayer implements Player {
         return a;
     }
 
+    /**
+     * One of two recursive functions that return the best possible move for the
+     * AI.  The min Function chooses the worst branch for the player.  Superceded
+     * by abMinValue function that provides the same functionality with added 
+     * alpha/beta tree pruning.
+     * 
+     * @return integer value indicating the lowest utility as determined by the utility function
+     * @param StateNode object, which is the local root node
+     */
+
     private int minValue(StateNode node)
     {
         if (difficulty <= node.getDepthInTree())
@@ -101,6 +144,16 @@ public class ArtificialPlayer implements Player {
         return val;
     }
 
+
+    /**
+     * One of two recursive functions that return the best possible move for the
+     * AI.  The max Function chooses the best branch for the AI.  Superceded
+     * by abMaxValue function that provides the same functionality with added 
+     * alpha/beta tree pruning.
+     * 
+     * @return integer value indicating the highest utility as determined by the utility function
+     * @param StateNode object, which is the local root node
+     */
     private int maxValue(StateNode node)
     {
         if (difficulty <= node.getDepthInTree()) 
