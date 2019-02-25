@@ -6,22 +6,17 @@ import gameElements.Piece;
 import gameElements.Board.ColumnFullException;
 
 /** @author Phillip Byram 
- * A Node in The Tree Struture
+ * Helper class to find utility of a board
  *
  */
 public class Utility {
 
     /**
-     * Finds a column to play that blocks an opponent from winning.
-     * @param b board that has a one away winning condition for their piece
+     * @param b the board to calculate the utility of
      * @param myPiece my piece
-     * @param theirPiece their piece
-     * @return the column to play myPiece to block their piece from winning
+     * @param theirPiece the opponent's piece
+     * @return the utility of a given board for one piece over another
      */
-    private static int findBlock(Board b, Piece myPiece, Piece theirPiece){
-        return 0;
-    }
-
     public static int calculate(Board b,Piece myPiece, Piece theirPiece){
         
         int wins = 0;
