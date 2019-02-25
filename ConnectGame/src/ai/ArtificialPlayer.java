@@ -15,7 +15,7 @@ import gameElements.Player;
  */
 public class ArtificialPlayer implements Player {
 
-    private int difficulty = 4;
+    private int difficulty = 6;
     private Piece myPiece;
     private Piece theirPiece;
     private Board gameBoard;
