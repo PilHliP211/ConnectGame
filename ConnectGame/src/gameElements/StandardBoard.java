@@ -161,6 +161,11 @@ public class StandardBoard  implements Board {
 					return false;
 		return true;
 	}
+
+	@Override
+	public Board copy() {
+		return null;
+	}
 	
 	private boolean checkVertical(Piece p, Piece[] col, int start, int needToWin){
 		

@@ -146,7 +146,36 @@ public class QuadraticBoard implements Board{
 					return false;
 		return true;
 	}
+
+	/**
+	 * Copies current board to a new board object that is returned.  Overrides Board class' 
+	 * copy function.  
+	 * 
+	 * @return Board object which is copy of current board. 
+	 */
+	@Override
+	public Board copy() {
+		QuadraticBoard newBoard;
+		newBoard = new QuadraticBoard(this.dimension,this.winCondition);
+		Piece[][] spaces = new Piece[this.getSpaces().length][this.getSpaces()[0].length];
+		for(int i=0;i<this.getSpaces().length;i++)
+		{
+			Piece[] p =Arrays.copyOf(this.getSpaces()[i], this.getSpaces()[i].length);
+			spaces[i] = p;
+		}
+		newBoard.setSpaces(spaces);
+		return (Board) newBoard;
+	}
 	
+	/**
+	 * Checks column for winning conditions.  
+	 * 
+	 * @return boolean value true if winning condition met.
+	 * @param Piece enumerator type to check for
+	 * @param array of pieces to check for winning conditions
+	 * @param integer value of where to start checking in array
+	 * @param integer value of how many pieces are required for a win
+	 */
 	private boolean checkVertical(Piece p, Piece[] col, int start, int needToWin){
 		
 		if(col.length>0 && col[start] == p)
@@ -154,6 +183,16 @@ public class QuadraticBoard implements Board{
 				return true;
 		return false;
 	}
+
+	/**
+	 * Checks row for winning conditions.  
+	 * 
+	 * @return boolean value true if winning condition met.
+	 * @param Piece enumerator type to check for
+	 * @param array of pieces to check for winning conditions
+	 * @param integer value of where to start checking in array
+	 * @param integer value of how many pieces are required for a win
+	 */
 	private boolean checkHorizontal(Piece p, Piece[] row, int start, int needToWin){
 		
 		if(row.length>0 && row[start] == p)
@@ -161,6 +200,16 @@ public class QuadraticBoard implements Board{
 				return true;
 		return false;
 	}
+
+	/**
+	 * Checks left diagonal for winning conditions.  
+	 * 
+	 * @return boolean value true if winning condition met.
+	 * @param Piece enumerator type to check for
+	 * @param array of pieces to check for winning conditions
+	 * @param integer value of where to start checking in array
+	 * @param integer value of how many pieces are required for a win
+	 */
 	private boolean checkLeftDiagonal(Piece p, Piece[] diag, int start, int needToWin){
 
 		if(diag.length>0 && diag[start] == p)
@@ -168,6 +217,16 @@ public class QuadraticBoard implements Board{
 				return true;
 		return false;
 	}
+
+	/**
+	 * Checks right diagonal for winning conditions.  
+	 * 
+	 * @return boolean value true if winning condition met.
+	 * @param Piece enumerator type to check for
+	 * @param array of pieces to check for winning conditions
+	 * @param integer value of where to start checking in array
+	 * @param integer value of how many pieces are required for a win
+	 */
 	private boolean checkRightDiagonal(Piece p, Piece[] diag, int start, int needToWin){
 
 		if(diag.length>0 && diag[start] == p)
@@ -176,6 +235,14 @@ public class QuadraticBoard implements Board{
 		return false;
 	}
 	
+	/**
+	 * returns a row as an array from two dimentional array, so that it
+	 * may be checked for winning conditions.  
+	 * 
+	 * @return Piece array
+	 * @param Piece 2D array
+	 * @param integer value of row number to return
+	 */
 	private Piece[] getRowOf2dArray(Piece[][] array,int row){
 		
 		Piece[] rowArray = new Piece[array.length];
@@ -186,7 +253,7 @@ public class QuadraticBoard implements Board{
 		return rowArray;
 	}
 	
-	/*
+	/**
 	 * given a board of 6 height and 7 width there would be 12 (6+7-1) diagonal indecies
 	 * 
 	 * for top right to bottom left diagonals (called left diagonals in this class - isLeft = true):
@@ -198,6 +265,10 @@ public class QuadraticBoard implements Board{
 	 * the most extreme indecies would only have a one cell diagonal. 
 	 * the second most extreme, 2, and so on.
 	 * 
+	 * @return Piece array representing diagonal of 2D array
+	 * @param Piece 2D array to derive diagonal from
+	 * @param integer indicating position of diagonal in 2D array
+	 * @param boolean value indicating whether to return left or right diagonal
 	 */
 	private Piece[] getDiagOf2dArray(Piece[][] array, int diagonal, boolean isLeft)
 	{
@@ -213,8 +284,12 @@ public class QuadraticBoard implements Board{
 		return diagArray;
 	}
 	
-	/*
+	/**
 	 * get the length of a diagonal in a board with a width and a height
+	 * 
+	 * @return integer value indicating length of diagonal
+	 * @param integer value indicating dimensions of board
+	 * @param integer value indicating diagonal position in board
 	 */
 	private static int getDiagLength(int dimension, int diagonal){
 		if(diagonal<dimension)
@@ -224,8 +299,13 @@ public class QuadraticBoard implements Board{
 	}
 	
 	
-	/*
+	/**
 	 * based on a given array's diagonal index return the item at i of that left diagonal
+	 * 
+	 * @return Piece enumerator type 
+	 * @param Piece 2D array representing the current board configuration
+	 * @param integer value indicating position of diagonal in 2D array
+	 * @param integer value indicating location of return piece in diagonal array
 	 */
 	private static Piece getArrayItemFromDiagIdxLeft(Piece[][] array, int diagonal, int i){
 			if(diagonal<array[0].length)
@@ -234,8 +314,13 @@ public class QuadraticBoard implements Board{
 				return array[(diagonal-array.length)+i+1][array[0].length-1-i];
 	}
 	
-	/*
+	/**
 	 * based on a given array's diagonal index return the item at i of that right diagonal
+	 * 
+ 	 * @return Piece enumerator type 
+	 * @param Piece 2D array representing the current board configuration
+	 * @param integer value indicating position of diagonal in 2D array
+	 * @param integer value indicating location of return piece in diagonal array
 	 */
 	private static Piece getArrayItemFromDiagIdxRight(Piece[][] array, int diagonal, int i){
 		if(diagonal<array[0].length)
@@ -284,6 +369,28 @@ public class QuadraticBoard implements Board{
 	{
 		return spaces;
 	}
+
+	/**
+	 * Sets the 2D piece array of spaces in the board
+	 * @param spaces the spaces in the board
+	 */
+	public void setSpaces(Piece[][] spaces)
+	{
+		this.spaces = spaces;
+	}
+
+	/**
+	 * Sets value at index h, w in 2D array of spaces
+	 * 
+	 * @param Piece enumerator type to place on board
+	 * @param integer value representing vertical position on board
+	 * @param integer value representing horizontal position on board
+	 */
+	public void setPieceAtSpace(Piece val, int h, int w)
+	{
+		spaces[h][w] = val;
+	}
+
 
 	/**
 	 * Gets the dimension of the board
