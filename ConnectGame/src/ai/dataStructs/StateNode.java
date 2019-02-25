@@ -35,6 +35,10 @@ public class StateNode
     }
 
 
+    /**
+     * Creates a node with a board
+     * @param b a board
+     */
     public StateNode(Board b)
     {
         this.board = b;
@@ -42,7 +46,11 @@ public class StateNode
         this.beta = posInf;
     }
 
-
+    /**
+     * Creates a node with a board a certain depth down the tree
+     * @param b a board
+     * @param depth the depth in the tree
+     */
     public StateNode(Board b, int depth)
     {
         this.board = b;
@@ -72,7 +80,6 @@ public class StateNode
      * Gets current node's depth in the tree.
      * @return  integer value of depth in tree.
      */
-
     public int getDepthInTree()
     {
         return this.depthInTree;
@@ -86,6 +93,7 @@ public class StateNode
     {
         return this.alpha;
     }
+    
     /**
      * Mutator method for variable alpha
      * @param int value of alpha

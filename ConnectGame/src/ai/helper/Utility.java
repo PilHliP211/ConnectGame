@@ -12,7 +12,10 @@ import gameElements.Board.ColumnFullException;
 public class Utility {
 
     /**
-     * 
+     * @param b the board to calculate the utility of
+     * @param myPiece my piece
+     * @param theirPiece the opponent's piece
+     * @return the utility of a given board for one piece over another
      */
     public static int calculate(Board b,Piece myPiece, Piece theirPiece){
         
