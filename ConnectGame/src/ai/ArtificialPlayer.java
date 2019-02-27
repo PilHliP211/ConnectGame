@@ -207,6 +207,8 @@ public class ArtificialPlayer implements Player {
             }
             if(goodColumn  && b != null)
             {
+                if(Utility.calculate(b, myPiece, theirPiece)==Integer.MAX_VALUE)
+                    return i;
                 int newAlpha = abMinValue(new StateNode(b, root.getDepthInTree()+1), root.getAlpha(), root.getBeta());
                 if(newAlpha > root.getAlpha())
                 { 
