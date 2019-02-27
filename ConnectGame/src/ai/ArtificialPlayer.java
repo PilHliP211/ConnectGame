@@ -207,6 +207,8 @@ public class ArtificialPlayer implements Player {
             }
             if(goodColumn  && b != null)
             {
+                if(Utility.calculate(b, myPiece, theirPiece)==Integer.MAX_VALUE)
+                    return i;
                 int newAlpha = abMinValue(new StateNode(b, root.getDepthInTree()+1), root.getAlpha(), root.getBeta());
                 if(newAlpha > root.getAlpha())
                 { 
@@ -248,8 +250,6 @@ public class ArtificialPlayer implements Player {
                 StateNode n = new StateNode(b,node.getDepthInTree()+1); 
                 node.setBeta(Math.min(node.getBeta(), abMaxValue(n, node.getAlpha(), node.getBeta())));
          
-                //FIXME:  Print statment for checking alpha/beta values
-                System.out.println("abMinValue Depth:  " + node.getDepthInTree() +"\n\tAlpha:  " + node.getAlpha() + "   Beta:  " + node.getBeta());
                 if(node.getAlpha() >= node.getBeta())
                 {
                     return Integer.MIN_VALUE;
@@ -289,8 +289,6 @@ public class ArtificialPlayer implements Player {
                 StateNode n = new StateNode(b,node.getDepthInTree()+1);
                 node.setAlpha(Math.max(node.getAlpha(), abMinValue(n, node.getAlpha(), node.getBeta())));
             
-                //FIXME:  Print statment for checking alpha/beta values 
-                System.out.println("abMaxValue Depth:  " + node.getDepthInTree() +"\n\tAlpha:  " + node.getAlpha() + "   Beta:  " + node.getBeta());        
                 if(node.getAlpha() >= node.getBeta())
                 {
                     return Integer.MAX_VALUE;

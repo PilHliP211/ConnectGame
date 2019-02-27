@@ -116,14 +116,14 @@ public class Utility {
         for(int i = 0;i<a.length;i++)
             if(a[i]==p)val++;
             else if(a[i]!= Piece.NONE)val--;
-        /*
+
         //sections with no enemy pieces are exponentially more valuable
         boolean bad = false;
         for(int i = 0;i<a.length && !bad;i++)   
             if(a[i]!=p && a[i]!=Piece.NONE) bad = true;
             else if (a[i]==Piece.NONE)val++;
             else val+=i+1;  
-            */   
+
         boolean loser = true;
         for(int i = 0;i<a.length;i++){
             if(a[i]==p || a[i]==Piece.NONE)
