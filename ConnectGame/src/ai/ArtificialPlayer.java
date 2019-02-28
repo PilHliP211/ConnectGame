@@ -64,129 +64,6 @@ public class ArtificialPlayer implements Player {
         return turn;
     }
 
-    /**
-     * min/max search function calls recursive minValue and maxValue functions
-     * to determine best move based on results returned from utility funciton.  
-     * Superceded by abSearch function that provides the same functionality with 
-     * added alpha/beta tree pruning.  
-     * 
-     * @return integer value indicting board position of best move
-     * @param StateNode object which is passed as the root of the min/max tree
-     */
-
-    private int minMaxSearch(StateNode root)
-    {
-        int val =Integer.MIN_VALUE;
-        int a = -1;
-        for(int i = 0; i<root.getBoard().getSpaces().length;i++)
-        {
-            boolean goodColumn = true;
-            Board b = root.getBoard().copy();
-            try 
-            {
-                b = (b.copy().placePiece(myPiece, i)?b.copy():null);
-                if(b!= null)
-                    b.placePiece(myPiece, i);
-            } 
-            catch (ColumnFullException cfe)
-            {
-                goodColumn = false;
-            }
-            if(goodColumn  && b != null)
-            {
-                int newVal = minValue(new StateNode(b, root.getDepthInTree()+1));
-                if(newVal > val)
-                { 
-                    val = newVal;
-                    a = i;
-                }
-            }
-        }
-        return a;
-    }
-
-    /**
-     * One of two recursive functions that return the best possible move for the
-     * AI.  The min Function chooses the worst branch for the player.  Superceded
-     * by abMinValue function that provides the same functionality with added 
-     * alpha/beta tree pruning.
-     * 
-     * @return integer value indicating the lowest utility as determined by the utility function
-     * @param StateNode object, which is the local root node
-     */
-
-    private int minValue(StateNode node)
-    {
-        if (difficulty <= node.getDepthInTree())
-            return Utility.calculate(node.getBoard(), myPiece, theirPiece);
-        int val = Integer.MAX_VALUE;
-        for(int i = 0;i<node.getBoard().getSpaces().length;i++)
-        {
-            boolean goodColumn = true;
-            Board b = null;
-            try
-            {
-                b = (node.getBoard().copy().placePiece(theirPiece, i)?node.getBoard().copy():null);
-                if(b!= null)
-                    b.placePiece(theirPiece, i);
-            } 
-            catch (ColumnFullException cfe)
-            {
-                goodColumn = false;
-            }
-            if(goodColumn && b != null)
-            {
-                StateNode n = new StateNode(b,node.getDepthInTree()+1);
-                val = Math.min(val, maxValue(n));
-            }
-            
-        }
-        return val;
-    }
-
-
-    /**
-     * One of two recursive functions that return the best possible move for the
-     * AI.  The max Function chooses the best branch for the AI.  Superceded
-     * by abMaxValue function that provides the same functionality with added 
-     * alpha/beta tree pruning.
-     * 
-     * @return integer value indicating the highest utility as determined by the utility function
-     * @param StateNode object, which is the local root node
-     */
-    private int maxValue(StateNode node)
-    {
-        if (difficulty <= node.getDepthInTree()) 
-            return Utility.calculate(node.getBoard(), myPiece, theirPiece);
-        int val = Integer.MIN_VALUE;
-        for(int i = 0;i<node.getBoard().getSpaces().length;i++)
-        {
-            boolean goodColumn = true;
-            Board b = null;
-            try
-            {
-                b = (node.getBoard().copy().placePiece(myPiece, i)?node.getBoard().copy():null);
-                if(b!= null)
-                    b.placePiece(myPiece, i);
-            } 
-            catch (ColumnFullException cfe)
-            {
-                goodColumn = false;
-            }
-            if(goodColumn && b != null)
-            {
-                StateNode n = new StateNode(b,node.getDepthInTree()+1);
-                val = Math.max(val, minValue(n));
-
-            }
-            
-        }
-        return val;
-    }
-
-
-
-
     private int abSearch(StateNode root)
     {
         int a = -1;
@@ -213,8 +90,6 @@ public class ArtificialPlayer implements Player {
                     root.setAlpha(newAlpha);
                     a = i;
                 }
-//                int blockLoss = Utility.willLose(b, myPiece, theirPiece);
-//                if(blockLoss>=0)
             }
         }
         return a;

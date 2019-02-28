@@ -25,7 +25,7 @@ public class Game {
 	public Game(){
 		board = new QuadraticBoard();
 		player1 = new InputPlayer(Piece.BLACK,board);
-		player2 = new ArtificialPlayer(4, Piece.RED,board);
+		player2 = new ArtificialPlayer(5, Piece.RED,board);
 		playerQueue = new LinkedList<Player>();
 		playerQueue.add(player1);
 		playerQueue.add(player2);
@@ -55,7 +55,7 @@ public class Game {
 	public Game(Board b){
 		board = b;
 		player1 = new InputPlayer(Piece.BLACK,board);
-		player2 = new ArtificialPlayer(4, Piece.RED,board);
+		player2 = new ArtificialPlayer(5, Piece.RED,board);
 		playerQueue = new LinkedList<Player>();
 		playerQueue.add(player1);
 		playerQueue.add(player2);
@@ -116,7 +116,13 @@ public class Game {
 	}
 
 	private static void startGameFromArgs(String[] args){
-		Board b = new QuadraticBoard(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+		int n = Integer.parseInt(args[0]);
+		int m = Integer.parseInt(args[1]);
+		if(n<4) n = 4;
+		if(n>9) n = 9;
+		if(m<3) m = 3;
+		if(m>6) m = 6;
+		Board b = new QuadraticBoard(n,m);
 		new Game(b).startGame();
 	}
 }

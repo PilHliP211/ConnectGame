@@ -38,7 +38,7 @@ public class Utility {
             System.out.println("getSubBoard encountered a bounds error!");
         }
         
-        int losses = 1;
+        int losses = 0;
         try{
         boolean lost = false;
         for(int w = 0;w<b.getSpaces().length - b.getWinCondition()+1&& !lost;w++)
@@ -124,6 +124,13 @@ public class Utility {
             else if (a[i]==Piece.NONE)val++;
             else val+=i+1;  
 
+        boolean winner = true;
+        for(int i = 0;i<a.length;i++){
+            if(a[i]!=p)winner= false;
+        }
+        if(winner) 
+            return Integer.MAX_VALUE;
+
         boolean loser = true;
         for(int i = 0;i<a.length;i++){
             if(a[i]==p || a[i]==Piece.NONE)
@@ -131,12 +138,6 @@ public class Utility {
         }
         if(loser) 
             return Integer.MIN_VALUE;
-        boolean winner = true;
-        for(int i = 0;i<a.length;i++){
-            if(a[i]!=p)winner= false;
-        }
-        if(winner) 
-            return Integer.MAX_VALUE;
 
         return val;
     }
