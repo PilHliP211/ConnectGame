@@ -41,8 +41,8 @@ public class RandomTester {
 			ByteArrayInputStream in = new ByteArrayInputStream(convertIntsToInputs(r.ints(400,0,dimension)).getBytes());
 			System.setIn(in);
 			Scanner sIn = new Scanner(System.in);
-			Player p1 = new InputPlayer(Piece.BLACK, b, sIn);
-			Player p2 = new InputPlayer(Piece.RED, b, sIn);
+			Player p1 = new InputPlayer(Piece.O, b, sIn);
+			Player p2 = new InputPlayer(Piece.X, b, sIn);
 			Game g = new Game(b,p1,p2);
 			g.startGame(true);
 			i++;

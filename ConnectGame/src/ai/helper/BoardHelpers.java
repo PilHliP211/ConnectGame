@@ -90,11 +90,11 @@ public class BoardHelpers {
                 }
                 if((i*j)%3 == 1)
                 {
-                    piece = Piece.RED;
+                    piece = Piece.X;
                 }
                 if((i*j)%3 == 2)
                 {
-                    piece = Piece.BLACK;
+                    piece = Piece.O;
                 }
                 testBoard.setPieceAtSpace(piece, i, j);
             }

@@ -31,7 +31,7 @@ public class ArtificialPlayer implements Player {
     public ArtificialPlayer(int difficulty, Piece p, Board b){
         this.difficulty = difficulty;
         this.myPiece = p;
-        this.theirPiece = myPiece == Piece.RED?Piece.BLACK:Piece.RED;
+        this.theirPiece = myPiece == Piece.X?Piece.O:Piece.X;
         this.gameBoard = b;
     }
 

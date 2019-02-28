@@ -144,8 +144,8 @@ public class Utility {
 
     public static void main(String[] args) throws ColumnFullException{
         Board b = new gameElements.QuadraticBoard(4,4);
-        b.placePiece(Piece.BLACK, 2);
-        b.placePiece(Piece.RED, 2);
-        System.out.println(Utility.calculate(b, Piece.BLACK, Piece.RED));
+        b.placePiece(Piece.O, 2);
+        b.placePiece(Piece.X, 2);
+        System.out.println(Utility.calculate(b, Piece.O, Piece.X));
     }
 }
