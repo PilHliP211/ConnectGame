@@ -51,7 +51,7 @@ public class ArtificialPlayer implements Player {
     public boolean nextMove(boolean noPrompt) throws NumberFormatException, ColumnFullException {
         Board b = gameBoard.copy();
         //if place was successful, turn = false, but nextMove = true;
-        return !(turn = !gameBoard.placePiece(myPiece,minMaxSearch(new StateNode(b))));
+        return !(turn = !gameBoard.placePiece(myPiece,abSearch(new StateNode(b))));
 
     }
 
@@ -256,7 +256,7 @@ public class ArtificialPlayer implements Player {
                 node.setBeta(Math.min(node.getBeta(), abMaxValue(n, node.getAlpha(), node.getBeta())));
          
                 //FIXME:  Print statment for checking alpha/beta values
-                System.out.println("abMinValue Depth:  " + node.getDepthInTree() +"\n\tAlpha:  " + node.getAlpha() + "   Beta:  " + node.getBeta());
+//                System.out.println("abMinValue Depth:  " + node.getDepthInTree() +"\n\tAlpha:  " + node.getAlpha() + "   Beta:  " + node.getBeta());
                 if(node.getAlpha() >= node.getBeta())
                 {
                     return Integer.MIN_VALUE;
@@ -296,7 +296,7 @@ public class ArtificialPlayer implements Player {
                 node.setAlpha(Math.max(node.getAlpha(), abMinValue(n, node.getAlpha(), node.getBeta())));
             
                 //FIXME:  Print statment for checking alpha/beta values 
-                System.out.println("abMaxValue Depth:  " + node.getDepthInTree() +"\n\tAlpha:  " + node.getAlpha() + "   Beta:  " + node.getBeta());        
+//                System.out.println("abMaxValue Depth:  " + node.getDepthInTree() +"\n\tAlpha:  " + node.getAlpha() + "   Beta:  " + node.getBeta());        
                 if(node.getAlpha() >= node.getBeta())
                 {
                     return Integer.MAX_VALUE;
