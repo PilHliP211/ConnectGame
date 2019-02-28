@@ -7,8 +7,8 @@ package gameElements;
  */
 public enum Piece {
     NONE(' '),
-    RED('X'),
-    BLACK('O');
+    X('X'),
+    O('O');
     
     char character = ' ';
     
