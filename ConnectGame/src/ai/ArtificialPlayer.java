@@ -207,8 +207,6 @@ public class ArtificialPlayer implements Player {
             }
             if(goodColumn  && b != null)
             {
-                if(Utility.calculate(b, myPiece, theirPiece)==Integer.MAX_VALUE)
-                    return i;
                 int newAlpha = abMinValue(new StateNode(b, root.getDepthInTree()+1), root.getAlpha(), root.getBeta());
                 if(newAlpha > root.getAlpha())
                 { 
@@ -228,7 +226,7 @@ public class ArtificialPlayer implements Player {
         node.setAlpha(alpha);
         node.setBeta(beta);
 
-        if (difficulty <= node.getDepthInTree())
+        if (difficulty <= node.getDepthInTree() || node.getBoard().didWin() != Piece.NONE)
             return Utility.calculate(node.getBoard(), myPiece, theirPiece);
 
         for(int i = 0;i<node.getBoard().getSpaces().length;i++)
@@ -267,7 +265,7 @@ public class ArtificialPlayer implements Player {
         node.setAlpha(alpha);
         node.setBeta(beta);
 
-        if (difficulty <= node.getDepthInTree()) 
+        if (difficulty <= node.getDepthInTree() || node.getBoard().didWin() != Piece.NONE) 
             return Utility.calculate(node.getBoard(), myPiece, theirPiece);
 
         for(int i = 0;i<node.getBoard().getSpaces().length;i++)
