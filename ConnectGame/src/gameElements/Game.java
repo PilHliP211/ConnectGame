@@ -24,7 +24,8 @@ public class Game {
 	 */
 	public Game(){
 		board = new QuadraticBoard();
-		player1 = new InputPlayer(Piece.BLACK,board);
+	//	player1 = new InputPlayer(Piece.BLACK,board);
+		player1 = new ArtificialPlayer(4, Piece.BLACK,board);		
 		player2 = new ArtificialPlayer(4, Piece.RED,board);
 		playerQueue = new LinkedList<Player>();
 		playerQueue.add(player1);

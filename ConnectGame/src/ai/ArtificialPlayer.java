@@ -7,6 +7,9 @@ import gameElements.Board;
 import gameElements.Piece;
 import gameElements.Player;
 
+//FIXME:  added import BoardHelpers
+import ai.helper.BoardHelpers;
+
 /**
  * @author Phillip Byram 
  * @author Russell Plenkers
@@ -48,7 +51,7 @@ public class ArtificialPlayer implements Player {
     public boolean nextMove(boolean noPrompt) throws NumberFormatException, ColumnFullException {
         Board b = gameBoard.copy();
         //if place was successful, turn = false, but nextMove = true;
-        return !(turn = !gameBoard.placePiece(myPiece,abSearch(new StateNode(b))));
+        return !(turn = !gameBoard.placePiece(myPiece,minMaxSearch(new StateNode(b))));
 
     }
 
@@ -94,6 +97,8 @@ public class ArtificialPlayer implements Player {
             }
             if(goodColumn  && b != null)
             {
+                if(Utility.calculate(b, myPiece, theirPiece)==Integer.MAX_VALUE)
+                    return i;
                 int newVal = minValue(new StateNode(b, root.getDepthInTree()+1));
                 if(newVal > val)
                 { 
@@ -202,7 +207,9 @@ public class ArtificialPlayer implements Player {
                 b = (b.copy().placePiece(myPiece, i)?b.copy():null);
                 if(b!= null)
                     b.placePiece(myPiece, i);
-            } catch (ColumnFullException cfe){
+            } 
+            catch (ColumnFullException cfe)
+            {
                 goodColumn = false;
             }
             if(goodColumn  && b != null)
@@ -215,8 +222,6 @@ public class ArtificialPlayer implements Player {
                     root.setAlpha(newAlpha);
                     a = i;
                 }
-//                int blockLoss = Utility.willLose(b, myPiece, theirPiece);
-//                if(blockLoss>=0)
             }
         }
         return a;
@@ -257,7 +262,6 @@ public class ArtificialPlayer implements Player {
                     return Integer.MIN_VALUE;
                 }
             }
-            
         }
         return node.getBeta();
     }

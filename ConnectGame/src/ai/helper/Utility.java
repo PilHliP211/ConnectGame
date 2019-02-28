@@ -18,7 +18,7 @@ public class Utility {
      * @return the utility of a given board for one piece over another
      */
     public static int calculate(Board b,Piece myPiece, Piece theirPiece){
-        
+
         int wins = 0;
         try{
         boolean won = false;
@@ -38,7 +38,7 @@ public class Utility {
             System.out.println("getSubBoard encountered a bounds error!");
         }
         
-        int losses = 1;
+        int losses = 0;
         try{
         boolean lost = false;
         for(int w = 0;w<b.getSpaces().length - b.getWinCondition()+1&& !lost;w++)
@@ -60,7 +60,8 @@ public class Utility {
         return wins - losses;
     }
 
-    private static int checkSubBoard(Board b, Piece p){
+    //FIXME:  Changed to public
+    public static int checkSubBoard(Board b, Piece p){
         int wins = 0;
         for(int w = 0;w<b.getSpaces().length;w++)
         {
@@ -116,14 +117,14 @@ public class Utility {
         for(int i = 0;i<a.length;i++)
             if(a[i]==p)val++;
             else if(a[i]!= Piece.NONE)val--;
-        /*
+        
         //sections with no enemy pieces are exponentially more valuable
         boolean bad = false;
         for(int i = 0;i<a.length && !bad;i++)   
             if(a[i]!=p && a[i]!=Piece.NONE) bad = true;
             else if (a[i]==Piece.NONE)val++;
             else val+=i+1;  
-            */   
+  
         boolean loser = true;
         for(int i = 0;i<a.length;i++){
             if(a[i]==p || a[i]==Piece.NONE)
