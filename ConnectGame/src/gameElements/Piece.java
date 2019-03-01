@@ -23,7 +23,6 @@ public enum Piece {
     String prettyName()
     {
         return  String.valueOf(this.getCharacter());
-        //return this.toString().substring(0, 1) + this.toString().toLowerCase().substring(1);
     }
 
 }

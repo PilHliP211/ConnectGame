@@ -119,10 +119,13 @@ public class Utility {
 
         //sections with no enemy pieces are exponentially more valuable
         boolean bad = false;
+        int tempVal = 0;
         for(int i = 0;i<a.length && !bad;i++)   
             if(a[i]!=p && a[i]!=Piece.NONE) bad = true;
-            else if (a[i]==Piece.NONE)val++;
-            else val+=i+1;  
+            else if (a[i]==Piece.NONE)tempVal++;
+            else tempVal+=i+1;
+        if(!bad)
+            val = tempVal;
 
         boolean winner = true;
         for(int i = 0;i<a.length;i++){
