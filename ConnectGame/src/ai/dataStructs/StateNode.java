@@ -60,7 +60,6 @@ public class StateNode
     }
  
 
-    
     /**
      *  Prints node data to terminal
      * 

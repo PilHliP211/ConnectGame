@@ -68,6 +68,7 @@ public class ArtificialPlayer implements Player {
 
     private int abSearch(StateNode root)
     {
+        
         Random r = new Random();
         
         //holder for all columns that can be placed into
