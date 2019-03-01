@@ -1,6 +1,9 @@
 package ai;
 
 import gameElements.Board.ColumnFullException;
+
+import java.util.Random;
+
 import ai.dataStructs.StateNode;
 import ai.helper.Utility;
 import gameElements.Board;
@@ -66,7 +69,8 @@ public class ArtificialPlayer implements Player {
 
     private int abSearch(StateNode root)
     {
-        int a = -1;
+        Random r = new Random();
+        int a = r.nextInt(root.getBoard().getSpaces().length);
         root.setAlpha(Integer.MIN_VALUE);
         root.setBeta(Integer.MAX_VALUE);
 
