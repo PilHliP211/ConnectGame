@@ -53,7 +53,6 @@ public class ArtificialPlayer implements Player {
         Board b = gameBoard.copy();
         //if place was successful, turn = false, but nextMove = true;
         return !(turn = !gameBoard.placePiece(myPiece,abSearch(new StateNode(b))));
-
     }
 
     /**
@@ -103,6 +102,7 @@ public class ArtificialPlayer implements Player {
             }
         }
         if(a==-1) return goodColumns.get(r.nextInt(goodColumns.size()));
+
         return a;
     }
 
