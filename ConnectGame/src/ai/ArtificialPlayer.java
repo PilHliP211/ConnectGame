@@ -2,6 +2,7 @@ package ai;
 
 import gameElements.Board.ColumnFullException;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import ai.dataStructs.StateNode;
@@ -61,7 +62,6 @@ public class ArtificialPlayer implements Player {
      * 
      * @return boolean value indicating whether it is AI's turn
      */
-
     @Override
     public boolean isTurn() {
         return turn;
@@ -70,7 +70,12 @@ public class ArtificialPlayer implements Player {
     private int abSearch(StateNode root)
     {
         Random r = new Random();
-        int a = r.nextInt(root.getBoard().getSpaces().length);
+        
+        //holder for all columns that can be placed into
+        //used in a final catch all in the case the a never changes from -1
+        ArrayList<Integer> goodColumns = new ArrayList<Integer>();
+
+        int a = -1;
         root.setAlpha(Integer.MIN_VALUE);
         root.setBeta(Integer.MAX_VALUE);
 
@@ -88,6 +93,7 @@ public class ArtificialPlayer implements Player {
             }
             if(goodColumn  && b != null)
             {
+                goodColumns.add(i);
                 int newAlpha = abMinValue(new StateNode(b, root.getDepthInTree()+1), root.getAlpha(), root.getBeta());
                 if(newAlpha > root.getAlpha())
                 { 
@@ -96,6 +102,7 @@ public class ArtificialPlayer implements Player {
                 }
             }
         }
+        if(a==-1) return goodColumns.get(r.nextInt(goodColumns.size()));
         return a;
     }
 
