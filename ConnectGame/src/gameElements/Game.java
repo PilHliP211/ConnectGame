@@ -109,13 +109,15 @@ public class Game {
 	}
 	
 	public static void main(String[] args){
-		if(args.length < 2)
-			new Game().startGame();
+		if(args.length == 2)
+			startGameFrom2Args(args);
+		else if (args.length == 1)
+			startGameFrom1Arg(args);
 		else
-			startGameFromArgs(args);
+			new Game().startGame();
 	}
 
-	private static void startGameFromArgs(String[] args){
+	private static void startGameFrom2Args(String[] args){
 		int n = Integer.parseInt(args[0]);
 		int m = Integer.parseInt(args[1]);
 		if(n<3) n = 3;
@@ -123,6 +125,14 @@ public class Game {
 		if(m<1) m = 1;
 		if(m>n) m = n;
 		Board b = new QuadraticBoard(n,m);
+		new Game(b).startGame();
+	}
+	
+	private static void startGameFrom1Arg(String[] args){
+		int n = Integer.parseInt(args[0]);
+		if(n<3) n = 3;
+		if(n>10) n = 10;
+		Board b = new QuadraticBoard(n,4);
 		new Game(b).startGame();
 	}
 }
