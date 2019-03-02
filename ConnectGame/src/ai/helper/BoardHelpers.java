@@ -19,10 +19,10 @@ public class BoardHelpers {
      * @param b game board used to generate sub board.
      * @param x horizontal position of game board to start copying into sub board
      * @param y vertical position of game board to start copying into sub board
-     * @return sub board object of type Board
-     * @throws DimensionsOOBException
+     * @return sub board object of type QuadraticBoard
+     * @throws DimensionsOOBException if the x,y coordinate would create a subboard that falls out of bounds of the board
      */
-    public static Board getSubBoard(Board b, int x, int y) throws DimensionsOOBException
+    public static QuadraticBoard getSubBoard(Board b, int x, int y) throws DimensionsOOBException
     {
         //iterate through spaces[w+i][h+i] until i = b.getWinCondition
         int dimension = b.getWinCondition();
@@ -113,7 +113,7 @@ public class BoardHelpers {
     }
 
     @SuppressWarnings("serial")
-    static class DimensionsOOBException extends Exception
+    public static class DimensionsOOBException extends Exception
     {
         public DimensionsOOBException(){
 			

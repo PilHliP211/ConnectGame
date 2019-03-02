@@ -9,7 +9,7 @@ import gameElements.Piece;
 import gameElements.QuadraticBoard;
 
 /**
- * 
+ * Main class to test the Artificial Players
  */
 public class ArtificialTester {
 

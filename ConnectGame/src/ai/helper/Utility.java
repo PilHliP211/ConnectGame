@@ -19,40 +19,44 @@ public class Utility {
      */
     public static int calculate(Board b,Piece myPiece, Piece theirPiece){
         
+        // get the positive utility
         int wins = 0;
         try{
-        boolean won = false;
-        for(int w = 0;w<b.getSpaces().length - b.getWinCondition()+1&& !won;w++)
-            for(int h = 0;h<b.getSpaces()[0].length - b.getWinCondition()+1&& !won;h++)
-                {
-                    int win = checkSubBoard(BoardHelpers.getSubBoard(b, w, h),myPiece);
-                    if(checkForInf(win)) 
+            boolean won = false;
+            for(int w = 0;w<b.getSpaces().length - b.getWinCondition()+1&& !won;w++)
+                for(int h = 0;h<b.getSpaces()[0].length - b.getWinCondition()+1&& !won;h++)
                     {
-                        won = true;
-                        return win;
+                        int win = checkSubBoard(BoardHelpers.getSubBoard(b, w, h),myPiece);
+                        if(checkForInf(win)) 
+                        {
+                            // this board lets us win, return max utility
+                            won = true;
+                            return win;
+                        }
+                        else
+                            wins += win;
                     }
-                    else
-                        wins += win;
-                }
         } catch (DimensionsOOBException doobe){
             System.out.println("getSubBoard encountered a bounds error!");
         }
         
+        // get the negative utility
         int losses = 0;
         try{
-        boolean lost = false;
-        for(int w = 0;w<b.getSpaces().length - b.getWinCondition()+1&& !lost;w++)
-            for(int h = 0;h<b.getSpaces()[0].length - b.getWinCondition()+1&& !lost;h++)
-            {
-                int lose = checkSubBoard(BoardHelpers.getSubBoard(b, w, h),theirPiece);
-                if(checkForInf(lose)) 
+            boolean lost = false;
+            for(int w = 0;w<b.getSpaces().length - b.getWinCondition()+1&& !lost;w++)
+                for(int h = 0;h<b.getSpaces()[0].length - b.getWinCondition()+1&& !lost;h++)
                 {
-                    lost = true;
-                    return -lose;
+                    int lose = checkSubBoard(BoardHelpers.getSubBoard(b, w, h),theirPiece);
+                    if(checkForInf(lose)) 
+                    {
+                        // this board makes us lose, return min utility.
+                        lost = true;
+                        return -lose;
+                    }
+                    else
+                        losses += lose;
                 }
-                else
-                    losses += lose;
-            }
         } catch (DimensionsOOBException doobe){
             System.out.println("getSubBoard encountered a bounds error!");
         }
@@ -62,22 +66,26 @@ public class Utility {
 
     private static int checkSubBoard(Board b, Piece p){
         int wins = 0;
+        // get the utility points for each vertical in the subboard
         for(int w = 0;w<b.getSpaces().length;w++)
         {
             int win = checkArray(getVert(b,w),p);
             if(checkForInf(win)) return win;
             wins+= win;
         }
+        // get the utility points for each horizontal in the subboard
         for(int h = 0;h<b.getSpaces().length;h++){
             int win = checkArray(getHoriz(b,h),p);
             if(checkForInf(win)) return win;
             wins+= win;
         }
+        // get the utility for the single left diagonal in the subboard
         {
             int win = checkArray(getLeftDiag(b), p);
             if(checkForInf(win)) return win;
             wins+=win;
         }
+        // get the utility for the single right diagonal in the subboard
         {
             int win = checkArray(getRightDiag(b), p);
             if(checkForInf(win)) return win;
@@ -117,7 +125,7 @@ public class Utility {
             if(a[i]==p)val++;
             else if(a[i]!= Piece.NONE)val--;
 
-        //sections with no enemy pieces are exponentially more valuable
+        // sections with no enemy pieces are exponentially more valuable
         boolean bad = false;
         int tempVal = 0;
         for(int i = 0;i<a.length && !bad;i++)   
@@ -127,6 +135,7 @@ public class Utility {
         if(!bad)
             val = tempVal;
 
+        // check if this array has only our pieces and report a win
         boolean winner = true;
         for(int i = 0;i<a.length;i++){
             if(a[i]!=p)winner= false;
@@ -134,6 +143,7 @@ public class Utility {
         if(winner) 
             return Integer.MAX_VALUE;
 
+        // check if this array has only thier piece and report a loss
         boolean loser = true;
         for(int i = 0;i<a.length;i++){
             if(a[i]==p || a[i]==Piece.NONE)

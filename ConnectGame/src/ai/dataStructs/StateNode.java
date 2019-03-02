@@ -5,7 +5,6 @@ import gameElements.Board;
 
 import ai.helper.BoardHelpers;
 
-
 /**
  * @author Phillip Byram 
  * A Node in The Tree Struture
@@ -13,15 +12,13 @@ import ai.helper.BoardHelpers;
  */
 public class StateNode 
 {
-    private Integer posInf = Integer.MAX_VALUE;
-    private Integer negInf = Integer.MIN_VALUE;
+    private static final int POS_INF = Integer.MAX_VALUE;
+    private static final int NEG_INF = Integer.MIN_VALUE;
 
     private Board board;
-    private int utility;
     private int alpha;
     private int beta;
-    private int depthInTree;
-    
+    private int depthInTree = 0;
 
     /**
      * Creates default node.  Best to setup tree's root node. 
@@ -29,11 +26,9 @@ public class StateNode
     public StateNode()
     {
         board.initBoard();
-        this.utility = 0;
-        this.alpha = negInf;
-        this.beta = posInf;
+        this.alpha = NEG_INF;
+        this.beta = POS_INF;
     }
-
 
     /**
      * Creates a node with a board
@@ -42,8 +37,8 @@ public class StateNode
     public StateNode(Board b)
     {
         this.board = b;
-        this.alpha = negInf;
-        this.beta = posInf;
+        this.alpha = NEG_INF;
+        this.beta = POS_INF;
     }
 
     /**
@@ -54,22 +49,19 @@ public class StateNode
     public StateNode(Board b, int depth)
     {
         this.board = b;
-        this.alpha = negInf;
-        this.beta = posInf;
+        this.alpha = NEG_INF;
+        this.beta = POS_INF;
         this.depthInTree = depth;
     }
- 
-
     
     /**
-     *  Prints node data to terminal
+     *  Prints node data to System.out
      * 
      */
     public void showNode()
     {
         System.out.println("Node Data:  ");
         System.out.println("--------------------------------------------");
-        System.out.println("Utility:\t" + this.utility);
         System.out.println("Alpha:  \t" + this.alpha);
         System.out.println("Beta:   \t" + this.beta);
         this.board.showBoard();
@@ -78,7 +70,7 @@ public class StateNode
 
     /**
      * Gets current node's depth in the tree.
-     * @return  integer value of depth in tree.
+     * @return value of depth in tree.
      */
     public int getDepthInTree()
     {
@@ -87,7 +79,7 @@ public class StateNode
 
     /**
      * Accessor method for variable alpha
-     * @return int value of alpha
+     * @return value of alpha
      */
     public int getAlpha()
     {
@@ -96,7 +88,7 @@ public class StateNode
     
     /**
      * Mutator method for variable alpha
-     * @param int value of alpha
+     * @param a value of alpha
      */
     public void setAlpha(int a)
     {
@@ -105,7 +97,7 @@ public class StateNode
     
     /**
      * Accessor method for variable beta
-     * @return int value of beta
+     * @return value of beta
      */
     public int getBeta()
     {
@@ -114,29 +106,11 @@ public class StateNode
 
     /**
      * Mutator method for variable beta
-     * @param int value of alpha
+     * @param b value of beta
      */
     public void setBeta(int b)
     {
         this.beta = b;
-    }
-
-    /**
-     * Accessor method for variable utility
-     * @return int value of utility
-     */
-    public int getUtility()
-    {
-        return this.utility;
-    }
-
-    /**
-     * Mutator method for variable utility
-     * @param int value of utility
-     */
-    public void setUtility(int u)
-    {
-        this.utility = u;
     }
 
     /**
@@ -151,7 +125,7 @@ public class StateNode
 
     /**
      * Main function to test StateNode class.
-     * @param args
+     * @param args none
      */
     public static void main(String[] args)
     {

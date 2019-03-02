@@ -26,7 +26,7 @@ public class ArtificialPlayer implements Player {
     private boolean turn;
     
     /**
-     * Constructor for the ArtificialPlayer class.
+     * Constructor for the ArtificialPlayer.
      * 
      * @param integer value indicating depth of tree traversal
      * @param Piece enumerator type for artificial player
@@ -39,15 +39,6 @@ public class ArtificialPlayer implements Player {
         this.gameBoard = b;
     }
 
-    /**
-     * Overrides Player interface's nextMove function to allow the AI to make its
-     * next move.  
-     * 
-     * @return boolean value indicating AI has made its move
-     * @param boolean which player's turn it is
-     * @throws NumberFormatException if number entered is outside valid bounds
-     * @throws ColumnFullException if invalid move is chosen because column is full
-     */
     @Override
     public boolean nextMove(boolean noPrompt) throws NumberFormatException, ColumnFullException {
         Board b = gameBoard.copy();
@@ -56,12 +47,6 @@ public class ArtificialPlayer implements Player {
 
     }
 
-    /**
-     * Accessor method for ArtificialPlayer class turn variable.  Overrides Player
-     * interface's isTurn function.  
-     * 
-     * @return boolean value indicating whether it is AI's turn
-     */
     @Override
     public boolean isTurn() {
         return turn;
@@ -72,7 +57,7 @@ public class ArtificialPlayer implements Player {
         Random r = new Random();
         
         //holder for all columns that can be placed into
-        //used in a final catch all in the case the a never changes from -1
+        //used in a final catch all in case a never changes from -1
         ArrayList<Integer> goodColumns = new ArrayList<Integer>();
 
         int a = -1;
@@ -82,10 +67,13 @@ public class ArtificialPlayer implements Player {
         for(int i = 0; i<root.getBoard().getSpaces().length;i++)
         {
             boolean goodColumn = true;
+            // work on a copy of the board so we never have to remove pieces
             Board b = root.getBoard().copy();
             try 
             {
+                // check if we can place piece here
                 b = (b.copy().placePiece(myPiece, i)?b.copy():null);
+                // if the place piece worked, let's place it
                 if(b!= null)
                     b.placePiece(myPiece, i);
             } catch (ColumnFullException cfe){
@@ -93,6 +81,7 @@ public class ArtificialPlayer implements Player {
             }
             if(goodColumn  && b != null)
             {
+                // place piece worked, let's progress through the tree.
                 goodColumns.add(i);
                 int newAlpha = abMinValue(new StateNode(b, root.getDepthInTree()+1), root.getAlpha(), root.getBeta());
                 if(newAlpha > root.getAlpha())
@@ -102,6 +91,9 @@ public class ArtificialPlayer implements Player {
                 }
             }
         }
+        // At this point if a == -1, we are in bad shape... Every column gave us minimal utility. 
+        // This only happens if we are 100% going to lose assuming min plays logically.
+        // Place a piece randomly and hope the opponent does something dumb.
         if(a==-1) return goodColumns.get(r.nextInt(goodColumns.size()));
         return a;
     }
@@ -112,6 +104,7 @@ public class ArtificialPlayer implements Player {
         node.setAlpha(alpha);
         node.setBeta(beta);
 
+        // cutoff test: leaf node or the game is over.
         if (difficulty <= node.getDepthInTree() || node.getBoard().didWin() != Piece.NONE)
             return Utility.calculate(node.getBoard(), myPiece, theirPiece);
 
@@ -121,7 +114,9 @@ public class ArtificialPlayer implements Player {
             Board b = null;
             try
             {
+                // check if we can place piece here
                 b = (node.getBoard().copy().placePiece(theirPiece, i)?node.getBoard().copy():null);
+                // if the place piece worked, let's place it
                 if(b != null)
                     b.placePiece(theirPiece, i);
             } 
@@ -131,11 +126,13 @@ public class ArtificialPlayer implements Player {
             }
             if(goodColumn && b != null)
             {
+                // place piece worked, let's progress through the tree.
                 StateNode n = new StateNode(b,node.getDepthInTree()+1); 
                 node.setBeta(Math.min(node.getBeta(), abMaxValue(n, node.getAlpha(), node.getBeta())));
          
                 if(node.getAlpha() >= node.getBeta())
                 {
+                    // prune neighbors
                     return Integer.MIN_VALUE;
                 }
             }
@@ -151,6 +148,7 @@ public class ArtificialPlayer implements Player {
         node.setAlpha(alpha);
         node.setBeta(beta);
 
+        // cutoff test: leaf node or the game is over.
         if (difficulty <= node.getDepthInTree() || node.getBoard().didWin() != Piece.NONE) 
             return Utility.calculate(node.getBoard(), myPiece, theirPiece);
 
@@ -160,7 +158,9 @@ public class ArtificialPlayer implements Player {
             Board b = null;
             try
             {
+                // check if we can place piece here
                 b = (node.getBoard().copy().placePiece(myPiece, i)?node.getBoard().copy():null);
+                // if the place piece worked, let's place it
                 if(b!= null)
                     b.placePiece(myPiece, i);
             } 
@@ -170,11 +170,13 @@ public class ArtificialPlayer implements Player {
             }
             if(goodColumn && b != null)
             {
+                // place piece worked, let's progress through the tree.
                 StateNode n = new StateNode(b,node.getDepthInTree()+1);
                 node.setAlpha(Math.max(node.getAlpha(), abMinValue(n, node.getAlpha(), node.getBeta())));
             
                 if(node.getAlpha() >= node.getBeta())
                 {
+                    // prune neighbors
                     return Integer.MAX_VALUE;
                 }
             }

@@ -6,7 +6,7 @@ import java.util.Arrays;
  * @author Phillip Byram
  * The board Connect is played on
  * This Board can have a width and height that are independent of each other.
- *
+ * Currently this class is not supported.
  */
 public class StandardBoard  implements Board {
 

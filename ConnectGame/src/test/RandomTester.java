@@ -15,6 +15,7 @@ import gameElements.QuadraticBoard;
 /**
  * @author Phillip Byram
  * A Tester for Connect that randomly places pieces between two players and reports a winner, if any
+ * Used for checking board win detection, etc.
  *
  */
 public class RandomTester {
