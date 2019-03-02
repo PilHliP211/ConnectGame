@@ -44,31 +44,47 @@ public class ArtificialPlayer implements Player {
         Board b = gameBoard.copy();
         //if place was successful, turn = false, but nextMove = true;
         return !(turn = !gameBoard.placePiece(myPiece,abSearch(new StateNode(b))));
-
     }
 
     @Override
     public boolean isTurn() {
         return turn;
     }
+    
+    /**
+     * The top level max function for the Artificial Player class' Game
+     * Tree.  abSearch calls the abMinValue function that starts the recursive
+     * traversal of the Game Tree.    
+     *  
+     * @return integer value indicating the AI's best move
+     * @param StateNode root node object
+     */
 
     private int abSearch(StateNode root)
     {
+        // Random Integer Generator used to select column when AI cannot win
         Random r = new Random();
         
         //holder for all columns that can be placed into
-        //used in a final catch all in case a never changes from -1
+        //used in a final catch all in the case the action variable 'a' never changes from -1
         ArrayList<Integer> goodColumns = new ArrayList<Integer>();
-
+        
+        // Declare and initialize the action variable to its initial state
         int a = -1;
+        
+        // Set Alpha and Beta values to -inf and +inf to be passed to children
         root.setAlpha(Integer.MIN_VALUE);
         root.setBeta(Integer.MAX_VALUE);
-
+        
+        // Iterate through all columns on the board and place AI's piece
         for(int i = 0; i<root.getBoard().getSpaces().length;i++)
         {
             boolean goodColumn = true;
             // work on a copy of the board so we never have to remove pieces
             Board b = root.getBoard().copy();
+
+            // Try/Catch block to check that column is not full, and place piece at 
+            // column i if it is not.
             try 
             {
                 // check if we can place piece here
@@ -76,14 +92,26 @@ public class ArtificialPlayer implements Player {
                 // if the place piece worked, let's place it
                 if(b!= null)
                     b.placePiece(myPiece, i);
-            } catch (ColumnFullException cfe){
+            } 
+            catch (ColumnFullException cfe){
                 goodColumn = false;
             }
+
+            // If column is empty and board is not null, pass new board to child in 
+            // abMinValue function.  
             if(goodColumn  && b != null)
             {
                 // place piece worked, let's progress through the tree.
+                
+                // Add good column to ArrayList for final catch, if needed
                 goodColumns.add(i);
+
+                // Call recursive abMinValue function.  Store current child alpha value.
                 int newAlpha = abMinValue(new StateNode(b, root.getDepthInTree()+1), root.getAlpha(), root.getBeta());
+                
+                // If current child alpha value is greater than root alpha value, store current
+                // child alpha value in root alpha variable to be passed to next child. Also, 
+                // select current for loop iteration i value as current best action.
                 if(newAlpha > root.getAlpha())
                 { 
                     root.setAlpha(newAlpha);
@@ -95,6 +123,9 @@ public class ArtificialPlayer implements Player {
         // This only happens if we are 100% going to lose assuming min plays logically.
         // Place a piece randomly and hope the opponent does something dumb.
         if(a==-1) return goodColumns.get(r.nextInt(goodColumns.size()));
+
+        // After tree traversal complete, return best possible action as determined by 
+        // Min-Max functions.
         return a;
     }
 
