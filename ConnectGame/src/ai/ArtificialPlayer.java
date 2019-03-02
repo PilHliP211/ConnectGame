@@ -62,7 +62,7 @@ public class ArtificialPlayer implements Player {
 
     private int abSearch(StateNode root)
     {
-        // Random Integer Generator used to select column when AI cannot win
+        // Random Generator used to select column when AI cannot win
         Random r = new Random();
         
         //holder for all columns that can be placed into
@@ -102,7 +102,7 @@ public class ArtificialPlayer implements Player {
             if(goodColumn  && b != null)
             {
                 // place piece worked, let's progress through the tree.
-                
+
                 // Add good column to ArrayList for final catch, if needed
                 goodColumns.add(i);
 
