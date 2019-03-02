@@ -6,7 +6,7 @@ import java.util.Arrays;
  * @author Phillip Byram
  * The board Connect is played on
  * This Board can have a width and height that are independent of each other.
- *
+ * Currently this class is not supported.
  */
 public class StandardBoard  implements Board {
 
@@ -119,31 +119,31 @@ public class StandardBoard  implements Board {
 	{
 		for(int w=0;w<width;w++)
 			for(int h=0;h<height;h++){
-				if(checkVertical(Piece.BLACK,spaces[w],h,winCondition))
-					return Piece.BLACK;
-				if(checkVertical(Piece.RED,spaces[w],h,winCondition))
-					return Piece.RED;
+				if(checkVertical(Piece.O,spaces[w],h,winCondition))
+					return Piece.O;
+				if(checkVertical(Piece.X,spaces[w],h,winCondition))
+					return Piece.X;
 			}
 		for(int h=0;h<height;h++)
 			for(int w=0;w<width;w++){
-				if(checkHorizontal(Piece.BLACK,getRowOf2dArray(spaces,h),w,winCondition))
-					return Piece.BLACK;
-				if(checkHorizontal(Piece.RED,getRowOf2dArray(spaces,h),w,winCondition))
-					return Piece.RED;
+				if(checkHorizontal(Piece.O,getRowOf2dArray(spaces,h),w,winCondition))
+					return Piece.O;
+				if(checkHorizontal(Piece.X,getRowOf2dArray(spaces,h),w,winCondition))
+					return Piece.X;
 		}
 		for(int d=0;d<width+height-1;d++)
 			for(int l=0;l<getDiagLength(width,height,d);l++){
-				if(checkLeftDiagonal(Piece.BLACK,getDiagOf2dArray(spaces,d,true),l,winCondition))
-					return Piece.BLACK;
-				if(checkLeftDiagonal(Piece.RED,getDiagOf2dArray(spaces,d,true),l,winCondition))
-					return Piece.RED;
+				if(checkLeftDiagonal(Piece.O,getDiagOf2dArray(spaces,d,true),l,winCondition))
+					return Piece.O;
+				if(checkLeftDiagonal(Piece.X,getDiagOf2dArray(spaces,d,true),l,winCondition))
+					return Piece.X;
 		}
 		for(int d=0;d<width+height-1;d++)
 			for(int l=0;l<getDiagLength(width,height,d);l++){
-				if(checkRightDiagonal(Piece.BLACK,getDiagOf2dArray(spaces,d,false),l,winCondition))
-					return Piece.BLACK;
-				if(checkRightDiagonal(Piece.RED,getDiagOf2dArray(spaces,d,false),l,winCondition))
-					return Piece.RED;
+				if(checkRightDiagonal(Piece.O,getDiagOf2dArray(spaces,d,false),l,winCondition))
+					return Piece.O;
+				if(checkRightDiagonal(Piece.X,getDiagOf2dArray(spaces,d,false),l,winCondition))
+					return Piece.X;
 		}
 		
 		return Piece.NONE;
@@ -353,63 +353,63 @@ public class StandardBoard  implements Board {
 		StandardBoard B = new StandardBoard(7,7);
 		B.didWin();
 		/*
-		B.placePiece(Piece.BLACK, 0);
-		B.placePiece(Piece.BLACK, 0);
+		B.placePiece(Piece.O, 0);
+		B.placePiece(Piece.O, 0);
 		
-		B.placePiece(Piece.RED, 1);
-		B.placePiece(Piece.RED, 1);
+		B.placePiece(Piece.X, 1);
+		B.placePiece(Piece.X, 1);
 		
-		B.placePiece(Piece.RED, 2);
-		B.placePiece(Piece.BLACK, 2);
-		B.placePiece(Piece.BLACK, 2);
+		B.placePiece(Piece.X, 2);
+		B.placePiece(Piece.O, 2);
+		B.placePiece(Piece.O, 2);
 		
-		B.placePiece(Piece.BLACK, 3);
-		B.placePiece(Piece.BLACK, 3);
-		B.placePiece(Piece.RED, 3);
-		B.placePiece(Piece.BLACK, 3);
+		B.placePiece(Piece.O, 3);
+		B.placePiece(Piece.O, 3);
+		B.placePiece(Piece.X, 3);
+		B.placePiece(Piece.O, 3);
 
-		B.placePiece(Piece.BLACK, 4);
-		B.placePiece(Piece.RED, 4);
-		B.placePiece(Piece.RED, 4);
-		B.placePiece(Piece.RED, 4);
+		B.placePiece(Piece.O, 4);
+		B.placePiece(Piece.X, 4);
+		B.placePiece(Piece.X, 4);
+		B.placePiece(Piece.X, 4);
 		*//*
-		B.placePiece(Piece.RED, 0);
-		B.placePiece(Piece.BLACK, 0);
+		B.placePiece(Piece.X, 0);
+		B.placePiece(Piece.O, 0);
 		
-		B.placePiece(Piece.BLACK, 1);
-		B.placePiece(Piece.RED, 1);
+		B.placePiece(Piece.O, 1);
+		B.placePiece(Piece.X, 1);
 		
-		B.placePiece(Piece.RED, 2);
-		B.placePiece(Piece.RED, 2);
-		B.placePiece(Piece.BLACK, 2);
+		B.placePiece(Piece.X, 2);
+		B.placePiece(Piece.X, 2);
+		B.placePiece(Piece.O, 2);
 		
-		B.placePiece(Piece.BLACK, 3);
-		B.placePiece(Piece.RED, 3);
-		B.placePiece(Piece.RED, 3);
-		B.placePiece(Piece.BLACK, 3);
-		B.placePiece(Piece.RED, 4);
-		B.placePiece(Piece.BLACK, 4);
-		B.placePiece(Piece.BLACK, 4);
-		B.placePiece(Piece.RED, 4);
+		B.placePiece(Piece.O, 3);
+		B.placePiece(Piece.X, 3);
+		B.placePiece(Piece.X, 3);
+		B.placePiece(Piece.O, 3);
+		B.placePiece(Piece.X, 4);
+		B.placePiece(Piece.O, 4);
+		B.placePiece(Piece.O, 4);
+		B.placePiece(Piece.X, 4);
 
-		B.placePiece(Piece.RED, 5);
-		B.placePiece(Piece.RED, 6);
-		B.placePiece(Piece.RED, 5);
-		B.placePiece(Piece.BLACK, 5);
-		B.placePiece(Piece.RED, 6);
-		B.placePiece(Piece.BLACK, 6);
-		B.placePiece(Piece.BLACK, 4);
+		B.placePiece(Piece.X, 5);
+		B.placePiece(Piece.X, 6);
+		B.placePiece(Piece.X, 5);
+		B.placePiece(Piece.O, 5);
+		B.placePiece(Piece.X, 6);
+		B.placePiece(Piece.O, 6);
+		B.placePiece(Piece.O, 4);
 		
-		B.placePiece(Piece.RED, 1);
-		B.placePiece(Piece.RED, 2);
-		B.placePiece(Piece.RED, 3);
-		B.placePiece(Piece.RED, 4);
+		B.placePiece(Piece.X, 1);
+		B.placePiece(Piece.X, 2);
+		B.placePiece(Piece.X, 3);
+		B.placePiece(Piece.X, 4);
 		*//*
 		Board B = new Board();
-		B.placePiece(Piece.BLACK, 1);
-		B.placePiece(Piece.BLACK, 2);
-		B.placePiece(Piece.BLACK, 3);
-		B.placePiece(Piece.BLACK, 4);
+		B.placePiece(Piece.O, 1);
+		B.placePiece(Piece.O, 2);
+		B.placePiece(Piece.O, 3);
+		B.placePiece(Piece.O, 4);
 		*/
 		
 		/*

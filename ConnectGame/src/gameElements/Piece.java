@@ -7,8 +7,8 @@ package gameElements;
  */
 public enum Piece {
     NONE(' '),
-    RED('X'),
-    BLACK('O');
+    X('X'),
+    O('O');
     
     char character = ' ';
     
@@ -23,7 +23,6 @@ public enum Piece {
     String prettyName()
     {
         return  String.valueOf(this.getCharacter());
-        //return this.toString().substring(0, 1) + this.toString().toLowerCase().substring(1);
     }
 
 }
