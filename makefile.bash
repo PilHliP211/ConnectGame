@@ -18,6 +18,7 @@ fi
 if test -d ./docs
 then 
     rm -r ./docs
+    echo "Old docs files removed"
 fi
 
 # Check whether bin and docs directories exist. 
@@ -26,11 +27,13 @@ fi
 if !(test -d ./bin)
 then
     mkdir ./bin
+    echo "Making new bin folder"
 fi
 
 if !(test -d ./docs)
 then
     mkdir ./docs
+    echo "Making new docs folder"
 fi
 
 # Compile project's java code.
