@@ -2,8 +2,8 @@
 CAP5600 Project 1
 
 # Compiling
-After extracting the uploaded zip file, navigate to the directory with \src\.
-create a \bin\ direcotry.
+After extracting the uploaded zip file, navigate to the directory with \src.
+Create a \bin directory.
 
 To compile connectM run the following command with JDK 8 or later (assuming the JDK is on your environment path):
 
@@ -11,8 +11,8 @@ To compile connectM run the following command with JDK 8 or later (assuming the 
 
 
 # Generating Docs
-Navigate to the directory with \src\.
-Create a \docs\ direcotry.
+Navigate to the directory with \src.
+Create a \docs directory.
 To generate javadocs run the following command (assuming the JDK is on your environment path):
 
 `javadoc -d docs -sourcepath src gameElements ai test`
@@ -35,4 +35,4 @@ To specify the size of the board and win condition run (this creates a board wit
 
 
 # Playing
-To play a column enter a number 0-width and hit enter. The human player is O and the AI is X.
+To play a column enter a number from 0 to width and hit enter. The human player is O and the AI is X.
