@@ -9,22 +9,22 @@ To compile connectM run the following command with JDK 8 or later (assuming java
 
 `.\javac -d bin -sourcepath src src\gameElements\Game.java`
 
+
 # Running
 After compiling, you can run connectM with the following command
 
-`java gameElements.Game`
+`java gameElements.Game `
 
-To specify the size of the board run
+
+To specify the size of the board run (this creates a board with width and height 7).
 
 `java gameElements.Game 7`
 
-(this creates a board with width and height 7)
 
-To specify the size of the board and win condition run
+To specify the size of the board and win condition run (this creates a board with width and height 6 and a win condition of 3).
 
 `java gameElements.Game 6 3`
 
-(this creates a board with width and height 6 and a win condition of 3)
 
 # Playing
 To play a column enter a number 0-width and hit enter. The human player is O and the AI is X.
