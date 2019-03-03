@@ -28,9 +28,9 @@ public class ArtificialPlayer implements Player {
     /**
      * Constructor for the ArtificialPlayer.
      * 
-     * @param integer value indicating depth of tree traversal
-     * @param Piece enumerator type for artificial player
-     * @param Board object indicating the game's current board progress
+     * @param difficulty value indicating depth of tree traversal
+     * @param p Piece enumerator type for artificial player
+     * @param b Board object indicating the game's current board progress
      */
     public ArtificialPlayer(int difficulty, Piece p, Board b){
         this.difficulty = difficulty;

@@ -45,11 +45,11 @@ public interface Board{
     /**
 	 * Drops a piece down a column of the Connect board.
 	 * @param p the type of Piece to place (cannot be Piece.NONE)
-	 * @param column the 0 based index of the column to drop the piece (cannot be >= board width)
+	 * @param column the 0 based index of the column to drop the piece (cannot be greter than or equal to board width)
 	 * @return true if the piece was placed on the board, false otherwise
 	 * @throws ColumnFullException if the index of the piece to place is a full column
 	 */
-	public boolean placePiece(Piece p, int coulmn) throws ColumnFullException;
+	public boolean placePiece(Piece p, int column) throws ColumnFullException;
 	
 	/**
 	 * Creates an entirely new board with the same dimensions, wincondition, and spaces of this board
