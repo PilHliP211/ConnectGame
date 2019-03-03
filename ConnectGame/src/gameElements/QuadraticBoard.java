@@ -92,7 +92,7 @@ public class QuadraticBoard implements Board{
 				spaces[column][h-1] = p;
 				return true;
 			}
-	
+		}
 		throw new ColumnFullException();
 	}
 	
