@@ -14,3 +14,5 @@ then
     rm -r ./docs
     echo -e "\nOld docs files removed\n"
 fi
+
+

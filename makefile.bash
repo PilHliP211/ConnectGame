@@ -45,7 +45,7 @@ echo -e "\nCompiling Project...\n"
 javac -d ./bin -sourcepath ./src $GAME_ELEMS_PATH/Game.java $GAME_ELEMS_PATH/Player.java $GAME_ELEMS_PATH/Board.java $GAME_ELEMS_PATH/QuadraticBoard.java $GAME_ELEMS_PATH/InputPlayer.java $GAME_ELEMS_PATH/Piece.java $GAME_ELEMS_PATH/StandardBoard.java $AI_PATH/ArtificialPlayer.java $AI_PATH/helper/BoardHelpers.java $AI_PATH/helper/Utility.java $AI_PATH/dataStructs/StateNode.java $TESTER_PATH/ArtificialTester.java $TESTER_PATH/RandomTester.java
 
 #javac -d ./bin -sourcepath ./src ./ConnectGame/src/gameElements/Game.java
-
+echo -e "\nGenerating javadoc documentation\n"
 javadoc -sourcepath ./src -classpath ./src $GAME_ELEMS_PATH/Game.java $GAME_ELEMS_PATH/Player.java $GAME_ELEMS_PATH/Board.java $GAME_ELEMS_PATH/QuadraticBoard.java $GAME_ELEMS_PATH/InputPlayer.java $GAME_ELEMS_PATH/Piece.java $GAME_ELEMS_PATH/StandardBoard.java $AI_PATH/ArtificialPlayer.java $AI_PATH/helper/BoardHelpers.java $AI_PATH/helper/Utility.java $AI_PATH/dataStructs/StateNode.java $TESTER_PATH/ArtificialTester.java $TESTER_PATH/RandomTester.java -d ./docs
 
 
