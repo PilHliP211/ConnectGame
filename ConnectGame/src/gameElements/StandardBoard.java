@@ -89,7 +89,7 @@ public class StandardBoard  implements Board {
 	/**
 	 * Drops a piece down a column of the Connect board.
 	 * @param p the type of Piece to place (cannot be Piece.NONE)
-	 * @param column the 0 based index of the column to drop the piece (cannot be >= board width)
+	 * @param column the 0 based index of the column to drop the piece (cannot be greater than or equal to board width)
 	 * @return true if the piece was placed on the board, false otherwise
 	 * @throws ColumnFullException if the index of the piece to place is a full column
 	 */
@@ -346,7 +346,7 @@ public class StandardBoard  implements Board {
 	}
 	
 	/**
-	 * @param args
+	 * @param args arguments to be passed into main function used for testing StandardBoard class.
 	 */
 	public static void main(String[] args) {
 		

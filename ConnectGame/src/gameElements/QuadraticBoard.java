@@ -33,7 +33,7 @@ public class QuadraticBoard implements Board{
 	
 	/**
 	 * Creates a Connect N board with a width and a height.
-	 * @param width the width and height of the board
+	 * @param dimension the width and height of the board
 	 * @param winCondition number needed to connect to win
 	 */
 	public QuadraticBoard(int dimension, int winCondition) {
@@ -74,7 +74,7 @@ public class QuadraticBoard implements Board{
 	/**
 	 * Drops a piece down a column of the Connect board.
 	 * @param p the type of Piece to place (cannot be Piece.NONE)
-	 * @param column the 0 based index of the column to drop the piece (cannot be >= board width)
+	 * @param column the 0 based index of the column to drop the piece (cannot be greater than or equal to board width)
 	 * @return true if the piece was placed on the board, false otherwise
 	 * @throws ColumnFullException if the index of the piece to place is a full column
 	 */
@@ -382,9 +382,9 @@ public class QuadraticBoard implements Board{
 	/**
 	 * Sets value at index h, w in 2D array of spaces
 	 * 
-	 * @param Piece enumerator type to place on board
-	 * @param integer value representing vertical position on board
-	 * @param integer value representing horizontal position on board
+	 * @param val Piece enumerator type to place on board
+	 * @param h integer value representing vertical position on board
+	 * @param w integer value representing horizontal position on board
 	 */
 	public void setPieceAtSpace(Piece val, int h, int w)
 	{
@@ -411,7 +411,7 @@ public class QuadraticBoard implements Board{
 	}
 	
 	/**
-	 * @param args
+	 * @param args arguments to pass into main tester function for this QuadraticBoard class
 	 */
 	public static void main(String[] args) {
 		
