@@ -2,24 +2,24 @@
 CAP5600 Project 1
 
 # Compiling
-After extracting the uploaded zip file, navigate to the directory with \src.
+After extracting the uploaded zip file, navigate to the top level directory that contains \src.
 Create a \bin directory.
 
-To compile connectM run the following command with JDK 8 or later (assuming the JDK is on your environment path):
+To compile connectM run the following command with JDK 8 or later (assuming the JDK\bin directory is on your environment path):
 
 `javac -d bin -sourcepath src src\gameElements\Game.java`
 
 
 # Generating Docs
-Navigate to the directory with \src.
+Navigate to the top level directory that contains \src.
 Create a \docs directory.
-To generate javadocs run the following command (assuming the JDK is on your environment path):
+To generate javadocs run the following command (assuming the JDK\bin directory is on your environment path):
 
 `javadoc -d docs -sourcepath src gameElements ai test`
 
 
 # Running
-After compiling, you can run connectM with the following command
+After compiling change to the \bin directory. Then, you can run connectM with the following command
 
 `java gameElements.Game `
 
